@@ -1,0 +1,9 @@
+/**
+ * Global styles for the USC Free Food Finder application
+ * 
+ * This file imports and configures Tailwind CSS for the entire application.
+ * It includes the base styles, component utilities, and custom utility classes
+ * that are used throughout the project for consistent styling and layout.
+ */
+
+@import "tailwindcss";

@@ -1,0 +1,3513 @@
+<!--this document just contains the html document that the events details page receives 
+when entering the webpage https://engage.usc.edu/resed/rsvp_boot?id=408945
+Event details is in line 680 to 691-->
+
+
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en-US" xml:lang="en-US">
+
+
+<script>
+	var jsPageName = "Greif LaunchPad - Lloyd Greif Center for Entrepreneurial Studies"; // pass strPageName to JavaScript, used in function setPageName() [accessibility.js]
+	var jsAjaxRequest = ('0' === '1') ? true : false;
+</script>
+
+<!-- AX != 1 -->
+
+<script>
+	var url = new URL(location.href);
+	history.replaceState({ type: "events" }, '', url.pathname + url.search);
+</script>
+
+
+
+<head>
+	<!-- META TAGS -->
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+
+	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1,requiresActiveX=true">
+	<meta name="apple-itunes-app" content="app-id=1621642088, affiliate-data=myAffiliateData, app-argument=myURL">
+
+	<title>Greif LaunchPad - Lloyd Greif Center for Entrepreneurial Studies</title>
+	<meta name="description" content="~ OPEN MONDAY THROUGH THURSDAY FROM 11 AM TO 4 PM  - ASK ABOUT OUR GIVE AWAY ITEM WHEN YOU CHECK IN IRL ~
+
+Think of it like a study lounge… but for your ideas + businesses &amp;#128640; 
+
+Drop by to work ...">
+	<meta name="title" content="Greif LaunchPad - Lloyd Greif Center for Entrepreneurial Studies">
+
+
+	<link rel="image_src"
+		href="https://engage.usc.edu/upload/usc/2025/r3_image_upload_2524521_Launchpad_Office_Hours_8_81517231.png">
+	<meta property="og:image"
+		content="https://engage.usc.edu/upload/usc/2025/r3_image_upload_2524521_Launchpad_Office_Hours_8_81517231.png" />
+
+
+	<!-- CSS IMPORT -->
+
+
+	<!-- FONT FOR DEV -->
+	<link href="/css/fonts/open-sans.css" rel="stylesheet" type="text/css">
+
+	<!-- FAVICON -->
+	<link rel="icon" type="images/x-icon" href="/upload/usc/2021/s1_image_upload_34747_favicons_46_112214282.png">
+	<link rel="shortcut icon" type="images/x-icon"
+		href="/upload/usc/2021/s1_image_upload_34747_favicons_46_112214282.png">
+
+	<!-- JQUERY UI -->
+	<link rel="stylesheet" type="text/css" href="/bower_components/jquery-ui/themes/base/jquery-ui.min.css">
+
+	<!-- AUTOCOMPLETE -->
+	<link rel="stylesheet" type="text/css" href="/js/jquery/jquery.autocomplete.css">
+
+	<!-- BOOTSTRAP & GLYPHICONS -->
+	<link rel="stylesheet" type="text/css" href="/bower_components/bootstrap/dist/css/bootstrap.min.css">
+	<link rel="stylesheet" type="text/css"
+		href="/static/plugins/bootstrap-multiselect/dist/css/bootstrap-multiselect.css">
+	<link rel="stylesheet" type="text/css" href="/glyphicons-pro/css/glyphicons-filetypes.css">
+
+	<!-- THICKBOX -->
+	<link rel="stylesheet" type="text/css" href="/js/thickbox/thickbox.css">
+
+
+	<!-- JQUERY & FONT -->
+	<script src="/bower_components/jquery/dist/jquery.min.js"></script>
+	<script src="/bower_components/jquery-ui/jquery-ui.min.js"></script>
+
+	<!-- BOOTSTRAP -->
+	<script src="/bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
+	<script src="/static/plugins/bootstrap-multiselect/dist/js/bootstrap-multiselect.js"></script>
+
+	<script type="text/javascript" src="/js/accessibility.js?v=20251112.1"></script>
+	<script type="text/javascript" src="/js/scripts.js?v=20251007.1"></script>
+
+	<link rel="stylesheet" type="text/css" href="/bower_components/mdi/css/materialdesignicons.min.css">
+	<link rel="stylesheet" type="text/css" href="/static/css/materialdesigniconscustom.css">
+
+	<link rel="stylesheet" type="text/css" href="/static/css/header.css?v=20220425.1">
+	<link rel="stylesheet" type="text/css" href="/css/bootstrap-customV.css?v=20250729.1">
+
+
+</head>
+
+<body class="body-background " data-menu="/events">
+
+	<!-- SKIP links - skip to top of main content -->
+	<div id="div-skip-links" class="skip-link-container-mobile">
+
+		<span style="padding: 5px"><a id="a-skip-to-main-content" href="javascript:void('skip-to-main-content');"
+				class="skip-link" onclick="setFocusToContent(true);" aria-label="Skip to Main Content">Skip to Main
+				Content</a></span>
+
+		<span id="span-skip-to-left-navigation" style="padding: 5px; display: none;"><a id="a-skip-to-left-navigation"
+				href="javascript:void('skip-to-navigation');" class="skip-link" onclick="setFocusToSidebar();"
+				aria-label="Skip to Navigation">Skip to Navigation</a></span>
+
+		<!-- ACCESSIBILITY -->
+
+
+		<script>
+			// if we're on mobile we will not enable the skip links
+			const isMobileDevice = /Mobi/i.test(window.navigator.userAgent);
+			// console.log('> isMobileDevice=' + isMobileDevice);
+
+			$(window).on('load', function () {
+				if (!isMobileDevice) {
+					var elem = document.getElementById('div-skip-links');
+					if (typeof elem !== undefined) {
+						elem.classList.remove('skip-link-container-mobile');
+						elem.classList.add('skip-link-container');
+					}
+				}
+			});
+		</script>
+	</div>
+
+	<!-- School custom code -->
+
+	<!-- End school custom code -->
+
+
+	<!-- Modal -->
+	<div id="primary-modal" class="modal fade" role="dialog">
+		<div class="modal-dialog" role="document">
+			<div class="modal-content">
+				<p class="loader">
+					<img alt="Loading" src="/images/loader-big.gif">
+					<br> Loading...
+				</p>
+			</div>
+		</div>
+	</div>
+	<div id="secondary-modal" class="modal fade" role="dialog">
+		<div class="modal-dialog" role="document">
+			<div class="modal-content">
+				<p class="loader">
+					<img alt="Loading" src="/images/loader-big.gif">
+					<br> Loading...
+				</p>
+			</div>
+		</div>
+	</div>
+	<script>
+		$("#primary-modal").on("hide.bs.modal", function (e) {
+			$("#primary-modal .modal-content").html(writeLoading("Loading"));
+		});
+		$("#secondary-modal").on("hide.bs.modal", function (e) {
+			$("#secondary-modal .modal-content").html(writeLoading("Loading"));
+		});
+	</script>
+	<!-- End Modal -->
+
+
+
+	<script src="/static/js/modernizr.min.js"></script>
+
+	<script src="/js/jquery-validate/jquery.validate.min.js"></script>
+
+	<script src="/static/js/polyfill.js"></script>
+
+
+
+	<!-- HEADER -->
+
+	<style>
+		.btn--school {
+			background-color: #990000;
+			color: #fff;
+		}
+
+		.btn--school:hover {
+			background-color: #990000;
+			color: #fff;
+		}
+
+		.btn--school:focus {
+			background-color: #990000;
+			color: #fff;
+		}
+
+		.topbar {
+			background: #990000;
+			border-color: #990000;
+		}
+
+		.topbar ul.nav>li>a:hover,
+		.topbar ul.nav>li>button:hover {
+			background-color: #ffffff !important;
+		}
+
+		.topbar ul.nav>li>a:focus,
+		.topbar ul.nav>li>button:focus {
+			background-color: #ffffff !important;
+			outline: none;
+		}
+
+		.topbar .topbar__sidebar-toggle:hover {
+			background-color: #ffffff !important;
+		}
+
+		.topbar .topbar__sidebar-toggle:focus {
+			background-color: #ffffff !important;
+			outline: none;
+		}
+
+		.topbar.topbar-fair .topbar__left button:hover,
+		.topbar.topbar-fair .topbar__left button:focus {
+			background-color: #ffffff !important;
+			color: #000000 !important;
+		}
+
+		.topbar .open:not(.topbar__left)>a,
+		.topbar .open:not(.topbar__left)>a:focus,
+		.topbar>.open:not(.topbar__left)>a:hover,
+		.topbar .open:not(.topbar__left)>button,
+		.topbar .open:not(.topbar__left)>button:focus,
+		.topbar>.open:not(.topbar__left)>button:hover {
+			background-color: #ffffff !important;
+		}
+
+		.topbar li:focus-within>button.mdi-menu {
+			background-color: #ffffff !important;
+		}
+
+		.topbar li.active>a,
+		.topbar li.active>button {
+			background-color: #ffffff !important;
+		}
+	</style>
+
+	<div id="generic"></div>
+
+
+	<div id="outer-shell" class="outer-shell  ">
+
+		<!-- Impersonate -->
+
+		<!-- /.Impersonate -->
+
+		<!-- Message / Maintenance -->
+
+		<!-- /.Message -->
+
+
+		<div id="topbar" class="topbar topbar-events  topbar--reverse" role="navigation" aria-label="Topbar">
+
+			<div class="topbar__left">
+
+				<div role="banner">
+					<a id="a-top-bar-logo" aria-label="EngageSC Logo. Opens the members homepage." role="button"
+						class="logo" href="/groups">
+						<img class="topbar__icon-large"
+							src="/upload/usc/2022/image_upload_2380263_engageSCcornerlogo_112145457.png"
+							alt="EngageSC Logo Image."
+							aria-label="EngageSC Logo Image. Clicking opens the members home page."
+							style="max-height: 50px; max-width: 165px;">
+						<img class="topbar__icon-small"
+							src="/upload/usc/2021/image_upload_34747_image_upload_34747_u8OeYl_0jpg_7211288_1122142733.jpeg"
+							alt="EngageSC Logo Image."
+							aria-label="EngageSC Logo Image. Clicking opens the members home page."
+							style="max-height: 35px; max-width: 35px; margin: 0 5px;">
+					</a>
+				</div>
+
+			</div>
+
+
+
+			<div class="topbar__center">
+				<nav aria-label="Topbar">
+					<ul class="nav">
+
+						<!-- Not Logged Buttons -->
+
+						<!-- Home Website Buttons -->
+
+						<li class="hidden-xs ">
+							<a class="topbar__menu topbar__menu--large" href="/home_login" aria-label="Home"
+								role="button">Home</a>
+						</li>
+						<li class="hidden-xs dropdown  hasNoSubMenu">
+							<a class="topbar__menu topbar__menu--large" href="/home/groups/" style="max-width: inherit">
+								Groups
+							</a>
+
+							<ul class="dropdown-menu dropdown-menu-left arrow-dropdown-menu arrow-menu-right user-list notify-list"
+								style="overflow-y: auto;max-height: 80vh;">
+
+							</ul>
+						</li>
+						<li class="hidden-xs dropdown  hasNoSubMenu">
+							<a class="topbar__menu topbar__menu--large" href="/home/events/" style="max-width: inherit">
+								Events
+							</a>
+
+							<ul class="dropdown-menu dropdown-menu-left arrow-dropdown-menu arrow-menu-right user-list notify-list"
+								style="overflow-y: auto;max-height: 80vh;">
+
+							</ul>
+						</li>
+						<li class="hidden-lg hidden-md hidden-sm dropdown hasSubMenu">
+							<button class="topbar__menu mdi mdi-menu"
+								aria-label="Top Menu. Expanded. Press tab to enter the menu dropdown."
+								tabindex="0"></button>
+							<ul class="dropdown-menu dropdown-menu-left"
+								style="overflow-y: auto;max-height: 80vh;min-width:220px;">
+								<li style="display: block;"><a href="/home_login" aria-label="Home"
+										role="button">Home</a></li>
+
+								<li style="display: block;"><a href="/home/groups/" aria-label="Groups Section"
+										role="button" tabindex="0">Groups</a></li>
+
+								<li style="display: block;"><a href="/home/events/" aria-label="Events Section"
+										role="button" tabindex="0">Events</a></li>
+
+							</ul>
+							<style>
+								.hasSubMenu:hover>ul,
+								.hasSubMenu:focus-within>ul {
+									display: block;
+								}
+							</style>
+						</li>
+						<!-- /.Home Website Buttons -->
+
+						<!-- Group & Event Buttons -->
+
+						<!-- /.Group & Event Buttons -->
+
+						<!-- /.Not Logged Buttons -->
+
+						<!-- Home Button -->
+
+						<!-- /.Home Button -->
+
+						<!-- Group Button -->
+
+						<!-- /.Group Button -->
+
+						<!-- Manage Button -->
+
+
+						<!-- Event Button -->
+
+						<!-- /.Event Button -->
+
+						<!-- Chat Button -->
+
+						<!-- /.Chat Button -->
+
+						<!-- Admin / Setup Button -->
+
+						<!-- /.Admin Button -->
+
+
+						<li class="spacer" role="presentation"></li>
+
+
+						<!-- Login Button -->
+						<li class="">
+							<a class="topbar__menu topbar__menu--row" href="/login_only" aria-label="Sign In Section"
+								role="button">
+								<span class="mdi mdi-login-variant mdi-24px"></span>
+								<span class="hidden-xs hidden-sm topbar__menu-text" style="overflow: initial;"> Sign In
+								</span>
+							</a>
+						</li>
+						<!-- /.Login Button -->
+
+
+					</ul>
+
+					<style>
+						#a-top-bar-logo:focus>i {
+							outline: 2px solid #ffffff;
+						}
+					</style>
+
+				</nav>
+
+
+			</div><!-- /.navbar-collapse -->
+
+		</div><!-- /.topbar -->
+
+		<div id="inner-shell" class="inner-shell">
+
+
+
+			<!-- END HEADER -->
+
+
+			<div id="content-cont" class="content-cont container">
+
+				<div id="page-cont" class="content" role="main" aria-label="Main Content.">
+					<div style="position: relative;"><span id="span-top-of-main-content--0" class="content__top-element"
+							tabindex="0" aria-label="Top of Main Content." style="display: none;">Top of Main
+							Content</span></div>
+
+
+
+					<!-- Used in email_form -->
+
+					<!-- END AX != 1 -->
+
+
+
+					<style>
+						body,
+						.outer-shell {
+							background: #f1f1f1 !important;
+						}
+
+						.acc-keyboard-mode a:focus {
+							outline: 2px solid #000000;
+							outline-offset: 2px;
+						}
+
+						.acc-keyboard-mode div#footer-links a:focus,
+						.acc-keyboard-mode a.a-footer-contact-links:focus {
+							outline: 2px solid #ffffff;
+							outline-offset: 2px;
+						}
+					</style>
+
+
+					<!-- Registration 15 Minutes Countdown -->
+
+					<!--/ Registration 15 Minutes Countdown -->
+
+					<!-- Event Main Card -->
+
+					<div id="event_main_card" class="card card--top">
+						<div class="card-block rsvp__event-card">
+							<div class="row">
+
+								<div class="col-md-8">
+									<img class="img-responsive"
+										src="https://engage.usc.edu/upload/usc/2025/r3_image_upload_2524521_Launchpad_Office_Hours_8_81517231.png"
+										alt="Text list under Greif LaunchPad. Banner for Greif LaunchPad" />
+								</div>
+
+								<div class="col-sm-12 col-md-4">
+									<p class="rsvp__event-month hidden-xs hidden-sm">Aug</p>
+									<p class="rsvp__event-day hidden-xs hidden-sm">25</p>
+									<p class="rsvp__event-price hidden-xs hidden-sm">FREE</p>
+
+									<h1 class="rsvp__event-name">Greif LaunchPad</h1>
+									<p class="rsvp__event-org">by <a href="javascript:;"
+											onClick="$('html, body').animate({ scrollTop: $('#event_host').offset().top - 60 }, 500); setFocusToElementFromCssSelector('#event_host a');"
+											aria-label="Lloyd Greif Center for Entrepreneurial Studies, more details">Lloyd
+											Greif Center for Entrepreneurial Studies</a></p>
+
+									<p class="rsvp__event-tags" data-z="rb.tag.00" role="group"
+										aria-label="Filter events by category in a new tab">
+										<a href="/events?event_type=16698" target="_blank" class="a-event-tag-new-tab">
+											<span class="label label-default label-tag">
+												Meeting
+											</span>
+										</a>
+
+									</p>
+
+
+								</div>
+							</div>
+						</div>
+						<div class="card-separator card-separator--stick-top card-separator--stick-bottom"></div>
+
+						<div class="card-block">
+							<div class="row">
+								<div class="col-md-4_5">
+									<div style="display: inline-block; font-size: 18px; vertical-align: top;"><span
+											class="grey-element mdi mdi-clock"></span></div>
+									<div style="display: inline-block; margin-left: 3px;">
+
+										<p style="margin:0;">Mon, Aug 25, 2025 9:00 AM &ndash; </p>
+										<p style="margin:0;">Fri, May 29, 2026 10:00 AM <span id="timezone">PDT
+												(GMT-7)</span></p>
+
+										<script>
+											var localDate = new Date('2025-08-25T10:00:00.0000000-07:00');
+											if (localDate.getHours() != 10 || localDate.getMinutes() != 0) {
+												//Event occurs in a non local timezone and we should therefore display the timezone to the user
+												$("#timezone").text("PDT (GMT-7)");
+											}
+										</script>
+
+
+										<a href="javascript:;"
+											onClick="openModal('/rsvp_add_calendar?event_uid=808d06c7939ee4f3279f2b4e70f49611&ax=1');"
+											aria-label="Add to Calendar. Greif LaunchPad. Mon, Aug 25, 2025 At 9 AM">Add
+											to Calendar</a>
+
+
+									</div>
+								</div>
+								<div class="col-md-5">
+									<div style="display: inline-block; font-size: 18px; vertical-align: top;"><span
+											class="grey-element mdi mdi-map-marker"></span></div>
+									<div style="display: inline-block; margin-left: 3px; width: calc(100% - 50px);">
+
+										<p style="margin:0;">Private Location (sign in to display)</p>
+
+										<a href="javascript:;" aria-label="View Map"
+											onClick="$('html, body').animate({ scrollTop: $('#event_where').offset().top - 60 }, 500);">View
+											Map</a>
+
+									</div>
+
+
+
+								</div>
+
+								<div class="col-md-2_5">
+									<span class="number">87</span>
+									<div>Registered</div>
+
+								</div>
+
+							</div>
+						</div>
+					</div>
+
+					<script type="application/ld+json">
+		{
+		  "@context": "https://schema.org",
+		  "@type": "Event",
+		  "name": "Greif LaunchPad",
+		  "startDate": "2025-08-25T09:00:00-07:00",
+		  "endDate": "2026-05-29T10:00:00-07:00",
+		  "location": {
+			"@type": "Place",
+			"name": "Private Location (sign in to display)",
+			"address": "Private Location (sign in to display)"
+		  },
+		  
+		  "image": ["https://engage.usc.edu/upload/usc/2025/image_upload_2524521_Launchpad_Office_Hours_8_81517231.png"],
+		  
+		  "description": "~ OPEN MONDAY THROUGH THURSDAY FROM 11 AM TO 4 PM  - ASK ABOUT OUR GIVE AWAY ITEM WHEN YOU CHECK IN IRL ~\r\n\r\nThink of it like a study lounge… but for your ideas + businesses &#128640; \r\n\r\nDrop by to work on your startups, toss around ideas, meet with your group, hang out or meet like-others. It’s a spot on campus where you can:\r\n&#128187; Work on your projects\r\n&#129309; Meet other student entrepreneurs\r\n☕️ Collaborate, brainstorm, and get support\r\n&#128205; All in one creative, energetic space designed for builders like you!\r\n\r\nWe offer mentorship for entrepreneurs at any stage in their venture, from early ideation to launch! \r\n\r\nCome visit us for our open or scheduled office hours, workshops, and other events - we host snap events and programs are also held here all throughout the week. \r\n\r\n*Verified RSO Student club members can book the LaunchPad as a meeting space.\r\n\r\n~ OPEN MONDAY THROUGH THURSDAY FROM 11 AM TO 4 PM  - ASK ABOUT OUR GIVE AWAY ITEM WHEN YOU CHECK IN IRL ~"
+		}
+		</script>
+
+					<!--/ Event Main Card -->
+
+					<!-- Existing & Ongoing Tickets -->
+
+					<!--/ End Existing & Ongoing Tickets -->
+
+					<!-- More Tickets -->
+					<script>
+						function showOtherRegistrationOptions(ticketToDisplayId, selectedTicketId) {
+							var strSelectedTicket = "ticket_" + selectedTicketId
+							if ($("select[name=" + strSelectedTicket + "] option:selected").index() >= 1) {
+								$('#ticket_' + ticketToDisplayId).css('display', 'contents');
+							}
+							else {
+								$('#ticket_' + ticketToDisplayId).css('display', 'none');
+								$('#ticket_' + ticketToDisplayId + ' option[value = 0]').attr("selected", "selected");
+							}
+						}
+					</script>
+
+
+					<div id="more_tickets" class="card">
+						<div class="card-block">
+							<div class="card-block__title">
+								<h2 class="header-cg--h3"><span class="mdi mdi-ticket color-cg--event"></span>
+									Registration </h2>
+							</div>
+							<div class="card-border border-cg--event"></div>
+
+
+							<div class="">
+								<form id="register_form" name="register_form" action="/Entrepreneur/rsvp" method="POST">
+									<input type="hidden" name="embed" value="">
+									<input type="hidden" name="_csrf"
+										value="runZIGz53yxdTASCCcisSIPeEYx+8sodeIXJNlX7H5Af">
+									<input type="hidden" name="reg_call" value="activate">
+									<input type="hidden" name="id" value="404810">
+									<table class="table table-hover rsvp__table-resp" data-z="zulu-102" role="group"
+										aria-label="Registration Options">
+										<thead>
+											<tr>
+												<th>Options</th>
+												<th class="text-center" style="min-width: 93px">Sales Start</th>
+												<th class="text-center" style="min-width: 93px">Sales End</th>
+												<th class="text-center" style="min-width: 150px">Availability</th>
+												<th class="text-right">Price</th>
+
+											</tr>
+										</thead>
+
+
+										<tr id="ticket_1000412440">
+											<td>
+												<span class="rsvp__table-resp--title">Option</span>
+												<b>RSVP</b>
+
+												<br>
+												<small class="grey-element hidden-xs hidden-sm"></small>
+												<br>
+												<span id="privacy_1000412440">
+												</span>
+											</td>
+											<td class="text-center">
+												<span class="rsvp__table-resp--title">Sales Start</span>
+
+												-
+
+											</td>
+											<td class="text-center">
+												<span class="rsvp__table-resp--title">Sales End</span>
+
+												-
+
+											</td>
+
+
+
+											<td class="text-center">
+												<span class="rsvp__table-resp--title">Availability</span>
+
+												Unlimited
+
+											</td>
+
+
+											<td class="text-right ">
+												<span class="rsvp__table-resp--title">Price</span>
+
+												FREE
+
+											</td>
+
+
+										</tr>
+
+
+									</table>
+								</form>
+							</div>
+
+
+							<div style="padding:3px 3px 10px!important;text-align:right;">
+
+								<a class="btn btn-cg--event"
+									aria-label="Register for this event. Greif LaunchPad. Mon, Aug 25, 2025 At 9 AM"
+									href="/otp_signup?module=event&event_id=404810">Register</a>
+
+
+							</div>
+
+
+						</div>
+					</div>
+
+					<!--/ More Tickets -->
+
+					<!-- Event Details -->
+
+					<div id="event_details" class="card">
+						<div class="card-block">
+							<div class="card-block__title">
+								<h2 class="header-cg--h3"><span class="mdi mdi-note-text color-cg--event"></span>
+									Details</h2>
+							</div>
+							<div class="card-border border-cg--event"></div>
+
+							~ OPEN MONDAY THROUGH THURSDAY FROM 11 AM TO 4 PM - ASK ABOUT OUR GIVE AWAY ITEM WHEN YOU
+							CHECK IN IRL ~<br /><br />Think of it like a study lounge… but for your ideas + businesses
+							&#128640; <br /><br />Drop by to work on your startups, toss around ideas, meet with your
+							group, hang out or meet like-others. It’s a spot on campus where you can:<br />&#128187;
+							Work on your projects<br />&#129309; Meet other student entrepreneurs<br />☕️ Collaborate,
+							brainstorm, and get support<br />&#128205; All in one creative, energetic space designed for
+							builders like you!<br /><br />We offer mentorship for entrepreneurs at any stage in their
+							venture, from early ideation to launch! <br /><br />Come visit us for our open or scheduled
+							office hours, workshops, and other events - we host snap events and programs are also held
+							here all throughout the week. <br /><br />*Verified RSO Student club members can book the
+							LaunchPad as a meeting space.<br /><br />~ OPEN MONDAY THROUGH THURSDAY FROM 11 AM TO 4 PM -
+							ASK ABOUT OUR GIVE AWAY ITEM WHEN YOU CHECK IN IRL ~
+
+
+							<!-- Event Website Link -->
+
+
+							<!-- Event Dress Code -->
+
+
+							<!-- Food Provided -->
+
+
+							<!-- More Details -->
+
+
+							<!-- Event Copy Link -->
+
+							<div style="margin: 10px 0;"><a class="btn btn-grey" href="javascript:;"
+									aria-label="Copy link. Opens a copy to clipboard dialog."
+									onClick="openModal('/ajax_create_link?ax=1&link=https%3a%2f%2fcglink.me%2f2nB%2fr404810');"><span
+										class="mdi mdi-link-variant"></span> Copy Link</a></div>
+
+						</div>
+					</div>
+
+					<!--/ Event Details -->
+
+					<!-- Event Child Events -->
+
+					<div class="card">
+						<div class="card-block">
+							<div class="card-block__title">
+								<h2 class="header-cg--h3"><span class="mdi mdi-calendar color-cg--event"></span> Agenda
+								</h2>
+							</div>
+							<div class="card-border border-cg--event"></div>
+
+							<div class="row">
+								<h3 class="header-cg--h4" style="margin-left: 10px; margin-bottom: 20px;">Upcoming
+									Events</h3>
+							</div>
+
+							<div class="row" style="margin-bottom: 10px;">
+								<div class="col-md-3">
+									<div>Tue, Jan 20, 2026 <br><span>11:30 AM &ndash; 4:00 PM</span></div><span
+										class="grey-element mdi mdi-map-marker"></span><small
+										class="grey-element">Private Location (sign in to display)</small>
+								</div>
+								<div class="col-md-5">
+									<b style="font-size:1.2em;">
+										<a href="/Entrepreneur/rsvp?id=408409" target="_blank">Greif LaunchPad Office
+											Hours - Appointment Required </a>
+									</b>
+									<div>
+										<p>~ SIGN UP BELOW WITH THE CALENDLY LINK - IF YOU DO NOT COMPLETE THE CALENDLY
+											LINK YOUR MEETING IS NOT CONFIRMED ~<br /><br />Appointment Only Office
+											Hours:<br /><br />Student entrepreneurs can use office hours to validate
+											their business ideas and receive constructive feedback.
+											<br /><br />&#128550; Is there a pressing issue or challenge in your
+											entrepreneurial venture that requires quick guidance or
+											solutions?<br /><br />&#128173; Are you looking for impromptu brainstorming
+											sessions or creative discussions to overcome obstacles?<br /><br />&#128161;
+											Is your goal to receive instant feedback on a project, pitch, or idea
+											they&#39;re working on<br /><br />&#128198; Are you seeking the flexibility
+											of drop-in hours to accommodate your busy schedule while still receiving
+											valuable support for your startup?<br /><br />Business Stage: Idea stage
+											&#127793; - Early stage &#127807; - Scale-up &#127795;<br />Location:
+											Blackstone LaunchPad; Bridge Hall Basement <br />Price: FREE
+											<br /><br />Time Slots Available: Drop in for 30 min
+											increments.<br /><br />Sign Up Here:
+											https://cal.com/amiahshe-marshall.usc.edu/pre-scheduled-office-hours-session
+										</p>
+
+									</div>
+								</div>
+
+								<div class="col-md-2 text-center">
+
+								</div>
+
+
+
+								<div class="col-md-2 text-right">
+
+									<a class="btn btn-cg--event mdi mdi-open-in-new"
+										href="/Entrepreneur/rsvp?id=408409"> Register</a>
+
+								</div>
+
+							</div>
+
+							<div class="row" style="margin-bottom: 10px;">
+								<div class="col-md-3">
+									<div>Wed, Jan 21, 2026 <br><span>1:00 PM &ndash; 4:00 PM</span></div><span
+										class="grey-element mdi mdi-map-marker"></span><small
+										class="grey-element">Private Location (register to display)</small>
+								</div>
+								<div class="col-md-5">
+									<b style="font-size:1.2em;">
+										<a href="/Entrepreneur/rsvp?id=408410" target="_blank">Greif Launchpad Open
+											Office Hours with Amiah Sheppard </a>
+									</b>
+									<div>
+										<p>~ BRIDGE HALL BASEMENT~<br /><br />&#128161; Drop-In Office Hours Open to
+											ALL<br /><br />Got a business idea or side hustle you’re working on?
+											&#128640; <br /><br />Swing by LaunchPad during Drop-In Office Hours every
+											Wednesday!<br /><br />No appointment needed—just stop in
+											to:<br /><br />&#129300; Ask questions<br />&#128200; Get
+											feedback<br />&#129309; Connect with other student
+											founders<br /><br />Connect with Amiah Sheppard, Senior Student Engagement
+											Programs Advisor, and identify next steps in your founding journey. Get
+											everything from your most pressing venture/startup/ideas, questions,
+											concerns or next steps addressed!<br /><br />Come through and let’s build!
+											✨<br /><br />​​​​​~ BRIDGE HALL BASEMENT~</p>
+
+									</div>
+								</div>
+
+								<div class="col-md-2 text-center">
+
+								</div>
+
+
+
+								<div class="col-md-2 text-right">
+
+									<a class="btn btn-cg--event mdi mdi-open-in-new"
+										href="/Entrepreneur/rsvp?id=408410"> Register</a>
+
+								</div>
+
+							</div>
+
+							<div class="row" style="margin-bottom: 10px;">
+								<div class="col-md-3">
+									<div>Tue, Jan 27, 2026 <br><span>11:30 AM &ndash; 4:00 PM</span></div><span
+										class="grey-element mdi mdi-map-marker"></span><small
+										class="grey-element">Private Location (sign in to display)</small>
+								</div>
+								<div class="col-md-5">
+									<b style="font-size:1.2em;">
+										<a href="/Entrepreneur/rsvp?id=408411" target="_blank">Greif LaunchPad Office
+											Hours - Appointment Required </a>
+									</b>
+									<div>
+										<p>~ SIGN UP BELOW WITH THE CALENDLY LINK - IF YOU DO NOT COMPLETE THE CALENDLY
+											LINK YOUR MEETING IS NOT CONFIRMED ~<br /><br />Appointment Only Office
+											Hours:<br /><br />Student entrepreneurs can use office hours to validate
+											their business ideas and receive constructive feedback.
+											<br /><br />&#128550; Is there a pressing issue or challenge in your
+											entrepreneurial venture that requires quick guidance or
+											solutions?<br /><br />&#128173; Are you looking for impromptu brainstorming
+											sessions or creative discussions to overcome obstacles?<br /><br />&#128161;
+											Is your goal to receive instant feedback on a project, pitch, or idea
+											they&#39;re working on<br /><br />&#128198; Are you seeking the flexibility
+											of drop-in hours to accommodate your busy schedule while still receiving
+											valuable support for your startup?<br /><br />Business Stage: Idea stage
+											&#127793; - Early stage &#127807; - Scale-up &#127795;<br />Location:
+											Blackstone LaunchPad; Bridge Hall Basement <br />Price: FREE
+											<br /><br />Time Slots Available: Drop in for 30 min
+											increments.<br /><br />Sign Up Here:
+											https://cal.com/amiahshe-marshall.usc.edu/pre-scheduled-office-hours-session
+										</p>
+
+									</div>
+								</div>
+
+								<div class="col-md-2 text-center">
+
+								</div>
+
+
+
+								<div class="col-md-2 text-right">
+
+									<a class="btn btn-cg--event mdi mdi-open-in-new"
+										href="/Entrepreneur/rsvp?id=408411"> Register</a>
+
+								</div>
+
+							</div>
+
+							<div class="row" style="margin-bottom: 10px;">
+								<div class="col-md-3">
+									<div>Wed, Jan 28, 2026 <br><span>1:00 PM &ndash; 4:00 PM</span></div><span
+										class="grey-element mdi mdi-map-marker"></span><small
+										class="grey-element">Private Location (register to display)</small>
+								</div>
+								<div class="col-md-5">
+									<b style="font-size:1.2em;">
+										<a href="/Entrepreneur/rsvp?id=408412" target="_blank">Greif Launchpad Open
+											Office Hours with Amiah Sheppard </a>
+									</b>
+									<div>
+										<p>~ BRIDGE HALL BASEMENT~<br /><br />&#128161; Drop-In Office Hours Open to
+											ALL<br /><br />Got a business idea or side hustle you’re working on?
+											&#128640; <br /><br />Swing by LaunchPad during Drop-In Office Hours every
+											Wednesday!<br /><br />No appointment needed—just stop in
+											to:<br /><br />&#129300; Ask questions<br />&#128200; Get
+											feedback<br />&#129309; Connect with other student
+											founders<br /><br />Connect with Amiah Sheppard, Senior Student Engagement
+											Programs Advisor, and identify next steps in your founding journey. Get
+											everything from your most pressing venture/startup/ideas, questions,
+											concerns or next steps addressed!<br /><br />Come through and let’s build!
+											✨<br /><br />​​​​​~ BRIDGE HALL BASEMENT~</p>
+
+									</div>
+								</div>
+
+								<div class="col-md-2 text-center">
+
+								</div>
+
+
+
+								<div class="col-md-2 text-right">
+
+									<a class="btn btn-cg--event mdi mdi-open-in-new"
+										href="/Entrepreneur/rsvp?id=408412"> Register</a>
+
+								</div>
+
+							</div>
+
+							<div class="row" style="margin-bottom: 10px;">
+								<div class="col-md-3">
+									<div>Tue, Feb 03, 2026 <br><span>11:30 AM &ndash; 4:00 PM</span></div><span
+										class="grey-element mdi mdi-map-marker"></span><small
+										class="grey-element">Private Location (sign in to display)</small>
+								</div>
+								<div class="col-md-5">
+									<b style="font-size:1.2em;">
+										<a href="/Entrepreneur/rsvp?id=408413" target="_blank">Greif LaunchPad Office
+											Hours - Appointment Required </a>
+									</b>
+									<div>
+										<p>~ SIGN UP BELOW WITH THE CALENDLY LINK - IF YOU DO NOT COMPLETE THE CALENDLY
+											LINK YOUR MEETING IS NOT CONFIRMED ~<br /><br />Appointment Only Office
+											Hours:<br /><br />Student entrepreneurs can use office hours to validate
+											their business ideas and receive constructive feedback.
+											<br /><br />&#128550; Is there a pressing issue or challenge in your
+											entrepreneurial venture that requires quick guidance or
+											solutions?<br /><br />&#128173; Are you looking for impromptu brainstorming
+											sessions or creative discussions to overcome obstacles?<br /><br />&#128161;
+											Is your goal to receive instant feedback on a project, pitch, or idea
+											they&#39;re working on<br /><br />&#128198; Are you seeking the flexibility
+											of drop-in hours to accommodate your busy schedule while still receiving
+											valuable support for your startup?<br /><br />Business Stage: Idea stage
+											&#127793; - Early stage &#127807; - Scale-up &#127795;<br />Location:
+											Blackstone LaunchPad; Bridge Hall Basement <br />Price: FREE
+											<br /><br />Time Slots Available: Drop in for 30 min
+											increments.<br /><br />Sign Up Here:
+											https://cal.com/amiahshe-marshall.usc.edu/pre-scheduled-office-hours-session
+										</p>
+
+									</div>
+								</div>
+
+								<div class="col-md-2 text-center">
+
+								</div>
+
+
+
+								<div class="col-md-2 text-right">
+
+									<a class="btn btn-cg--event mdi mdi-open-in-new"
+										href="/Entrepreneur/rsvp?id=408413"> Register</a>
+
+								</div>
+
+							</div>
+
+							<div class="row" style="margin-bottom: 10px;">
+								<div class="col-md-3">
+									<div>Wed, Feb 04, 2026 <br><span>1:00 PM &ndash; 4:00 PM</span></div><span
+										class="grey-element mdi mdi-map-marker"></span><small
+										class="grey-element">Private Location (register to display)</small>
+								</div>
+								<div class="col-md-5">
+									<b style="font-size:1.2em;">
+										<a href="/Entrepreneur/rsvp?id=408414" target="_blank">Greif Launchpad Open
+											Office Hours with Amiah Sheppard </a>
+									</b>
+									<div>
+										<p>~ BRIDGE HALL BASEMENT~<br /><br />&#128161; Drop-In Office Hours Open to
+											ALL<br /><br />Got a business idea or side hustle you’re working on?
+											&#128640; <br /><br />Swing by LaunchPad during Drop-In Office Hours every
+											Wednesday!<br /><br />No appointment needed—just stop in
+											to:<br /><br />&#129300; Ask questions<br />&#128200; Get
+											feedback<br />&#129309; Connect with other student
+											founders<br /><br />Connect with Amiah Sheppard, Senior Student Engagement
+											Programs Advisor, and identify next steps in your founding journey. Get
+											everything from your most pressing venture/startup/ideas, questions,
+											concerns or next steps addressed!<br /><br />Come through and let’s build!
+											✨<br /><br />​​​​​~ BRIDGE HALL BASEMENT~</p>
+
+									</div>
+								</div>
+
+								<div class="col-md-2 text-center">
+
+								</div>
+
+
+
+								<div class="col-md-2 text-right">
+
+									<a class="btn btn-cg--event mdi mdi-open-in-new"
+										href="/Entrepreneur/rsvp?id=408414"> Register</a>
+
+								</div>
+
+							</div>
+
+							<div class="row" style="margin-bottom: 10px;">
+								<div class="col-md-3">
+									<div>Tue, Feb 10, 2026 <br><span>11:30 AM &ndash; 4:00 PM</span></div><span
+										class="grey-element mdi mdi-map-marker"></span><small
+										class="grey-element">Private Location (sign in to display)</small>
+								</div>
+								<div class="col-md-5">
+									<b style="font-size:1.2em;">
+										<a href="/Entrepreneur/rsvp?id=408415" target="_blank">Greif LaunchPad Office
+											Hours - Appointment Required </a>
+									</b>
+									<div>
+										<p>~ SIGN UP BELOW WITH THE CALENDLY LINK - IF YOU DO NOT COMPLETE THE CALENDLY
+											LINK YOUR MEETING IS NOT CONFIRMED ~<br /><br />Appointment Only Office
+											Hours:<br /><br />Student entrepreneurs can use office hours to validate
+											their business ideas and receive constructive feedback.
+											<br /><br />&#128550; Is there a pressing issue or challenge in your
+											entrepreneurial venture that requires quick guidance or
+											solutions?<br /><br />&#128173; Are you looking for impromptu brainstorming
+											sessions or creative discussions to overcome obstacles?<br /><br />&#128161;
+											Is your goal to receive instant feedback on a project, pitch, or idea
+											they&#39;re working on<br /><br />&#128198; Are you seeking the flexibility
+											of drop-in hours to accommodate your busy schedule while still receiving
+											valuable support for your startup?<br /><br />Business Stage: Idea stage
+											&#127793; - Early stage &#127807; - Scale-up &#127795;<br />Location:
+											Blackstone LaunchPad; Bridge Hall Basement <br />Price: FREE
+											<br /><br />Time Slots Available: Drop in for 30 min
+											increments.<br /><br />Sign Up Here:
+											https://cal.com/amiahshe-marshall.usc.edu/pre-scheduled-office-hours-session
+										</p>
+
+									</div>
+								</div>
+
+								<div class="col-md-2 text-center">
+
+								</div>
+
+
+
+								<div class="col-md-2 text-right">
+
+									<a class="btn btn-cg--event mdi mdi-open-in-new"
+										href="/Entrepreneur/rsvp?id=408415"> Register</a>
+
+								</div>
+
+							</div>
+
+							<div class="row" style="margin-bottom: 10px;">
+								<div class="col-md-3">
+									<div>Wed, Feb 11, 2026 <br><span>1:00 PM &ndash; 4:00 PM</span></div><span
+										class="grey-element mdi mdi-map-marker"></span><small
+										class="grey-element">Private Location (register to display)</small>
+								</div>
+								<div class="col-md-5">
+									<b style="font-size:1.2em;">
+										<a href="/Entrepreneur/rsvp?id=408416" target="_blank">Greif Launchpad Open
+											Office Hours with Amiah Sheppard </a>
+									</b>
+									<div>
+										<p>~ BRIDGE HALL BASEMENT~<br /><br />&#128161; Drop-In Office Hours Open to
+											ALL<br /><br />Got a business idea or side hustle you’re working on?
+											&#128640; <br /><br />Swing by LaunchPad during Drop-In Office Hours every
+											Wednesday!<br /><br />No appointment needed—just stop in
+											to:<br /><br />&#129300; Ask questions<br />&#128200; Get
+											feedback<br />&#129309; Connect with other student
+											founders<br /><br />Connect with Amiah Sheppard, Senior Student Engagement
+											Programs Advisor, and identify next steps in your founding journey. Get
+											everything from your most pressing venture/startup/ideas, questions,
+											concerns or next steps addressed!<br /><br />Come through and let’s build!
+											✨<br /><br />​​​​​~ BRIDGE HALL BASEMENT~</p>
+
+									</div>
+								</div>
+
+								<div class="col-md-2 text-center">
+
+								</div>
+
+
+
+								<div class="col-md-2 text-right">
+
+									<a class="btn btn-cg--event mdi mdi-open-in-new"
+										href="/Entrepreneur/rsvp?id=408416"> Register</a>
+
+								</div>
+
+							</div>
+
+							<div class="row" style="margin-bottom: 10px;">
+								<div class="col-md-3">
+									<div>Tue, Feb 17, 2026 <br><span>11:30 AM &ndash; 4:00 PM</span></div><span
+										class="grey-element mdi mdi-map-marker"></span><small
+										class="grey-element">Private Location (sign in to display)</small>
+								</div>
+								<div class="col-md-5">
+									<b style="font-size:1.2em;">
+										<a href="/Entrepreneur/rsvp?id=408417" target="_blank">Greif LaunchPad Office
+											Hours - Appointment Required </a>
+									</b>
+									<div>
+										<p>~ SIGN UP BELOW WITH THE CALENDLY LINK - IF YOU DO NOT COMPLETE THE CALENDLY
+											LINK YOUR MEETING IS NOT CONFIRMED ~<br /><br />Appointment Only Office
+											Hours:<br /><br />Student entrepreneurs can use office hours to validate
+											their business ideas and receive constructive feedback.
+											<br /><br />&#128550; Is there a pressing issue or challenge in your
+											entrepreneurial venture that requires quick guidance or
+											solutions?<br /><br />&#128173; Are you looking for impromptu brainstorming
+											sessions or creative discussions to overcome obstacles?<br /><br />&#128161;
+											Is your goal to receive instant feedback on a project, pitch, or idea
+											they&#39;re working on<br /><br />&#128198; Are you seeking the flexibility
+											of drop-in hours to accommodate your busy schedule while still receiving
+											valuable support for your startup?<br /><br />Business Stage: Idea stage
+											&#127793; - Early stage &#127807; - Scale-up &#127795;<br />Location:
+											Blackstone LaunchPad; Bridge Hall Basement <br />Price: FREE
+											<br /><br />Time Slots Available: Drop in for 30 min
+											increments.<br /><br />Sign Up Here:
+											https://cal.com/amiahshe-marshall.usc.edu/pre-scheduled-office-hours-session
+										</p>
+
+									</div>
+								</div>
+
+								<div class="col-md-2 text-center">
+
+								</div>
+
+
+
+								<div class="col-md-2 text-right">
+
+									<a class="btn btn-cg--event mdi mdi-open-in-new"
+										href="/Entrepreneur/rsvp?id=408417"> Register</a>
+
+								</div>
+
+							</div>
+
+							<div class="row" style="margin-bottom: 10px;">
+								<div class="col-md-3">
+									<div>Wed, Feb 18, 2026 <br><span>1:00 PM &ndash; 4:00 PM</span></div><span
+										class="grey-element mdi mdi-map-marker"></span><small
+										class="grey-element">Private Location (register to display)</small>
+								</div>
+								<div class="col-md-5">
+									<b style="font-size:1.2em;">
+										<a href="/Entrepreneur/rsvp?id=408418" target="_blank">Greif Launchpad Open
+											Office Hours with Amiah Sheppard</a>
+									</b>
+									<div>
+										<p>~ BRIDGE HALL BASEMENT~<br /><br />&#128161; Drop-In Office Hours Open to
+											ALL<br /><br />Got a business idea or side hustle you’re working on?
+											&#128640; <br /><br />Swing by LaunchPad during Drop-In Office Hours every
+											Wednesday!<br /><br />No appointment needed—just stop in
+											to:<br /><br />&#129300; Ask questions<br />&#128200; Get
+											feedback<br />&#129309; Connect with other student
+											founders<br /><br />Connect with Amiah Sheppard, Senior Student Engagement
+											Programs Advisor, and identify next steps in your founding journey. Get
+											everything from your most pressing venture/startup/ideas, questions,
+											concerns or next steps addressed!<br /><br />Come through and let’s build!
+											✨<br /><br />​​​​​~ BRIDGE HALL BASEMENT~</p>
+
+									</div>
+								</div>
+
+								<div class="col-md-2 text-center">
+
+								</div>
+
+
+
+								<div class="col-md-2 text-right">
+
+									<a class="btn btn-cg--event mdi mdi-open-in-new"
+										href="/Entrepreneur/rsvp?id=408418"> Register</a>
+
+								</div>
+
+							</div>
+
+							<div class="row" style="margin-bottom: 10px;">
+								<div class="col-md-3">
+									<div>Tue, Feb 24, 2026 <br><span>11:30 AM &ndash; 4:00 PM</span></div><span
+										class="grey-element mdi mdi-map-marker"></span><small
+										class="grey-element">Private Location (sign in to display)</small>
+								</div>
+								<div class="col-md-5">
+									<b style="font-size:1.2em;">
+										<a href="/Entrepreneur/rsvp?id=408419" target="_blank">Greif LaunchPad Office
+											Hours - Appointment Required </a>
+									</b>
+									<div>
+										<p>~ SIGN UP BELOW WITH THE CALENDLY LINK - IF YOU DO NOT COMPLETE THE CALENDLY
+											LINK YOUR MEETING IS NOT CONFIRMED ~<br /><br />Appointment Only Office
+											Hours:<br /><br />Student entrepreneurs can use office hours to validate
+											their business ideas and receive constructive feedback.
+											<br /><br />&#128550; Is there a pressing issue or challenge in your
+											entrepreneurial venture that requires quick guidance or
+											solutions?<br /><br />&#128173; Are you looking for impromptu brainstorming
+											sessions or creative discussions to overcome obstacles?<br /><br />&#128161;
+											Is your goal to receive instant feedback on a project, pitch, or idea
+											they&#39;re working on<br /><br />&#128198; Are you seeking the flexibility
+											of drop-in hours to accommodate your busy schedule while still receiving
+											valuable support for your startup?<br /><br />Business Stage: Idea stage
+											&#127793; - Early stage &#127807; - Scale-up &#127795;<br />Location:
+											Blackstone LaunchPad; Bridge Hall Basement <br />Price: FREE
+											<br /><br />Time Slots Available: Drop in for 30 min
+											increments.<br /><br />Sign Up Here:
+											https://cal.com/amiahshe-marshall.usc.edu/pre-scheduled-office-hours-session
+										</p>
+
+									</div>
+								</div>
+
+								<div class="col-md-2 text-center">
+
+								</div>
+
+
+
+								<div class="col-md-2 text-right">
+
+									<a class="btn btn-cg--event mdi mdi-open-in-new"
+										href="/Entrepreneur/rsvp?id=408419"> Register</a>
+
+								</div>
+
+							</div>
+
+							<div class="row" style="margin-bottom: 10px;">
+								<div class="col-md-3">
+									<div>Wed, Feb 25, 2026 <br><span>1:00 PM &ndash; 4:00 PM</span></div><span
+										class="grey-element mdi mdi-map-marker"></span><small
+										class="grey-element">Private Location (register to display)</small>
+								</div>
+								<div class="col-md-5">
+									<b style="font-size:1.2em;">
+										<a href="/Entrepreneur/rsvp?id=408420" target="_blank">Greif Launchpad Open
+											Office Hours with Amiah Sheppard </a>
+									</b>
+									<div>
+										<p>~ BRIDGE HALL BASEMENT~<br /><br />&#128161; Drop-In Office Hours Open to
+											ALL<br /><br />Got a business idea or side hustle you’re working on?
+											&#128640; <br /><br />Swing by LaunchPad during Drop-In Office Hours every
+											Wednesday!<br /><br />No appointment needed—just stop in
+											to:<br /><br />&#129300; Ask questions<br />&#128200; Get
+											feedback<br />&#129309; Connect with other student
+											founders<br /><br />Connect with Amiah Sheppard, Senior Student Engagement
+											Programs Advisor, and identify next steps in your founding journey. Get
+											everything from your most pressing venture/startup/ideas, questions,
+											concerns or next steps addressed!<br /><br />Come through and let’s build!
+											✨<br /><br />​​​​​~ BRIDGE HALL BASEMENT~</p>
+
+									</div>
+								</div>
+
+								<div class="col-md-2 text-center">
+
+								</div>
+
+
+
+								<div class="col-md-2 text-right">
+
+									<a class="btn btn-cg--event mdi mdi-open-in-new"
+										href="/Entrepreneur/rsvp?id=408420"> Register</a>
+
+								</div>
+
+							</div>
+
+							<div class="row" style="margin-bottom: 10px;">
+								<div class="col-md-3">
+									<div>Tue, Mar 03, 2026 <br><span>11:30 AM &ndash; 4:00 PM</span></div><span
+										class="grey-element mdi mdi-map-marker"></span><small
+										class="grey-element">Private Location (sign in to display)</small>
+								</div>
+								<div class="col-md-5">
+									<b style="font-size:1.2em;">
+										<a href="/Entrepreneur/rsvp?id=408421" target="_blank">Greif LaunchPad Office
+											Hours - Appointment Required </a>
+									</b>
+									<div>
+										<p>~ SIGN UP BELOW WITH THE CALENDLY LINK - IF YOU DO NOT COMPLETE THE CALENDLY
+											LINK YOUR MEETING IS NOT CONFIRMED ~<br /><br />Appointment Only Office
+											Hours:<br /><br />Student entrepreneurs can use office hours to validate
+											their business ideas and receive constructive feedback.
+											<br /><br />&#128550; Is there a pressing issue or challenge in your
+											entrepreneurial venture that requires quick guidance or
+											solutions?<br /><br />&#128173; Are you looking for impromptu brainstorming
+											sessions or creative discussions to overcome obstacles?<br /><br />&#128161;
+											Is your goal to receive instant feedback on a project, pitch, or idea
+											they&#39;re working on<br /><br />&#128198; Are you seeking the flexibility
+											of drop-in hours to accommodate your busy schedule while still receiving
+											valuable support for your startup?<br /><br />Business Stage: Idea stage
+											&#127793; - Early stage &#127807; - Scale-up &#127795;<br />Location:
+											Blackstone LaunchPad; Bridge Hall Basement <br />Price: FREE
+											<br /><br />Time Slots Available: Drop in for 30 min
+											increments.<br /><br />Sign Up Here:
+											https://cal.com/amiahshe-marshall.usc.edu/pre-scheduled-office-hours-session
+										</p>
+
+									</div>
+								</div>
+
+								<div class="col-md-2 text-center">
+
+								</div>
+
+
+
+								<div class="col-md-2 text-right">
+
+									<a class="btn btn-cg--event mdi mdi-open-in-new"
+										href="/Entrepreneur/rsvp?id=408421"> Register</a>
+
+								</div>
+
+							</div>
+
+							<div class="row" style="margin-bottom: 10px;">
+								<div class="col-md-3">
+									<div>Wed, Mar 04, 2026 <br><span>1:00 PM &ndash; 4:00 PM</span></div><span
+										class="grey-element mdi mdi-map-marker"></span><small
+										class="grey-element">Private Location (register to display)</small>
+								</div>
+								<div class="col-md-5">
+									<b style="font-size:1.2em;">
+										<a href="/Entrepreneur/rsvp?id=408422" target="_blank">Greif Launchpad Open
+											Office Hours with Amiah Sheppard </a>
+									</b>
+									<div>
+										<p>~ BRIDGE HALL BASEMENT~<br /><br />&#128161; Drop-In Office Hours Open to
+											ALL<br /><br />Got a business idea or side hustle you’re working on?
+											&#128640; <br /><br />Swing by LaunchPad during Drop-In Office Hours every
+											Wednesday!<br /><br />No appointment needed—just stop in
+											to:<br /><br />&#129300; Ask questions<br />&#128200; Get
+											feedback<br />&#129309; Connect with other student
+											founders<br /><br />Connect with Amiah Sheppard, Senior Student Engagement
+											Programs Advisor, and identify next steps in your founding journey. Get
+											everything from your most pressing venture/startup/ideas, questions,
+											concerns or next steps addressed!<br /><br />Come through and let’s build!
+											✨<br /><br />​​​​​~ BRIDGE HALL BASEMENT~</p>
+
+									</div>
+								</div>
+
+								<div class="col-md-2 text-center">
+
+								</div>
+
+
+
+								<div class="col-md-2 text-right">
+
+									<a class="btn btn-cg--event mdi mdi-open-in-new"
+										href="/Entrepreneur/rsvp?id=408422"> Register</a>
+
+								</div>
+
+							</div>
+
+							<div class="row" style="margin-bottom: 10px;">
+								<div class="col-md-3">
+									<div>Tue, Mar 10, 2026 <br><span>11:30 AM &ndash; 4:00 PM</span></div><span
+										class="grey-element mdi mdi-map-marker"></span><small
+										class="grey-element">Private Location (sign in to display)</small>
+								</div>
+								<div class="col-md-5">
+									<b style="font-size:1.2em;">
+										<a href="/Entrepreneur/rsvp?id=408423" target="_blank">Greif LaunchPad Office
+											Hours - Appointment Required </a>
+									</b>
+									<div>
+										<p>~ SIGN UP BELOW WITH THE CALENDLY LINK - IF YOU DO NOT COMPLETE THE CALENDLY
+											LINK YOUR MEETING IS NOT CONFIRMED ~<br /><br />Appointment Only Office
+											Hours:<br /><br />Student entrepreneurs can use office hours to validate
+											their business ideas and receive constructive feedback.
+											<br /><br />&#128550; Is there a pressing issue or challenge in your
+											entrepreneurial venture that requires quick guidance or
+											solutions?<br /><br />&#128173; Are you looking for impromptu brainstorming
+											sessions or creative discussions to overcome obstacles?<br /><br />&#128161;
+											Is your goal to receive instant feedback on a project, pitch, or idea
+											they&#39;re working on<br /><br />&#128198; Are you seeking the flexibility
+											of drop-in hours to accommodate your busy schedule while still receiving
+											valuable support for your startup?<br /><br />Business Stage: Idea stage
+											&#127793; - Early stage &#127807; - Scale-up &#127795;<br />Location:
+											Blackstone LaunchPad; Bridge Hall Basement <br />Price: FREE
+											<br /><br />Time Slots Available: Drop in for 30 min
+											increments.<br /><br />Sign Up Here:
+											https://cal.com/amiahshe-marshall.usc.edu/pre-scheduled-office-hours-session
+										</p>
+
+									</div>
+								</div>
+
+								<div class="col-md-2 text-center">
+
+								</div>
+
+
+
+								<div class="col-md-2 text-right">
+
+									<a class="btn btn-cg--event mdi mdi-open-in-new"
+										href="/Entrepreneur/rsvp?id=408423"> Register</a>
+
+								</div>
+
+							</div>
+
+							<div class="row" style="margin-bottom: 10px;">
+								<div class="col-md-3">
+									<div>Wed, Mar 11, 2026 <br><span>1:00 PM &ndash; 4:00 PM</span></div><span
+										class="grey-element mdi mdi-map-marker"></span><small
+										class="grey-element">Private Location (register to display)</small>
+								</div>
+								<div class="col-md-5">
+									<b style="font-size:1.2em;">
+										<a href="/Entrepreneur/rsvp?id=408424" target="_blank">Greif Launchpad Open
+											Office Hours with Amiah Sheppard </a>
+									</b>
+									<div>
+										<p>~ BRIDGE HALL BASEMENT~<br /><br />&#128161; Drop-In Office Hours Open to
+											ALL<br /><br />Got a business idea or side hustle you’re working on?
+											&#128640; <br /><br />Swing by LaunchPad during Drop-In Office Hours every
+											Wednesday!<br /><br />No appointment needed—just stop in
+											to:<br /><br />&#129300; Ask questions<br />&#128200; Get
+											feedback<br />&#129309; Connect with other student
+											founders<br /><br />Connect with Amiah Sheppard, Senior Student Engagement
+											Programs Advisor, and identify next steps in your founding journey. Get
+											everything from your most pressing venture/startup/ideas, questions,
+											concerns or next steps addressed!<br /><br />Come through and let’s build!
+											✨<br /><br />​​​​​~ BRIDGE HALL BASEMENT~</p>
+
+									</div>
+								</div>
+
+								<div class="col-md-2 text-center">
+
+								</div>
+
+
+
+								<div class="col-md-2 text-right">
+
+									<a class="btn btn-cg--event mdi mdi-open-in-new"
+										href="/Entrepreneur/rsvp?id=408424"> Register</a>
+
+								</div>
+
+							</div>
+
+							<div class="row" style="margin-bottom: 10px;">
+								<div class="col-md-3">
+									<div>Tue, Mar 24, 2026 <br><span>11:30 AM &ndash; 4:00 PM</span></div><span
+										class="grey-element mdi mdi-map-marker"></span><small
+										class="grey-element">Private Location (sign in to display)</small>
+								</div>
+								<div class="col-md-5">
+									<b style="font-size:1.2em;">
+										<a href="/Entrepreneur/rsvp?id=408425" target="_blank">Greif LaunchPad Office
+											Hours - Appointment Required </a>
+									</b>
+									<div>
+										<p>~ SIGN UP BELOW WITH THE CALENDLY LINK - IF YOU DO NOT COMPLETE THE CALENDLY
+											LINK YOUR MEETING IS NOT CONFIRMED ~<br /><br />Appointment Only Office
+											Hours:<br /><br />Student entrepreneurs can use office hours to validate
+											their business ideas and receive constructive feedback.
+											<br /><br />&#128550; Is there a pressing issue or challenge in your
+											entrepreneurial venture that requires quick guidance or
+											solutions?<br /><br />&#128173; Are you looking for impromptu brainstorming
+											sessions or creative discussions to overcome obstacles?<br /><br />&#128161;
+											Is your goal to receive instant feedback on a project, pitch, or idea
+											they&#39;re working on<br /><br />&#128198; Are you seeking the flexibility
+											of drop-in hours to accommodate your busy schedule while still receiving
+											valuable support for your startup?<br /><br />Business Stage: Idea stage
+											&#127793; - Early stage &#127807; - Scale-up &#127795;<br />Location:
+											Blackstone LaunchPad; Bridge Hall Basement <br />Price: FREE
+											<br /><br />Time Slots Available: Drop in for 30 min
+											increments.<br /><br />Sign Up Here:
+											https://cal.com/amiahshe-marshall.usc.edu/pre-scheduled-office-hours-session
+										</p>
+
+									</div>
+								</div>
+
+								<div class="col-md-2 text-center">
+
+								</div>
+
+
+
+								<div class="col-md-2 text-right">
+
+									<a class="btn btn-cg--event mdi mdi-open-in-new"
+										href="/Entrepreneur/rsvp?id=408425"> Register</a>
+
+								</div>
+
+							</div>
+
+							<div class="row" style="margin-bottom: 10px;">
+								<div class="col-md-3">
+									<div>Wed, Mar 25, 2026 <br><span>1:00 PM &ndash; 4:00 PM</span></div><span
+										class="grey-element mdi mdi-map-marker"></span><small
+										class="grey-element">Private Location (register to display)</small>
+								</div>
+								<div class="col-md-5">
+									<b style="font-size:1.2em;">
+										<a href="/Entrepreneur/rsvp?id=408427" target="_blank">Greif Launchpad Open
+											Office Hours with Amiah Sheppard </a>
+									</b>
+									<div>
+										<p>~ BRIDGE HALL BASEMENT~<br /><br />&#128161; Drop-In Office Hours Open to
+											ALL<br /><br />Got a business idea or side hustle you’re working on?
+											&#128640; <br /><br />Swing by LaunchPad during Drop-In Office Hours every
+											Wednesday!<br /><br />No appointment needed—just stop in
+											to:<br /><br />&#129300; Ask questions<br />&#128200; Get
+											feedback<br />&#129309; Connect with other student
+											founders<br /><br />Connect with Amiah Sheppard, Senior Student Engagement
+											Programs Advisor, and identify next steps in your founding journey. Get
+											everything from your most pressing venture/startup/ideas, questions,
+											concerns or next steps addressed!<br /><br />Come through and let’s build!
+											✨<br /><br />​​​​​~ BRIDGE HALL BASEMENT~</p>
+
+									</div>
+								</div>
+
+								<div class="col-md-2 text-center">
+
+								</div>
+
+
+
+								<div class="col-md-2 text-right">
+
+									<a class="btn btn-cg--event mdi mdi-open-in-new"
+										href="/Entrepreneur/rsvp?id=408427"> Register</a>
+
+								</div>
+
+							</div>
+
+							<div class="row" style="margin-bottom: 10px;">
+								<div class="col-md-3">
+									<div>Tue, Mar 31, 2026 <br><span>11:30 AM &ndash; 4:00 PM</span></div><span
+										class="grey-element mdi mdi-map-marker"></span><small
+										class="grey-element">Private Location (sign in to display)</small>
+								</div>
+								<div class="col-md-5">
+									<b style="font-size:1.2em;">
+										<a href="/Entrepreneur/rsvp?id=408428" target="_blank">Greif LaunchPad Office
+											Hours - Appointment Required </a>
+									</b>
+									<div>
+										<p>~ SIGN UP BELOW WITH THE CALENDLY LINK - IF YOU DO NOT COMPLETE THE CALENDLY
+											LINK YOUR MEETING IS NOT CONFIRMED ~<br /><br />Appointment Only Office
+											Hours:<br /><br />Student entrepreneurs can use office hours to validate
+											their business ideas and receive constructive feedback.
+											<br /><br />&#128550; Is there a pressing issue or challenge in your
+											entrepreneurial venture that requires quick guidance or
+											solutions?<br /><br />&#128173; Are you looking for impromptu brainstorming
+											sessions or creative discussions to overcome obstacles?<br /><br />&#128161;
+											Is your goal to receive instant feedback on a project, pitch, or idea
+											they&#39;re working on<br /><br />&#128198; Are you seeking the flexibility
+											of drop-in hours to accommodate your busy schedule while still receiving
+											valuable support for your startup?<br /><br />Business Stage: Idea stage
+											&#127793; - Early stage &#127807; - Scale-up &#127795;<br />Location:
+											Blackstone LaunchPad; Bridge Hall Basement <br />Price: FREE
+											<br /><br />Time Slots Available: Drop in for 30 min
+											increments.<br /><br />Sign Up Here:
+											https://cal.com/amiahshe-marshall.usc.edu/pre-scheduled-office-hours-session
+										</p>
+
+									</div>
+								</div>
+
+								<div class="col-md-2 text-center">
+
+								</div>
+
+
+
+								<div class="col-md-2 text-right">
+
+									<a class="btn btn-cg--event mdi mdi-open-in-new"
+										href="/Entrepreneur/rsvp?id=408428"> Register</a>
+
+								</div>
+
+							</div>
+
+							<div class="row" style="margin-bottom: 10px;">
+								<div class="col-md-3">
+									<div>Wed, Apr 01, 2026 <br><span>1:00 PM &ndash; 4:00 PM</span></div><span
+										class="grey-element mdi mdi-map-marker"></span><small
+										class="grey-element">Private Location (register to display)</small>
+								</div>
+								<div class="col-md-5">
+									<b style="font-size:1.2em;">
+										<a href="/Entrepreneur/rsvp?id=408429" target="_blank">Greif Launchpad Open
+											Office Hours with Amiah Sheppard </a>
+									</b>
+									<div>
+										<p>~ BRIDGE HALL BASEMENT~<br /><br />&#128161; Drop-In Office Hours Open to
+											ALL<br /><br />Got a business idea or side hustle you’re working on?
+											&#128640; <br /><br />Swing by LaunchPad during Drop-In Office Hours every
+											Wednesday!<br /><br />No appointment needed—just stop in
+											to:<br /><br />&#129300; Ask questions<br />&#128200; Get
+											feedback<br />&#129309; Connect with other student
+											founders<br /><br />Connect with Amiah Sheppard, Senior Student Engagement
+											Programs Advisor, and identify next steps in your founding journey. Get
+											everything from your most pressing venture/startup/ideas, questions,
+											concerns or next steps addressed!<br /><br />Come through and let’s build!
+											✨<br /><br />​​​​​~ BRIDGE HALL BASEMENT~</p>
+
+									</div>
+								</div>
+
+								<div class="col-md-2 text-center">
+
+								</div>
+
+
+
+								<div class="col-md-2 text-right">
+
+									<a class="btn btn-cg--event mdi mdi-open-in-new"
+										href="/Entrepreneur/rsvp?id=408429"> Register</a>
+
+								</div>
+
+							</div>
+
+							<div class="row">
+								<h3 class="header-cg--h4" style="margin-left: 10px; margin-bottom: 20px;">Past Events
+								</h3>
+							</div>
+
+							<div class="row" style="margin-bottom: 10px;">
+								<div class="col-md-3">
+									<div>Wed, Nov 19, 2025 <br><span>1:00 PM &ndash; 4:00 PM</span></div><span
+										class="grey-element mdi mdi-map-marker"></span><small
+										class="grey-element">Private Location (register to display)</small>
+								</div>
+								<div class="col-md-5">
+									<b style="font-size:1.2em;">
+										<a href="/Entrepreneur/rsvp?id=404732" target="_blank">Greif Launchpad Open
+											Office Hours with Amiah Sheppard</a>
+									</b>
+									<div>
+										<p>~ BRIDGE HALL BASEMENT~<br /><br />&#128161; Drop-In Office Hours Open to
+											ALL<br /><br />Got a business idea or side hustle you’re working on?
+											&#128640; <br /><br />Swing by LaunchPad during Drop-In Office Hours every
+											Wednesday!<br /><br />No appointment needed—just stop in
+											to:<br /><br />&#129300; Ask questions<br />&#128200; Get
+											feedback<br />&#129309; Connect with other student
+											founders<br /><br />Connect with Amiah Sheppard, Senior Student Engagement
+											Programs Advisor, and identify next steps in your founding journey. Get
+											everything from your most pressing venture/startup/ideas, questions,
+											concerns or next steps addressed!<br /><br />Come through and let’s build!
+											✨<br /><br />​​​​​~ BRIDGE HALL BASEMENT~</p>
+
+									</div>
+								</div>
+
+								<div class="col-md-2 text-center">
+
+								</div>
+
+
+
+							</div>
+
+							<div class="row" style="margin-bottom: 10px;">
+								<div class="col-md-3">
+									<div>Tue, Nov 18, 2025 <br><span>11:00 AM &ndash; 2:00 PM</span></div><span
+										class="grey-element mdi mdi-map-marker"></span><small
+										class="grey-element">Private Location (sign in to display)</small>
+								</div>
+								<div class="col-md-5">
+									<b style="font-size:1.2em;">
+										<a href="/Entrepreneur/rsvp?id=404809" target="_blank">Greif LaunchPad Office
+											Hours - Appointment Required</a>
+									</b>
+									<div>
+										<p>~ SIGN UP BELOW WITH THE CALENDLY LINK - IF YOU DO NOT COMPLETE THE CALENDLY
+											LINK YOUR MEETING IS NOT CONFIRMED ~<br /><br />Appointment Only Office
+											Hours:<br /><br />Student entrepreneurs can use office hours to validate
+											their business ideas and receive constructive feedback.
+											<br /><br />&#128550; Is there a pressing issue or challenge in your
+											entrepreneurial venture that requires quick guidance or
+											solutions?<br /><br />&#128173; Are you looking for impromptu brainstorming
+											sessions or creative discussions to overcome obstacles?<br /><br />&#128161;
+											Is your goal to receive instant feedback on a project, pitch, or idea
+											they&#39;re working on<br /><br />&#128198; Are you seeking the flexibility
+											of drop-in hours to accommodate your busy schedule while still receiving
+											valuable support for your startup?<br /><br />Business Stage: Idea stage
+											&#127793; - Early stage &#127807; - Scale-up &#127795;<br />Location:
+											Blackstone LaunchPad; Bridge Hall Basement <br />Price: FREE
+											<br /><br />Time Slots Available: Drop in for 30 min
+											increments.<br /><br />Sign Up Here:
+											https://calendly.com/uscblackstonelaunchpad/psof
+										</p>
+
+									</div>
+								</div>
+
+								<div class="col-md-2 text-center">
+
+								</div>
+
+
+
+							</div>
+
+							<div class="row" style="margin-bottom: 10px;">
+								<div class="col-md-3">
+									<div>Wed, Nov 12, 2025 <br><span>1:00 PM &ndash; 4:00 PM</span></div><span
+										class="grey-element mdi mdi-map-marker"></span><small
+										class="grey-element">Private Location (register to display)</small>
+								</div>
+								<div class="col-md-5">
+									<b style="font-size:1.2em;">
+										<a href="/Entrepreneur/rsvp?id=404731" target="_blank">Greif Launchpad Open
+											Office Hours with Amiah Sheppard</a>
+									</b>
+									<div>
+										<p>~ BRIDGE HALL BASEMENT~<br /><br />&#128161; Drop-In Office Hours Open to
+											ALL<br /><br />Got a business idea or side hustle you’re working on?
+											&#128640; <br /><br />Swing by LaunchPad during Drop-In Office Hours every
+											Wednesday!<br /><br />No appointment needed—just stop in
+											to:<br /><br />&#129300; Ask questions<br />&#128200; Get
+											feedback<br />&#129309; Connect with other student
+											founders<br /><br />Connect with Amiah Sheppard, Senior Student Engagement
+											Programs Advisor, and identify next steps in your founding journey. Get
+											everything from your most pressing venture/startup/ideas, questions,
+											concerns or next steps addressed!<br /><br />Come through and let’s build!
+											✨<br /><br />​​​​​~ BRIDGE HALL BASEMENT~</p>
+
+									</div>
+								</div>
+
+								<div class="col-md-2 text-center">
+
+								</div>
+
+
+
+							</div>
+
+							<div class="row" style="margin-bottom: 10px;">
+								<div class="col-md-3">
+									<div>Wed, Nov 05, 2025 <br><span>1:00 PM &ndash; 2:00 PM</span></div><span
+										class="grey-element mdi mdi-map-marker"></span><small
+										class="grey-element">Private Location (register to display)</small>
+								</div>
+								<div class="col-md-5">
+									<b style="font-size:1.2em;">
+										<a href="/Entrepreneur/rsvp?id=404730" target="_blank">Greif Launchpad Open
+											Office Hours with Amiah Sheppard</a>
+									</b>
+									<div>
+										<p>~ BRIDGE HALL BASEMENT~<br /><br />&#128161; Drop-In Office Hours Open to
+											ALL<br /><br />Got a business idea or side hustle you’re working on?
+											&#128640; <br /><br />Swing by LaunchPad during Drop-In Office Hours every
+											Wednesday!<br /><br />No appointment needed—just stop in
+											to:<br /><br />&#129300; Ask questions<br />&#128200; Get
+											feedback<br />&#129309; Connect with other student
+											founders<br /><br />Connect with Amiah Sheppard, Senior Student Engagement
+											Programs Advisor, and identify next steps in your founding journey. Get
+											everything from your most pressing venture/startup/ideas, questions,
+											concerns or next steps addressed!<br /><br />Come through and let’s build!
+											✨<br /><br />​​​​​~ BRIDGE HALL BASEMENT~</p>
+
+									</div>
+								</div>
+
+								<div class="col-md-2 text-center">
+
+								</div>
+
+
+
+							</div>
+
+							<div class="row" style="margin-bottom: 10px;">
+								<div class="col-md-3">
+									<div>Tue, Nov 04, 2025 <br><span>11:00 AM &ndash; 2:00 PM</span></div><span
+										class="grey-element mdi mdi-map-marker"></span><small
+										class="grey-element">Private Location (sign in to display)</small>
+								</div>
+								<div class="col-md-5">
+									<b style="font-size:1.2em;">
+										<a href="/Entrepreneur/rsvp?id=404808" target="_blank">Greif LaunchPad Office
+											Hours - Appointment Required</a>
+									</b>
+									<div>
+										<p>~ SIGN UP BELOW WITH THE CALENDLY LINK - IF YOU DO NOT COMPLETE THE CALENDLY
+											LINK YOUR MEETING IS NOT CONFIRMED ~<br /><br />Sign Up Here:
+											https://calendly.com/uscblackstonelaunchpad/psof<br /><br />Appointment Only
+											Office Hours:<br /><br />Student entrepreneurs can use office hours to
+											validate their business ideas and receive constructive feedback.
+											<br /><br />&#128550; Is there a pressing issue or challenge in your
+											entrepreneurial venture that requires quick guidance or
+											solutions?<br /><br />&#128173; Are you looking for impromptu brainstorming
+											sessions or creative discussions to overcome obstacles?<br /><br />&#128161;
+											Is your goal to receive instant feedback on a project, pitch, or idea
+											they&#39;re working on<br /><br />&#128198; Are you seeking the flexibility
+											of drop-in hours to accommodate your busy schedule while still receiving
+											valuable support for your startup?<br /><br />Business Stage: Idea stage
+											&#127793; - Early stage &#127807; - Scale-up &#127795;<br />Location:
+											Blackstone LaunchPad; Bridge Hall Basement <br />Price: FREE
+											<br /><br />Time Slots Available: Drop in for 30 min
+											increments.<br /><br />Sign Up Here:
+											https://calendly.com/uscblackstonelaunchpad/psof
+										</p>
+
+									</div>
+								</div>
+
+								<div class="col-md-2 text-center">
+
+								</div>
+
+
+
+							</div>
+
+							<div class="row" style="margin-bottom: 10px;">
+								<div class="col-md-3">
+									<div>Wed, Oct 29, 2025 <br><span>1:00 PM &ndash; 4:00 PM</span></div><span
+										class="grey-element mdi mdi-map-marker"></span><small
+										class="grey-element">Private Location (register to display)</small>
+								</div>
+								<div class="col-md-5">
+									<b style="font-size:1.2em;">
+										<a href="/Entrepreneur/rsvp?id=404729" target="_blank">Greif Launchpad Open
+											Office Hours with Amiah Sheppard</a>
+									</b>
+									<div>
+										<p>~ BRIDGE HALL BASEMENT~<br /><br />&#128161; Drop-In Office Hours Open to
+											ALL<br /><br />Got a business idea or side hustle you’re working on?
+											&#128640; <br /><br />Swing by LaunchPad during Drop-In Office Hours every
+											Wednesday!<br /><br />No appointment needed—just stop in
+											to:<br /><br />&#129300; Ask questions<br />&#128200; Get
+											feedback<br />&#129309; Connect with other student
+											founders<br /><br />Connect with Amiah Sheppard, Senior Student Engagement
+											Programs Advisor, and identify next steps in your founding journey. Get
+											everything from your most pressing venture/startup/ideas, questions,
+											concerns or next steps addressed!<br /><br />Come through and let’s build!
+											✨<br /><br />​​​​​~ BRIDGE HALL BASEMENT~</p>
+
+									</div>
+								</div>
+
+								<div class="col-md-2 text-center">
+
+								</div>
+
+
+
+							</div>
+
+							<div class="row" style="margin-bottom: 10px;">
+								<div class="col-md-3">
+									<div>Tue, Oct 28, 2025 <br><span>11:00 AM &ndash; 12:00 PM</span></div><span
+										class="grey-element mdi mdi-map-marker"></span><small
+										class="grey-element">Private Location (sign in to display)</small>
+								</div>
+								<div class="col-md-5">
+									<b style="font-size:1.2em;">
+										<a href="/Entrepreneur/rsvp?id=404807" target="_blank">Greif LaunchPad Office
+											Hours - Appointment Required</a>
+									</b>
+									<div>
+										<p>~ SIGN UP BELOW WITH THE CALENDLY LINK - IF YOU DO NOT COMPLETE THE CALENDLY
+											LINK YOUR MEETING IS NOT CONFIRMED ~<br /><br />Appointment Only Office
+											Hours:<br /><br />Student entrepreneurs can use office hours to validate
+											their business ideas and receive constructive feedback.
+											<br /><br />&#128550; Is there a pressing issue or challenge in your
+											entrepreneurial venture that requires quick guidance or
+											solutions?<br /><br />&#128173; Are you looking for impromptu brainstorming
+											sessions or creative discussions to overcome obstacles?<br /><br />&#128161;
+											Is your goal to receive instant feedback on a project, pitch, or idea
+											they&#39;re working on<br /><br />&#128198; Are you seeking the flexibility
+											of drop-in hours to accommodate your busy schedule while still receiving
+											valuable support for your startup?<br /><br />Business Stage: Idea stage
+											&#127793; - Early stage &#127807; - Scale-up &#127795;<br />Location:
+											Blackstone LaunchPad; Bridge Hall Basement <br />Price: FREE
+											<br /><br />Time Slots Available: Drop in for 30 min
+											increments.<br /><br />Sign Up Here:
+											https://calendly.com/uscblackstonelaunchpad/psof
+										</p>
+
+									</div>
+								</div>
+
+								<div class="col-md-2 text-center">
+
+								</div>
+
+
+
+							</div>
+
+							<div class="row" style="margin-bottom: 10px;">
+								<div class="col-md-3">
+									<div>Wed, Oct 22, 2025 <br><span>1:00 PM &ndash; 4:00 PM</span></div><span
+										class="grey-element mdi mdi-map-marker"></span><small
+										class="grey-element">Private Location (register to display)</small>
+								</div>
+								<div class="col-md-5">
+									<b style="font-size:1.2em;">
+										<a href="/Entrepreneur/rsvp?id=404728" target="_blank">Greif Launchpad Open
+											Office Hours with Amiah Sheppard</a>
+									</b>
+									<div>
+										<p>~ BRIDGE HALL BASEMENT~<br /><br />&#128161; Drop-In Office Hours Open to
+											ALL<br /><br />Got a business idea or side hustle you’re working on?
+											&#128640; <br /><br />Swing by LaunchPad during Drop-In Office Hours every
+											Wednesday!<br /><br />No appointment needed—just stop in
+											to:<br /><br />&#129300; Ask questions<br />&#128200; Get
+											feedback<br />&#129309; Connect with other student
+											founders<br /><br />Connect with Amiah Sheppard, Senior Student Engagement
+											Programs Advisor, and identify next steps in your founding journey. Get
+											everything from your most pressing venture/startup/ideas, questions,
+											concerns or next steps addressed!<br /><br />Come through and let’s build!
+											✨<br /><br />​​​​​~ BRIDGE HALL BASEMENT~</p>
+
+									</div>
+								</div>
+
+								<div class="col-md-2 text-center">
+
+								</div>
+
+
+
+							</div>
+
+							<div class="row" style="margin-bottom: 10px;">
+								<div class="col-md-3">
+									<div>Tue, Oct 21, 2025 <br><span>11:00 AM &ndash; 2:00 PM</span></div><span
+										class="grey-element mdi mdi-map-marker"></span><small
+										class="grey-element">Private Location (sign in to display)</small>
+								</div>
+								<div class="col-md-5">
+									<b style="font-size:1.2em;">
+										<a href="/Entrepreneur/rsvp?id=404806" target="_blank">Greif LaunchPad Office
+											Hours - Appointment Required</a>
+									</b>
+									<div>
+										<p>~ SIGN UP BELOW WITH THE CALENDLY LINK - IF YOU DO NOT COMPLETE THE CALENDLY
+											LINK YOUR MEETING IS NOT CONFIRMED ~<br /><br />Appointment Only Office
+											Hours:<br /><br />Student entrepreneurs can use office hours to validate
+											their business ideas and receive constructive feedback.
+											<br /><br />&#128550; Is there a pressing issue or challenge in your
+											entrepreneurial venture that requires quick guidance or
+											solutions?<br /><br />&#128173; Are you looking for impromptu brainstorming
+											sessions or creative discussions to overcome obstacles?<br /><br />&#128161;
+											Is your goal to receive instant feedback on a project, pitch, or idea
+											they&#39;re working on<br /><br />&#128198; Are you seeking the flexibility
+											of drop-in hours to accommodate your busy schedule while still receiving
+											valuable support for your startup?<br /><br />Business Stage: Idea stage
+											&#127793; - Early stage &#127807; - Scale-up &#127795;<br />Location:
+											Blackstone LaunchPad; Bridge Hall Basement <br />Price: FREE
+											<br /><br />Time Slots Available: Drop in for 30 min
+											increments.<br /><br />Sign Up Here:
+											https://calendly.com/uscblackstonelaunchpad/psof
+										</p>
+
+									</div>
+								</div>
+
+								<div class="col-md-2 text-center">
+
+								</div>
+
+
+
+							</div>
+
+							<div class="row" style="margin-bottom: 10px;">
+								<div class="col-md-3">
+									<div>Wed, Oct 15, 2025 <br><span>1:00 PM &ndash; 4:00 PM</span></div><span
+										class="grey-element mdi mdi-map-marker"></span><small
+										class="grey-element">Private Location (register to display)</small>
+								</div>
+								<div class="col-md-5">
+									<b style="font-size:1.2em;">
+										<a href="/Entrepreneur/rsvp?id=404727" target="_blank">Greif Launchpad Open
+											Office Hours with Amiah Sheppard</a>
+									</b>
+									<div>
+										<p>~ BRIDGE HALL BASEMENT~<br /><br />&#128161; Drop-In Office Hours Open to
+											ALL<br /><br />Got a business idea or side hustle you’re working on?
+											&#128640; <br /><br />Swing by LaunchPad during Drop-In Office Hours every
+											Wednesday!<br /><br />No appointment needed—just stop in
+											to:<br /><br />&#129300; Ask questions<br />&#128200; Get
+											feedback<br />&#129309; Connect with other student
+											founders<br /><br />Connect with Amiah Sheppard, Senior Student Engagement
+											Programs Advisor, and identify next steps in your founding journey. Get
+											everything from your most pressing venture/startup/ideas, questions,
+											concerns or next steps addressed!<br /><br />Come through and let’s build!
+											✨<br /><br />​​​​​~ BRIDGE HALL BASEMENT~</p>
+
+									</div>
+								</div>
+
+								<div class="col-md-2 text-center">
+
+								</div>
+
+
+
+							</div>
+
+							<div class="row" style="margin-bottom: 10px;">
+								<div class="col-md-3">
+									<div>Tue, Oct 14, 2025 <br><span>11:00 AM &ndash; 2:00 PM</span></div><span
+										class="grey-element mdi mdi-map-marker"></span><small
+										class="grey-element">Private Location (sign in to display)</small>
+								</div>
+								<div class="col-md-5">
+									<b style="font-size:1.2em;">
+										<a href="/Entrepreneur/rsvp?id=404805" target="_blank">Greif LaunchPad Office
+											Hours - Appointment Required</a>
+									</b>
+									<div>
+										<p>~ SIGN UP BELOW WITH THE CALENDLY LINK - IF YOU DO NOT COMPLETE THE CALENDLY
+											LINK YOUR MEETING IS NOT CONFIRMED ~<br /><br />Appointment Only Office
+											Hours:<br /><br />Student entrepreneurs can use office hours to validate
+											their business ideas and receive constructive feedback.
+											<br /><br />&#128550; Is there a pressing issue or challenge in your
+											entrepreneurial venture that requires quick guidance or
+											solutions?<br /><br />&#128173; Are you looking for impromptu brainstorming
+											sessions or creative discussions to overcome obstacles?<br /><br />&#128161;
+											Is your goal to receive instant feedback on a project, pitch, or idea
+											they&#39;re working on<br /><br />&#128198; Are you seeking the flexibility
+											of drop-in hours to accommodate your busy schedule while still receiving
+											valuable support for your startup?<br /><br />Business Stage: Idea stage
+											&#127793; - Early stage &#127807; - Scale-up &#127795;<br />Location:
+											Blackstone LaunchPad; Bridge Hall Basement <br />Price: FREE
+											<br /><br />Time Slots Available: Drop in for 30 min
+											increments.<br /><br />Sign Up Here:
+											https://calendly.com/uscblackstonelaunchpad/psof
+										</p>
+
+									</div>
+								</div>
+
+								<div class="col-md-2 text-center">
+
+								</div>
+
+
+
+							</div>
+
+							<div class="row" style="margin-bottom: 10px;">
+								<div class="col-md-3">
+									<div>Wed, Oct 08, 2025 <br><span>1:00 PM &ndash; 4:00 PM</span></div><span
+										class="grey-element mdi mdi-map-marker"></span><small
+										class="grey-element">Private Location (register to display)</small>
+								</div>
+								<div class="col-md-5">
+									<b style="font-size:1.2em;">
+										<a href="/Entrepreneur/rsvp?id=404726" target="_blank">Greif Launchpad Open
+											Office Hours with Amiah Sheppard</a>
+									</b>
+									<div>
+										<p>~ BRIDGE HALL BASEMENT~<br /><br />&#128161; Drop-In Office Hours Open to
+											ALL<br /><br />Got a business idea or side hustle you’re working on?
+											&#128640; <br /><br />Swing by LaunchPad during Drop-In Office Hours every
+											Wednesday!<br /><br />No appointment needed—just stop in
+											to:<br /><br />&#129300; Ask questions<br />&#128200; Get
+											feedback<br />&#129309; Connect with other student
+											founders<br /><br />Connect with Amiah Sheppard, Senior Student Engagement
+											Programs Advisor, and identify next steps in your founding journey. Get
+											everything from your most pressing venture/startup/ideas, questions,
+											concerns or next steps addressed!<br /><br />Come through and let’s build!
+											✨<br /><br />​​​​​~ BRIDGE HALL BASEMENT~</p>
+
+									</div>
+								</div>
+
+								<div class="col-md-2 text-center">
+
+								</div>
+
+
+
+							</div>
+
+							<div class="row" style="margin-bottom: 10px;">
+								<div class="col-md-3">
+									<div>Tue, Oct 07, 2025 <br><span>11:00 AM &ndash; 2:00 PM</span></div><span
+										class="grey-element mdi mdi-map-marker"></span><small
+										class="grey-element">Private Location (sign in to display)</small>
+								</div>
+								<div class="col-md-5">
+									<b style="font-size:1.2em;">
+										<a href="/Entrepreneur/rsvp?id=404804" target="_blank">Greif LaunchPad Office
+											Hours - Appointment Required</a>
+									</b>
+									<div>
+										<p>~ SIGN UP BELOW WITH THE CALENDLY LINK - IF YOU DO NOT COMPLETE THE CALENDLY
+											LINK YOUR MEETING IS NOT CONFIRMED ~<br /><br />Appointment Only Office
+											Hours:<br /><br />Student entrepreneurs can use office hours to validate
+											their business ideas and receive constructive feedback.
+											<br /><br />&#128550; Is there a pressing issue or challenge in your
+											entrepreneurial venture that requires quick guidance or
+											solutions?<br /><br />&#128173; Are you looking for impromptu brainstorming
+											sessions or creative discussions to overcome obstacles?<br /><br />&#128161;
+											Is your goal to receive instant feedback on a project, pitch, or idea
+											they&#39;re working on<br /><br />&#128198; Are you seeking the flexibility
+											of drop-in hours to accommodate your busy schedule while still receiving
+											valuable support for your startup?<br /><br />Business Stage: Idea stage
+											&#127793; - Early stage &#127807; - Scale-up &#127795;<br />Location:
+											Blackstone LaunchPad; Bridge Hall Basement <br />Price: FREE
+											<br /><br />Time Slots Available: Drop in for 30 min
+											increments.<br /><br />Sign Up Here:
+											https://calendly.com/uscblackstonelaunchpad/psof
+										</p>
+
+									</div>
+								</div>
+
+								<div class="col-md-2 text-center">
+
+								</div>
+
+
+
+							</div>
+
+							<div class="row" style="margin-bottom: 10px;">
+								<div class="col-md-3">
+									<div>Mon, Oct 06, 2025 <br><span>4:00 PM &ndash; 6:00 PM</span></div><span
+										class="grey-element mdi mdi-map-marker"></span><small
+										class="grey-element">Private Location (sign in to display)</small>
+								</div>
+								<div class="col-md-5">
+									<b style="font-size:1.2em;">
+										<a href="/Entrepreneur/rsvp?id=404771" target="_blank">Greif LaunchPad Idea to
+											Launch #3</a>
+									</b>
+									<div>
+										<p>Turn your startup idea into a launchable plan—in just four powerful sessions
+											&#128640;This interactive, fast-paced mini-series is designed to help
+											aspiring founders go from concept to clarity.<br /><br />&#127775; Idea to
+											Launch Sessions<br />Got a big idea? Let’s make it real.<br /><br />In just
+											four powerful sessions, you’ll learn how to turn your startup concept into a
+											launchable plan &#128640;.<br /><br />This interactive, fast-paced
+											mini-series is built for college students who are curious about
+											entrepreneurship, ready to test ideas, and excited to bring their vision to
+											life.<br /><br />&#128073; What you’ll get:<br />✨ Hands-on activities to
+											refine your idea<br />✨ Simple frameworks for building a business
+											model<br />✨ Guidance on how to pitch with confidence<br /><br />Whether
+											you’re dreaming of your first startup or just exploring what it takes to be
+											a founder, this series will give you the clarity, confidence, and tools to
+											take the next step. &#128161;&#128293;<br /><br />This program is open to
+											all eligible individuals. The Greif Center operates all of its programs and
+											activities consistent with the University’s Notice of Non-Discrimination.
+											Eligibility -
+											https://ocrc.usc.edu/policies-and-processes/notice-of-non-discrimination/ -
+											is not determined based on race, sex, ethnicity, sexual orientation, or any
+											other prohibited factor.<br /><br />Individuals with disabilities who need
+											accommodations to attend this event may contact Amiah Sheppard at
+											amiahshe@marshall.usc.edu. We request that individuals requiring
+											accommodations or auxiliary aids such as sign language interpreters and
+											alternative format materials notify us at least 7 days prior to the event.
+											Every reasonable effort will be made to provide reasonable accommodations in
+											an effective and timely manner.</p>
+
+									</div>
+								</div>
+
+								<div class="col-md-2 text-center">
+
+								</div>
+
+
+
+							</div>
+
+							<div class="row" style="margin-bottom: 10px;">
+								<div class="col-md-3">
+									<div>Thu, Oct 02, 2025 <br><span>11:00 AM &ndash; 2:00 PM</span></div><span
+										class="grey-element mdi mdi-map-marker"></span><small
+										class="grey-element">Private Location (sign in to display)</small>
+								</div>
+								<div class="col-md-5">
+									<b style="font-size:1.2em;">
+										<a href="/Entrepreneur/rsvp?id=405005" target="_blank">Greif LaunchPad Idea to
+											Launch Coworking #2</a>
+									</b>
+									<div>
+										<p>These optional sessions are held for Idea to Launch Sessions participants to
+											work on projects supervised by expert. <br /><br />Join us at the Greif
+											LaunchPad, build community, and put your new tools to action!</p>
+
+									</div>
+								</div>
+
+								<div class="col-md-2 text-center">
+
+								</div>
+
+
+
+							</div>
+
+							<div class="row" style="margin-bottom: 10px;">
+								<div class="col-md-3">
+									<div>Wed, Oct 01, 2025 <br><span>1:00 PM &ndash; 4:00 PM</span></div><span
+										class="grey-element mdi mdi-map-marker"></span><small
+										class="grey-element">Private Location (register to display)</small>
+								</div>
+								<div class="col-md-5">
+									<b style="font-size:1.2em;">
+										<a href="/Entrepreneur/rsvp?id=404725" target="_blank">Greif Launchpad Open
+											Office Hours with Amiah Sheppard</a>
+									</b>
+									<div>
+										<p>~ BRIDGE HALL BASEMENT~<br /><br />&#128161; Drop-In Office Hours Open to
+											ALL<br /><br />Got a business idea or side hustle you’re working on?
+											&#128640; <br /><br />Swing by LaunchPad during Drop-In Office Hours every
+											Wednesday!<br /><br />No appointment needed—just stop in
+											to:<br /><br />&#129300; Ask questions<br />&#128200; Get
+											feedback<br />&#129309; Connect with other student
+											founders<br /><br />Connect with Amiah Sheppard, Senior Student Engagement
+											Programs Advisor, and identify next steps in your founding journey. Get
+											everything from your most pressing venture/startup/ideas, questions,
+											concerns or next steps addressed!<br /><br />Come through and let’s build!
+											✨<br /><br />​​​​​~ BRIDGE HALL BASEMENT~</p>
+
+									</div>
+								</div>
+
+								<div class="col-md-2 text-center">
+
+								</div>
+
+
+
+							</div>
+
+							<div class="row" style="margin-bottom: 10px;">
+								<div class="col-md-3">
+									<div>Tue, Sep 30, 2025 <br><span>11:00 AM &ndash; 2:00 PM</span></div><span
+										class="grey-element mdi mdi-map-marker"></span><small
+										class="grey-element">Private Location (sign in to display)</small>
+								</div>
+								<div class="col-md-5">
+									<b style="font-size:1.2em;">
+										<a href="/Entrepreneur/rsvp?id=404803" target="_blank">Greif LaunchPad Office
+											Hours - Appointment Required</a>
+									</b>
+									<div>
+										<p>Appointment Only Office Hours:<br /><br />Student entrepreneurs can use
+											office hours to validate their business ideas and receive constructive
+											feedback. <br /><br />&#128550; Is there a pressing issue or challenge in
+											your entrepreneurial venture that requires quick guidance or
+											solutions?<br /><br />&#128173; Are you looking for impromptu brainstorming
+											sessions or creative discussions to overcome obstacles?<br /><br />&#128161;
+											Is your goal to receive instant feedback on a project, pitch, or idea
+											they&#39;re working on<br /><br />&#128198; Are you seeking the flexibility
+											of drop-in hours to accommodate your busy schedule while still receiving
+											valuable support for your startup?<br /><br />Business Stage: Idea stage
+											&#127793; - Early stage &#127807; - Scale-up &#127795;<br />Location:
+											Blackstone LaunchPad; Bridge Hall Basement <br />Price: FREE
+											<br /><br />Time Slots Available: Drop in for 30 min
+											increments.<br /><br />Sign Up Here:
+											https://calendly.com/uscblackstonelaunchpad/psof
+										</p>
+
+									</div>
+								</div>
+
+								<div class="col-md-2 text-center">
+
+								</div>
+
+
+
+							</div>
+
+							<div class="row" style="margin-bottom: 10px;">
+								<div class="col-md-3">
+									<div>Mon, Sep 29, 2025 <br><span>11:00 AM &ndash; 2:00 PM</span></div><span
+										class="grey-element mdi mdi-map-marker"></span><small
+										class="grey-element">Private Location (sign in to display)</small>
+								</div>
+								<div class="col-md-5">
+									<b style="font-size:1.2em;">
+										<a href="/Entrepreneur/rsvp?id=405001" target="_blank">Greif LaunchPad Idea to
+											Launch Coworking #1</a>
+									</b>
+									<div>
+										<p>These optional sessions are held for Idea to Launch Sessions participants to
+											work on projects supervised by expert. <br /><br />Join us at the Greif
+											LaunchPad, build community, and put your new tools to action!</p>
+
+									</div>
+								</div>
+
+								<div class="col-md-2 text-center">
+
+								</div>
+
+
+
+							</div>
+
+							<div class="row" style="margin-bottom: 10px;">
+								<div class="col-md-3">
+									<div>Mon, Sep 29, 2025 <br><span>2:00 PM &ndash; 4:00 PM</span></div><span
+										class="grey-element mdi mdi-map-marker"></span><small
+										class="grey-element">Private Location (sign in to display)</small>
+								</div>
+								<div class="col-md-5">
+									<b style="font-size:1.2em;">
+										<a href="/Entrepreneur/rsvp?id=404770" target="_blank">Greif LaunchPad Idea to
+											Launch #2</a>
+									</b>
+									<div>
+										<p>Turn your startup idea into a launchable plan—in just four powerful sessions
+											&#128640;This interactive, fast-paced mini-series is designed to help
+											aspiring founders go from concept to clarity.<br /><br />&#127775; Idea to
+											Launch Sessions<br />Got a big idea? Let’s make it real.<br /><br />In just
+											four powerful sessions, you’ll learn how to turn your startup concept into a
+											launchable plan &#128640;.<br /><br />This interactive, fast-paced
+											mini-series is built for college students who are curious about
+											entrepreneurship, ready to test ideas, and excited to bring their vision to
+											life.<br /><br />&#128073; What you’ll get:<br />✨ Hands-on activities to
+											refine your idea<br />✨ Simple frameworks for building a business
+											model<br />✨ Guidance on how to pitch with confidence<br /><br />Whether
+											you’re dreaming of your first startup or just exploring what it takes to be
+											a founder, this series will give you the clarity, confidence, and tools to
+											take the next step. &#128161;&#128293;<br /><br />This program is open to
+											all eligible individuals. The Greif Center operates all of its programs and
+											activities consistent with the University’s Notice of Non-Discrimination.
+											Eligibility -
+											https://ocrc.usc.edu/policies-and-processes/notice-of-non-discrimination/ -
+											is not determined based on race, sex, ethnicity, sexual orientation, or any
+											other prohibited factor.<br /><br />Individuals with disabilities who need
+											accommodations to attend this event may contact Amiah Sheppard at
+											amiahshe@marshall.usc.edu. We request that individuals requiring
+											accommodations or auxiliary aids such as sign language interpreters and
+											alternative format materials notify us at least 7 days prior to the event.
+											Every reasonable effort will be made to provide reasonable accommodations in
+											an effective and timely manner.</p>
+
+									</div>
+								</div>
+
+								<div class="col-md-2 text-center">
+
+								</div>
+
+
+
+							</div>
+
+							<div class="row" style="margin-bottom: 10px;">
+								<div class="col-md-3">
+									<div>Thu, Sep 25, 2025 <br><span>11:00 AM &ndash; 2:00 PM</span></div><span
+										class="grey-element mdi mdi-map-marker"></span><small
+										class="grey-element">Private Location (sign in to display)</small>
+								</div>
+								<div class="col-md-5">
+									<b style="font-size:1.2em;">
+										<a href="/Entrepreneur/rsvp?id=404768" target="_blank">Greif LaunchPad Pitch
+											Practice</a>
+									</b>
+									<div>
+										<p>Join the Pitch Practice, where you can present ideas, get expert feedback,
+											and network with leaders &#128161;<br /><br />&#128640; Hone your
+											pitch&#128640;<br />This event, designed to foster a culture of resilience
+											and learning through practice, is the perfect platform for USC Community
+											Entrepreneurs to present their ideas and receive invaluable feedback.
+											<br /><br />Why You Should Apply: <br /><br />Empowerment and Inclusivity:
+											Be part of a vibrant and inclusive environment where your entrepreneurial
+											vision is seen, valued, and affirmed. <br /><br />Expert Feedback: Each
+											participant will deliver a 5-minute pitch, followed by a 10-minute feedback
+											session from a rotating panel of community leaders, professors,
+											entrepreneurs, and other notable figures. <br /><br />Networking
+											Opportunities: Connect with seasoned professionals, community leaders, and
+											peers during our 30-minute networking break. <br /><br />Promoting Diversity
+											and Inclusion: The initiative upholds values of diversity, equity, and
+											inclusion, providing a supportive platform for entrepreneurs of all
+											backgrounds. <br /><br /><br />EVENT HIGHLIGHT<br />Opening Remarks: 10
+											minutes of introduction aligning with the BLP&#39;s mission and vision.
+											<br /><br />Pitch Sessions: 5 minutes each for entrepreneurs to present
+											their pitches. <br /><br />Feedback Rounds: Panel and audience feedback
+											sessions for each entrepreneur. <br /><br />Break and Networking: A 3-minute
+											break, followed by a 30-minute networking session. <br /><br />Closing
+											Remarks: A summary of the event and announcement of the next session.
+											<br /><br /><br />This program is open to all eligible individuals. The
+											Greif Center operates all of its programs and activities consistent with the
+											University’s Notice of Non-Discrimination. Eligibility -
+											https://ocrc.usc.edu/policies-and-processes/notice-of-non-discrimination/ -
+											is not determined based on race, sex, ethnicity, sexual orientation, or any
+											other prohibited factor.<br /><br />Individuals with disabilities who need
+											accommodations to attend this event may contact Amiah Sheppard at
+											amiahshe@marshall.usc.edu. We request that individuals requiring
+											accommodations or auxiliary aids such as sign language interpreters and
+											alternative format materials notify us at least 7 days prior to the event.
+											Every reasonable effort will be made to provide reasonable accommodations in
+											an effective and timely manner.
+										</p>
+
+									</div>
+								</div>
+
+								<div class="col-md-2 text-center">
+
+								</div>
+
+
+
+							</div>
+
+							<div class="row" style="margin-bottom: 10px;">
+								<div class="col-md-3">
+									<div>Wed, Sep 24, 2025 <br><span>1:00 PM &ndash; 4:00 PM</span></div><span
+										class="grey-element mdi mdi-map-marker"></span><small
+										class="grey-element">Private Location (register to display)</small>
+								</div>
+								<div class="col-md-5">
+									<b style="font-size:1.2em;">
+										<a href="/Entrepreneur/rsvp?id=404724" target="_blank">Greif Launchpad Open
+											Office Hours with Amiah Sheppard</a>
+									</b>
+									<div>
+										<p>~ BRIDGE HALL BASEMENT~<br /><br />&#128161; Drop-In Office Hours Open to
+											ALL<br /><br />Got a business idea or side hustle you’re working on?
+											&#128640; <br /><br />Swing by LaunchPad during Drop-In Office Hours every
+											Wednesday!<br /><br />No appointment needed—just stop in
+											to:<br /><br />&#129300; Ask questions<br />&#128200; Get
+											feedback<br />&#129309; Connect with other student
+											founders<br /><br />Connect with Amiah Sheppard, Senior Student Engagement
+											Programs Advisor, and identify next steps in your founding journey. Get
+											everything from your most pressing venture/startup/ideas, questions,
+											concerns or next steps addressed!<br /><br />Come through and let’s build!
+											✨<br /><br />​​​​​~ BRIDGE HALL BASEMENT~<br /><br />*PLEASE NOTE: September
+											24 office hours will be held at a special time! 1PM - 4PM<br /><br />​​​​​
+										</p>
+
+									</div>
+								</div>
+
+								<div class="col-md-2 text-center">
+
+								</div>
+
+
+
+							</div>
+
+							<div class="row" style="margin-bottom: 10px;">
+								<div class="col-md-3">
+									<div>Tue, Sep 23, 2025 <br><span>11:00 AM &ndash; 2:00 PM</span></div><span
+										class="grey-element mdi mdi-map-marker"></span><small
+										class="grey-element">Private Location (sign in to display)</small>
+								</div>
+								<div class="col-md-5">
+									<b style="font-size:1.2em;">
+										<a href="/Entrepreneur/rsvp?id=404802" target="_blank">Greif LaunchPad Office
+											Hours - Appointment Required</a>
+									</b>
+									<div>
+										<p>Appointment Only Office Hours:<br /><br />Student entrepreneurs can use
+											office hours to validate their business ideas and receive constructive
+											feedback. <br /><br />&#128550; Is there a pressing issue or challenge in
+											your entrepreneurial venture that requires quick guidance or
+											solutions?<br /><br />&#128173; Are you looking for impromptu brainstorming
+											sessions or creative discussions to overcome obstacles?<br /><br />&#128161;
+											Is your goal to receive instant feedback on a project, pitch, or idea
+											they&#39;re working on<br /><br />&#128198; Are you seeking the flexibility
+											of drop-in hours to accommodate your busy schedule while still receiving
+											valuable support for your startup?<br /><br />Business Stage: Idea stage
+											&#127793; - Early stage &#127807; - Scale-up &#127795;<br />Location:
+											Blackstone LaunchPad; Bridge Hall Basement <br />Price: FREE
+											<br /><br />Time Slots Available: Drop in for 30 min
+											increments.<br /><br />Sign Up Here:
+											https://calendly.com/uscblackstonelaunchpad/psof
+										</p>
+
+									</div>
+								</div>
+
+								<div class="col-md-2 text-center">
+
+								</div>
+
+
+
+							</div>
+
+							<div class="row" style="margin-bottom: 10px;">
+								<div class="col-md-3">
+									<div>Mon, Sep 22, 2025 <br><span>4:00 PM &ndash; 6:00 PM</span></div><span
+										class="grey-element mdi mdi-map-marker"></span><small
+										class="grey-element">Private Location (sign in to display)</small>
+								</div>
+								<div class="col-md-5">
+									<b style="font-size:1.2em;">
+										<a href="/Entrepreneur/rsvp?id=404769" target="_blank">Greif LaunchPad Idea to
+											Launch #1</a>
+									</b>
+									<div>
+										<p>Turn your startup idea into a launchable plan—in just four powerful sessions
+											&#128640;This interactive, fast-paced mini-series is designed to help
+											aspiring founders go from concept to clarity.<br /><br />&#127775; Idea to
+											Launch Sessions<br /><br />Got a big idea? Let’s make it real.<br />In just
+											four powerful sessions, you’ll learn how to turn your startup concept into a
+											launchable plan &#128640;.<br /><br />This interactive, fast-paced
+											mini-series is built for college students who are curious about
+											entrepreneurship, ready to test ideas, and excited to bring their vision to
+											life.<br /><br />&#128073; What you’ll get:<br />✨ Hands-on activities to
+											refine your idea<br />✨ Simple frameworks for building a business
+											model<br />✨ Guidance on how to pitch with confidence<br /><br />Whether
+											you’re dreaming of your first startup or just exploring what it takes to be
+											a founder, this series will give you the clarity, confidence, and tools to
+											take the next step. &#128161;&#128293;<br /><br />Join this first session,
+											and no worries if you can&#39;t make it - we will be livestreaming it on our
+											Instagram and a recording will be available. <br /><br />This program is
+											open to all eligible individuals. The Greif Center operates all of its
+											programs and activities consistent with the University’s Notice of
+											Non-Discrimination. Eligibility -
+											https://ocrc.usc.edu/policies-and-processes/notice-of-non-discrimination/ -
+											is not determined based on race, sex, ethnicity, sexual orientation, or any
+											other prohibited factor.<br /><br />Individuals with disabilities who need
+											accommodations to attend this event may contact Amiah Sheppard at
+											amiahshe@marshall.usc.edu. We request that individuals requiring
+											accommodations or auxiliary aids such as sign language interpreters and
+											alternative format materials notify us at least 7 days prior to the event.
+											Every reasonable effort will be made to provide reasonable accommodations in
+											an effective and timely manner.</p>
+
+									</div>
+								</div>
+
+								<div class="col-md-2 text-center">
+
+								</div>
+
+
+
+							</div>
+
+							<div class="row" style="margin-bottom: 10px;">
+								<div class="col-md-3">
+									<div>Fri, Sep 19, 2025 <br><span>11:00 AM &ndash; 2:00 PM</span></div><span
+										class="grey-element mdi mdi-map-marker"></span><small
+										class="grey-element">Private Location (sign in to display)</small>
+								</div>
+								<div class="col-md-5">
+									<b style="font-size:1.2em;">
+										<a href="/Entrepreneur/rsvp?id=405003" target="_blank">Greif LaunchPad LA Tech
+											Week Collegiate CoWorking</a>
+									</b>
+									<div>
+										<p>Join us for a dynamic day of collaboration, creativity, and connection with
+											fellow student innovators during LA Tech Week!<br /><br />Collegiate
+											Coworking is a casual drop-in experience designed to bring together student
+											founders, builders, and creatives from across campuses to work side-by-side,
+											share ideas, and spark new collaborations. Whether you&#39;re refining your
+											pitch, working on your startup, or just want to plug into LA’s tech energy,
+											the LaunchPad is the space for you.<br /></p>
+
+									</div>
+								</div>
+
+								<div class="col-md-2 text-center">
+
+								</div>
+
+
+
+							</div>
+
+							<div class="row" style="margin-bottom: 10px;">
+								<div class="col-md-3">
+									<div>Wed, Sep 17, 2025 <br><span>1:00 PM &ndash; 4:00 PM</span></div><span
+										class="grey-element mdi mdi-map-marker"></span><small
+										class="grey-element">Private Location (register to display)</small>
+								</div>
+								<div class="col-md-5">
+									<b style="font-size:1.2em;">
+										<a href="/Entrepreneur/rsvp?id=404723" target="_blank">Greif Launchpad Open
+											Office Hours with Amiah Sheppard</a>
+									</b>
+									<div>
+										<p>~ BRIDGE HALL BASEMENT~<br /><br />&#128161; Drop-In Office Hours Open to
+											ALL<br /><br />Got a business idea or side hustle you’re working on?
+											&#128640; <br /><br />Swing by LaunchPad during Drop-In Office Hours every
+											Wednesday!<br /><br />No appointment needed—just stop in
+											to:<br /><br />&#129300; Ask questions<br />&#128200; Get
+											feedback<br />&#129309; Connect with other student
+											founders<br /><br />Connect with Amiah Sheppard, Senior Student Engagement
+											Programs Advisor, and identify next steps in your founding journey. Get
+											everything from your most pressing venture/startup/ideas, questions,
+											concerns or next steps addressed!<br /><br />Come through and let’s build!
+											✨<br /><br />​​​​​~ BRIDGE HALL BASEMENT~</p>
+
+									</div>
+								</div>
+
+								<div class="col-md-2 text-center">
+
+								</div>
+
+
+
+							</div>
+
+							<div class="row" style="margin-bottom: 10px;">
+								<div class="col-md-3">
+									<div>Tue, Sep 16, 2025 <br><span>11:00 AM &ndash; 2:00 PM</span></div><span
+										class="grey-element mdi mdi-map-marker"></span><small
+										class="grey-element">Private Location (sign in to display)</small>
+								</div>
+								<div class="col-md-5">
+									<b style="font-size:1.2em;">
+										<a href="/Entrepreneur/rsvp?id=404801" target="_blank">Greif LaunchPad Office
+											Hours - Appointment Required</a>
+									</b>
+									<div>
+										<p>Appointment Only Office Hours:<br /><br />Student entrepreneurs can use
+											office hours to validate their business ideas and receive constructive
+											feedback. <br /><br />&#128550; Is there a pressing issue or challenge in
+											your entrepreneurial venture that requires quick guidance or
+											solutions?<br /><br />&#128173; Are you looking for impromptu brainstorming
+											sessions or creative discussions to overcome obstacles?<br /><br />&#128161;
+											Is your goal to receive instant feedback on a project, pitch, or idea
+											they&#39;re working on<br /><br />&#128198; Are you seeking the flexibility
+											of drop-in hours to accommodate your busy schedule while still receiving
+											valuable support for your startup?<br /><br />Business Stage: Idea stage
+											&#127793; - Early stage &#127807; - Scale-up &#127795;<br />Location:
+											Blackstone LaunchPad; Bridge Hall Basement <br />Price: FREE
+											<br /><br />Time Slots Available: Drop in for 30 min increments.
+											<br /><br />Sign Up Here: https://calendly.com/uscblackstonelaunchpad/psof
+										</p>
+
+									</div>
+								</div>
+
+								<div class="col-md-2 text-center">
+
+								</div>
+
+
+
+							</div>
+
+							<div class="row" style="margin-bottom: 10px;">
+								<div class="col-md-3">
+									<div>Wed, Sep 10, 2025 <br><span>1:00 PM &ndash; 4:00 PM</span></div><span
+										class="grey-element mdi mdi-map-marker"></span><small
+										class="grey-element">Private Location (register to display)</small>
+								</div>
+								<div class="col-md-5">
+									<b style="font-size:1.2em;">
+										<a href="/Entrepreneur/rsvp?id=404722" target="_blank">Greif Launchpad Open
+											Office Hours with Amiah Sheppard</a>
+									</b>
+									<div>
+										<p>~ BRIDGE HALL BASEMENT~<br /><br />&#128161; Drop-In Office Hours Open to
+											ALL<br /><br />Got a business idea or side hustle you’re working on?
+											&#128640; <br /><br />Swing by LaunchPad during Drop-In Office Hours every
+											Wednesday!<br /><br />No appointment needed—just stop in
+											to:<br /><br />&#129300; Ask questions<br />&#128200; Get
+											feedback<br />&#129309; Connect with other student
+											founders<br /><br />Connect with Amiah Sheppard, Senior Student Engagement
+											Programs Advisor, and identify next steps in your founding journey. Get
+											everything from your most pressing venture/startup/ideas, questions,
+											concerns or next steps addressed!<br /><br />Come through and let’s build!
+											✨<br /><br />​​​​​~ BRIDGE HALL BASEMENT~</p>
+
+									</div>
+								</div>
+
+								<div class="col-md-2 text-center">
+
+								</div>
+
+
+
+							</div>
+
+							<div class="row" style="margin-bottom: 10px;">
+								<div class="col-md-3">
+									<div>Tue, Sep 09, 2025 <br><span>11:00 AM &ndash; 2:00 PM</span></div><span
+										class="grey-element mdi mdi-map-marker"></span><small
+										class="grey-element">Private Location (sign in to display)</small>
+								</div>
+								<div class="col-md-5">
+									<b style="font-size:1.2em;">
+										<a href="/Entrepreneur/rsvp?id=404800" target="_blank">Greif LaunchPad Office
+											Hours - Appointment Required</a>
+									</b>
+									<div>
+										<p>Appointment Only Office Hours:<br /><br />Student entrepreneurs can use
+											office hours to validate their business ideas and receive constructive
+											feedback. <br /><br />&#128550; Is there a pressing issue or challenge in
+											your entrepreneurial venture that requires quick guidance or
+											solutions?<br /><br />&#128173; Are you looking for impromptu brainstorming
+											sessions or creative discussions to overcome obstacles?<br /><br />&#128161;
+											Is your goal to receive instant feedback on a project, pitch, or idea
+											they&#39;re working on<br /><br />&#128198; Are you seeking the flexibility
+											of drop-in hours to accommodate your busy schedule while still receiving
+											valuable support for your startup?<br /><br />Business Stage: Idea stage
+											&#127793; - Early stage &#127807; - Scale-up &#127795;<br />Location:
+											Blackstone LaunchPad; Bridge Hall Basement <br />Price: FREE
+											<br /><br />Time Slots Available: Drop in for 30 min
+											increments.<br /><br />Sign Up Here:
+											https://calendly.com/uscblackstonelaunchpad/psof
+										</p>
+
+									</div>
+								</div>
+
+								<div class="col-md-2 text-center">
+
+								</div>
+
+
+
+							</div>
+
+							<div class="row" style="margin-bottom: 10px;">
+								<div class="col-md-3">
+									<div>Tue, Sep 02, 2025 <br><span>11:00 AM &ndash; 2:00 PM</span></div><span
+										class="grey-element mdi mdi-map-marker"></span><small
+										class="grey-element">Private Location (sign in to display)</small>
+								</div>
+								<div class="col-md-5">
+									<b style="font-size:1.2em;">
+										<a href="/Entrepreneur/rsvp?id=404799" target="_blank">Greif LaunchPad Meetings
+											with Amiah - By APPT ONLY</a>
+									</b>
+									<div>
+										<p>Join us for Appointment Only Office Hours!<br /><br />Student entrepreneurs
+											can use office hours to validate their business ideas and receive
+											constructive feedback. <br /><br />&#128550; Is there a pressing issue or
+											challenge in your entrepreneurial venture that requires quick guidance or
+											solutions?<br /><br />&#128173; Are you looking for impromptu brainstorming
+											sessions or creative discussions to overcome obstacles?<br /><br />&#128161;
+											Is your goal to receive instant feedback on a project, pitch, or idea
+											they&#39;re working on<br /><br />&#128198; Are you seeking the flexibility
+											of drop-in hours to accommodate your busy schedule while still receiving
+											valuable support for your startup?<br /><br />Business Stage: Idea stage
+											&#127793; - Early stage &#127807; - Scale-up &#127795;<br />Location:
+											Blackstone LaunchPad; Bridge Hall Basement <br />Price: FREE
+											<br /><br />Time Slots Available: Drop in for 30 min
+											increments.<br /><br />Sign Up Here:
+											https://calendly.com/uscblackstonelaunchpad/psof
+										</p>
+
+									</div>
+								</div>
+
+								<div class="col-md-2 text-center">
+
+								</div>
+
+
+
+							</div>
+
+						</div>
+					</div>
+
+					<!--/ Event Child Events -->
+
+
+					<!-- Event Where -->
+
+					<!--/ Event Where -->
+
+					<!-- Event Speakers -->
+
+					<!--/ Event Speakers -->
+
+					<!-- Event Attendees -->
+
+					<!--/ Event Attendees -->
+
+					<!-- Event Sponsors -->
+
+					<!--/ Event Sponsors -->
+
+					<!-- Event Host -->
+
+					<div id="event_host" class="card">
+						<div class="card-block" role="group"
+							aria-label="Hosted By Lloyd Greif Center for Entrepreneurial Studies">
+							<div class="card-block__title">
+								<h2 class="header-cg--h3"><span class="mdi mdi-account-group color-cg--event"></span>
+									Hosted By</h2>
+							</div>
+							<div class="card-border border-cg--event"></div>
+
+							<strong>Lloyd Greif Center for Entrepreneurial Studies</strong> | <a href="/Entrepreneur/"
+								aria-label="Go to the Lloyd Greif Center for Entrepreneurial Studies  group website.">Website</a>
+							| <a href="/events?group_ids=36948"
+								aria-label="View more events from Lloyd Greif Center for Entrepreneurial Studies.">View
+								More Events</a>
+
+
+							<br><br>
+
+							<a class="btn btn-default" title="Contacting the host" href="javascript:;"
+								onClick="openModal('/send_message_boot?uid=8ef2f8d4-e1d9-11ec-9e75-0acdec7e683b&event_id=404810&ax=1&async=1&modal=true');"
+								aria-label="Contact the organizers. Opens a dialog form to send your message.">
+								<span class="mdi mdi-email"></span> Contact the organizers
+							</a>
+
+						</div>
+					</div>
+
+					<!--/ Event Host -->
+
+					<!-- Registration Details -->
+
+					<!--/ Registration Details -->
+
+					<!-- Event Cancellation -->
+
+					<!--/ Event Cancellation -->
+
+					<!-- Event Refund -->
+
+					<!--/ Event Refund -->
+
+
+
+					<!-- LL - 10/03/2017: Moved up here so ckeditor can work in popups -->
+
+
+					<script>
+						//YT Viewer
+						if (typeof arrYoutubePlayerObjects != "undefined") {
+
+							$("#youtubeScript").remove();
+							$("#www-widgetapi-script").remove();
+							if (window['YT'] != undefined) { window.YT.loading = 0; window.YT.loaded = 0; }
+
+							var youtubeTag = document.createElement('script');
+							youtubeTag.id = "youtubeScript";
+							youtubeTag.src = "https://www.youtube.com/iframe_api";
+							youtubeTag.async = false;
+
+							// Get First Script Tag & Insert Vimeo Script before that.
+							var firstScriptTag = document.getElementsByTagName('script')[0];
+							firstScriptTag.parentNode.insertBefore(youtubeTag, firstScriptTag);
+
+							// Array of Players
+							var arrYoutubePlayers = [];
+
+							// Functions to work on Youtube Players
+							function onYoutubePlayerReady(event) {
+								var player = event.target;
+								$(window).blur(function () { player.pauseVideo(); });
+								$(window).scroll(function () {
+									if (!isInViewport(document.getElementById("player--" + player.youtubeObject.cgID))) {
+										player.pauseVideo();
+									}
+								});
+
+								var startTime = new Date(player.youtubeObject.startTime * 1000).toISOString();
+								var totalTime = new Date(player.getDuration() * 1000).toISOString();
+								if (player.getDuration() >= 3600) {
+									startTime = startTime.substr(11, 8);
+									totalTime = totalTime.substr(11, 8);
+								}
+								else {
+									startTime = startTime.substr(14, 5);
+									totalTime = totalTime.substr(14, 5);
+								}
+								$("#player-btn--" + player.youtubeObject.cgID + " div.timer").html("<span id='player-time--" + player.youtubeObject.cgID + "'>" + startTime + "</span> / " + totalTime);
+							}
+
+							function onYoutubePlayerStateChange(event) {
+								var player = event.target;
+
+								if (event.data == YT.PlayerState.PLAYING) {
+									// Change Buttons
+									$("#player-btn--" + player.youtubeObject.cgID + " button.playpause").attr("data-status", "pause").attr("aria-label", "Pause");
+									$("#player-btn--" + player.youtubeObject.cgID + " button.playpause span.mdi").removeClass("mdi-play").addClass("mdi-pause");
+								}
+
+								if (event.data == YT.PlayerState.PLAYING && player.intervalFunction == null) {
+									// HACK For Window BLUR
+									window.focus();
+
+									// AJAX Recurring Call
+									player.intervalFunction = setInterval(function () {
+										postVideoViews(player.youtubeObject.cgUID, player.youtubeObject.cgUID_s, player.getCurrentTime());
+									}, 10000);
+
+									// Timer
+									player.intervalTimerFunction = setInterval(function () {
+										var currentTime = new Date(player.getCurrentTime() * 1000).toISOString();
+										if (player.getDuration() >= 3600) {
+											currentTime = currentTime.substr(11, 8);
+										}
+										else {
+											currentTime = currentTime.substr(14, 5);
+										}
+										$("#player-time--" + player.youtubeObject.cgID).html(currentTime);
+									}, 1000)
+								}
+								else if (event.data == YT.PlayerState.PAUSED || event.data == YT.PlayerState.ENDED) {
+									// Change Buttons
+									$("#player-btn--" + player.youtubeObject.cgID + " button.playpause").attr("data-status", "play").attr("aria-label", "Play");
+									$("#player-btn--" + player.youtubeObject.cgID + " button.playpause span.mdi").removeClass("mdi-pause").addClass("mdi-play");
+
+									clearInterval(player.intervalFunction);
+									clearInterval(player.intervalTimerFunction);
+									player.intervalFunction = null;
+									player.intervalTimerFunction = null;
+									postVideoViews(player.youtubeObject.cgUID, player.youtubeObject.cgUID_s, player.getCurrentTime(), (event.data == YT.PlayerState.ENDED ? 'true' : ''));
+									//if (event.data == YT.PlayerState.ENDED) { 
+									//if (typeof refreshTrackChecklist !== "undefined") { refreshTrackChecklist(); }
+									//else if (typeof parent.refreshTrackChecklist !== "undefined") { parent.refreshTrackChecklist(); }
+									//}
+								}
+							}
+
+							function youtubePlayerPlayPause(player) {
+								var currentStatus = $("#player-btn--" + player.youtubeObject.cgID + " button.playpause").attr("data-status");
+								if (currentStatus == "play") { player.playVideo(); }
+								else if (currentStatus == "pause") { player.pauseVideo(); }
+							}
+
+							/* Function that checks localStorage for the Vimeo/YouTube closed captions load policy. Returns number values:
+							 *   0 - closed captions should be be disabled (do not load closed captions)
+							 *   1 - closed captions should be loaded when video loads
+							 * If the local storage key is not defined we return 0 (as a number).
+							 */
+							function getVideoPlayerCCLoadPolicy() {
+								try {
+									const lsKey = 'cg-video-player-cc-load-policy';
+									const ccLoadPolicy = localStorage.getItem(lsKey);
+									return (ccLoadPolicy === '1') ? 1 : 0;
+								} catch (e) {
+									return 0;
+								}
+							}
+
+							/* Function that toggles the video player CC load policy stored in local storage. Toggled values are (strings values):
+							 *   '0' - closed captions should be be disabled (do not load closed captions)
+							 *   '1' - closed captions should be loaded when video loads
+							 * If the local storage key is not defined it is treated as though the value were '0' and toggles to '1'.
+							 * */
+							function toggleVideoPlayerCCLoadPolicy() {
+								try {
+									const lsKey = 'cg-video-player-cc-load-policy';
+									const ccLoadPolicy = localStorage.getItem(lsKey);
+									if (ccLoadPolicy === '1') {
+										localStorage.setItem(lsKey, '0');
+									} else {
+										localStorage.setItem(lsKey, '1');
+									}
+								} catch (e) {
+									return;
+								}
+							}
+
+							/* Function that prompts the user for confirmation before toggling the video player closed caption load policy.
+							 * - If closed captions are currently turned off, the user will be prompted to confirm before turning them on (and vice versa)
+							 * - Video player CC load policy setting is stored in local storage (see above functions)
+							 * - Vimeo and YouTube video players require reload of the associated IFrames to change the setting, 
+							 *   if user confirms yes to reload, the page will be reloaded.
+							 */
+							function toggleClosedCaptionsAndReloadVideoIframes() {
+								const turnClosedCaptionsOnOff = (typeof getVideoPlayerCCLoadPolicy !== 'undefined' && getVideoPlayerCCLoadPolicy() === 1) ? 'off' : 'on';
+								const message = 'Turning ' + turnClosedCaptionsOnOff + ' closed captions will reload this page, please save any outstanding changes before you choose to turn closed captions ' + turnClosedCaptionsOnOff + '. Are you sure you want to turn closed captions ' + turnClosedCaptionsOnOff + '?';
+								if (confirm(message)) {
+									toggleVideoPlayerCCLoadPolicy();
+									location.reload();
+								} else {
+									return false;
+								}
+							}
+
+							// Called when the script is fully loaded.
+							function onYouTubeIframeAPIReady() {
+
+								// Loop through players
+								arrYoutubePlayerObjects.forEach(function (youtubeObject, index) {
+									arrYoutubePlayers[index] = new YT.Player("player--" + youtubeObject.cgID, {
+										height: youtubeObject.height,
+										width: youtubeObject.width,
+										videoId: youtubeObject.videoID,
+										playerVars: {
+											modestbranding: 1,
+											rel: 0,
+											disablekb: 1,
+											playsinline: 1,
+											controls: 0,
+											start: youtubeObject.startTime,
+											cc_load_policy: (typeof getVideoPlayerCCLoadPolicy !== 'undefined') ? getVideoPlayerCCLoadPolicy() : 0
+										},
+										events: {
+											'onStateChange': onYoutubePlayerStateChange,
+											'onReady': onYoutubePlayerReady
+										}
+									});
+									arrYoutubePlayers[index].youtubeObject = youtubeObject;
+									arrYoutubePlayers[index].intervalFunction = null;
+
+									$("#player-btn--" + youtubeObject.cgID + " button.playpause").on('click', function () {
+										youtubePlayerPlayPause(arrYoutubePlayers[index]);
+									});
+									$("#player-btn--" + youtubeObject.cgID + " button.replay").on('click', function () {
+										arrYoutubePlayers[index].seekTo(0);
+									});
+									$("#player-btn--" + youtubeObject.cgID + " button.rewind").on('click', function () {
+										arrYoutubePlayers[index].seekTo(arrYoutubePlayers[index].getCurrentTime() - 10);
+									});
+									const turnClosedCaptionsOnOff = (typeof getVideoPlayerCCLoadPolicy !== 'undefined' && getVideoPlayerCCLoadPolicy() === 1) ? 'off' : 'on';
+									$("#player-btn--" + youtubeObject.cgID + " button.closedcaption").attr('aria-label', 'Turn ' + turnClosedCaptionsOnOff + ' closed captions. Note, this requires a reload of the current page.');
+									$("#player-btn--" + youtubeObject.cgID + " button.closedcaption").on('click', function () {
+										toggleClosedCaptionsAndReloadVideoIframes();
+									});
+									$("#player-btn--" + youtubeObject.cgID + " button.fullscreen").on('click', function () {
+										arrYoutubePlayers[index].pauseVideo();
+										tb_show("", "/video_player?embed=1&uid=" + youtubeObject.cgUID + "&width=995&height=680&modal=true&TB_iframe=1", "");
+									});
+
+								});
+
+								arrYoutubePlayerObjects = undefined;
+							}
+						}
+
+
+						//Vimeo Viewer
+						if (typeof arrVimeoPlayerObjects != "undefined") {
+
+							$("#vimeoScript").remove();
+
+							var vimeoTag = document.createElement('script');
+							vimeoTag.id = "vimeoScript";
+							vimeoTag.src = "https://player.vimeo.com/api/player.js";
+							vimeoTag.async = false;
+
+							// Get First Script Tag & Insert Vimeo Script before that.
+							var firstScriptTag = document.getElementsByTagName('script')[0];
+							firstScriptTag.parentNode.insertBefore(vimeoTag, firstScriptTag);
+
+							// Array of Players
+							var arrVimeoPlayers = [];
+
+							// Functions to work on Vimeo Players
+							function vimeoPlayerPlay(player) {
+								// Change Buttons
+								$("#player-btn--" + player.vimeoObject.cgID + " button.playpause").attr("data-status", "pause").attr("aria-label", "Pause");
+								$("#player-btn--" + player.vimeoObject.cgID + " button.playpause span.mdi").removeClass("mdi-play").addClass("mdi-pause");
+
+								// AJAX Recurring Call
+								player.intervalFunction = setInterval(function () {
+									player.getCurrentTime().then(function (seconds) {
+										postVideoViews(player.vimeoObject.cgUID, player.vimeoObject.cgUID_s, seconds);
+									})
+								}, 10000)
+
+								// Timer
+								player.intervalTimerFunction = setInterval(function () {
+									player.getCurrentTime().then(function (seconds) {
+										var currentTime = new Date(seconds * 1000).toISOString();
+										if (player.totalDuration >= 3600) {
+											currentTime = currentTime.substr(11, 8);
+										}
+										else {
+											currentTime = currentTime.substr(14, 5);
+										}
+										$("#player-time--" + player.vimeoObject.cgID).html(currentTime);
+									})
+								}, 1000)
+							}
+
+							function vimeoPlayerPause(player) {
+								// Change Buttons
+								$("#player-btn--" + player.vimeoObject.cgID + " button.playpause").attr("data-status", "play").attr("aria-label", "Play");
+								$("#player-btn--" + player.vimeoObject.cgID + " button.playpause span.mdi").removeClass("mdi-pause").addClass("mdi-play");
+
+								// Clear AJAX Recurring Call
+								clearInterval(player.intervalFunction);
+								clearInterval(player.intervalTimerFunction);
+								player.intervalFunction = null;
+								player.intervalTimerFunction = null;
+
+								player.getCurrentTime().then(function (seconds) {
+									postVideoViews(player.vimeoObject.cgUID, player.vimeoObject.cgUID_s, seconds);
+								});
+							}
+
+							function vimeoPlayerEnded(player) {
+								// Change Buttons
+								$("#player-btn--" + player.vimeoObject.cgID + " button.playpause").attr("data-status", "play").attr("aria-label", "Play");
+								$("#player-btn--" + player.vimeoObject.cgID + " button.playpause span.mdi").removeClass("mdi-pause").addClass("mdi-play");
+
+								// Clear AJAX Recurring Call
+								clearInterval(player.intervalFunction);
+								clearInterval(player.intervalTimerFunction);
+								player.intervalFunction = null;
+								player.intervalTimerFunction = null;
+
+								player.getCurrentTime().then(function (seconds) {
+									postVideoViews(player.vimeoObject.cgUID, player.vimeoObject.cgUID_s, seconds, 'true');
+								});
+
+								//if (typeof refreshTrackChecklist !== "undefined") { refreshTrackChecklist(); }
+								//else if (typeof parent.refreshTrackChecklist !== "undefined") { parent.refreshTrackChecklist(); }
+							}
+
+							function vimeoPlayerPlayPause(player) {
+								var currentStatus = $("#player-btn--" + player.vimeoObject.cgID + " button.playpause").attr("data-status");
+								if (currentStatus == "play") {
+									player.play();
+								}
+								else if (currentStatus == "pause") {
+									player.pause();
+								}
+							}
+
+							// We wait until the script is fully loaded.
+							$("#vimeoScript").on('load', function () {
+
+								// Loop through players
+								arrVimeoPlayerObjects.forEach(function (vimeoObject, index) {
+
+									if (typeof getVideoPlayerCCLoadPolicy !== 'undefined' && getVideoPlayerCCLoadPolicy() === 1) {
+										// load with closed captions enabled (set texttrack to 'en')
+										arrVimeoPlayers[index] = new Vimeo.Player("player--" + vimeoObject.cgID, { url: vimeoObject.URL, height: vimeoObject.height, width: vimeoObject.width, controls: false, texttrack: 'en' });
+									} else {
+										arrVimeoPlayers[index] = new Vimeo.Player("player--" + vimeoObject.cgID, { url: vimeoObject.URL, height: vimeoObject.height, width: vimeoObject.width, controls: false });
+									}
+									arrVimeoPlayers[index].vimeoObject = vimeoObject;
+									arrVimeoPlayers[index].intervalFunction = null;
+
+									if (vimeoObject.startTime != 0) {
+										arrVimeoPlayers[index].setCurrentTime(vimeoObject.startTime);
+									}
+
+									arrVimeoPlayers[index].on('play', function () { vimeoPlayerPlay(this) });
+									arrVimeoPlayers[index].on('pause', function () { vimeoPlayerPause(this) });
+									arrVimeoPlayers[index].on('ended', function () { vimeoPlayerEnded(this) });
+
+									$("#player-btn--" + vimeoObject.cgID + " button.playpause").on('click', function () {
+										vimeoPlayerPlayPause(arrVimeoPlayers[index]);
+									});
+									$("#player-btn--" + vimeoObject.cgID + " button.replay").on('click', function () {
+										arrVimeoPlayers[index].setCurrentTime(0)
+									});
+									$("#player-btn--" + vimeoObject.cgID + " button.rewind").on('click', function () {
+										arrVimeoPlayers[index].getCurrentTime().then(function (seconds) {
+											arrVimeoPlayers[index].setCurrentTime(Math.max(0, seconds - 10));
+										})
+									});
+									const turnClosedCaptionsOnOff = (typeof getVideoPlayerCCLoadPolicy !== 'undefined' && getVideoPlayerCCLoadPolicy() === 1) ? 'off' : 'on';
+									$("#player-btn--" + vimeoObject.cgID + " button.closedcaption").attr('aria-label', 'Turn ' + turnClosedCaptionsOnOff + ' closed captions. Note, this requires a reload of the current page.');
+									$("#player-btn--" + vimeoObject.cgID + " button.closedcaption").on('click', function () {
+										toggleClosedCaptionsAndReloadVideoIframes();
+									});
+									$("#player-btn--" + vimeoObject.cgID + " button.fullscreen").on('click', function () {
+										arrVimeoPlayers[index].pause();
+										tb_show("", "/video_player?embed=1&uid=" + vimeoObject.cgUID + "&width=995&height=680&modal=true&TB_iframe=1", "");
+									});
+
+									$(window).blur(function () {
+										arrVimeoPlayers[index].pause();
+									});
+									$(window).scroll(function () {
+										if (!isInViewport(document.getElementById("player--" + vimeoObject.cgID))) {
+											arrVimeoPlayers[index].pause();
+										}
+									});
+
+
+									var startTime = new Date(vimeoObject.startTime * 1000).toISOString();
+									var totalTime = 0;
+									arrVimeoPlayers[index].getDuration().then(function (seconds) {
+										arrVimeoPlayers[index].totalDuration = seconds;
+
+										totalTime = new Date(seconds * 1000).toISOString();
+										if (seconds >= 3600) {
+											startTime = startTime.substr(11, 8);
+											totalTime = totalTime.substr(11, 8);
+										}
+										else {
+											startTime = startTime.substr(14, 5);
+											totalTime = totalTime.substr(14, 5);
+										}
+										$("#player-btn--" + vimeoObject.cgID + " div.timer").html("<span id='player-time--" + vimeoObject.cgID + "'>" + startTime + "</span> / " + totalTime);
+									});
+								});
+
+								arrVimeoPlayerObjects = undefined;
+
+							});
+
+						}
+					</script>
+
+					<script>
+						$(document).ready(function () {
+							$("[data-toggle='tooltip']").tooltip();
+							$(".btn--loader").click(function () {
+								loadButton($(this));
+							});
+							tb_init('a.thickbox, area.thickbox, input.thickbox');
+
+							// fix for the non editable input in ckeditor (ex: URL...)
+							$(".modal").removeAttr("tabindex");
+							// second hack to fix ckeditor links, especially the 'edit link' option
+							if ($.fn.modal && $.fn.modal.Constructor && $.fn.modal.Constructor.prototype) {
+								$.fn.modal.Constructor.prototype.enforceFocus = function () {
+									modal_this = this
+									$(document).on('focusin.modal', function (e) {
+										if (modal_this.$element[0] !== e.target && !modal_this.$element.has(e.target).length
+											&& !$(e.target.parentNode).hasClass('cke_dialog_ui_input_select')
+											&& !$(e.target.parentNode).hasClass('cke_dialog_ui_input_text')) {
+											modal_this.$element.focus()
+										}
+									})
+								};
+							}
+
+							setupAjaxAccessibility();
+						});
+					</script>
+
+					<!-- AX != 1 -->
+
+
+
+				</div><!--/.content -->
+			</div><!--/.content-page -->
+		</div><!--/.inner-shell -->
+
+
+		<style>
+			.outer-shell {
+				display: flex;
+				flex-direction: column;
+				min-height: 100vh;
+			}
+
+			@-moz-document url-prefix() {
+				.inner-shell {
+					flex: 1;
+				}
+			}
+
+			@media screen and (-webkit-min-device-pixel-ratio:0) {
+				.inner-shell {
+					flex: 1;
+				}
+			}
+
+			body.enlarged {
+				min-height: initial;
+				position: relative;
+			}
+
+			body.enlarged>.outer-shell {
+				display: flex;
+				flex-direction: column;
+				min-height: 100vh;
+			}
+		</style>
+		<footer class="footer__home">
+			<div>
+
+				<div id="footer-links" class="row footer__cont" style="background: transparent;">
+					<div class="col-md-offset-1_5 col-md-3 col-sm-12 col-xs-12 text-center" style="padding-top:10px;">
+						<img alt="EngageSC Website Logo"
+							src="/upload/usc/2022/image_upload_2380263_engageSCcornerlogo_112145457.png"
+							style="max-width:150px;max-height:50px;border-radius:6px;">
+					</div>
+					<div class="text-xs-center text-sm-left text-md-left col-md-3 col-sm-6 col-xs-12"
+						style="display:flex;padding: 10px 10px;">
+						<div style="margin:auto" role="group" aria-label="Contact information.">
+							<h2 class="footer__home--title" style="margin-top: 0; margin-bottom: 10px;">Contact</h2><br>
+							<span style="margin-bottom:5px">EngageSC</span><br>
+							<span style="margin-bottom:5px;line-height:1.7">Los Angeles, California 90089<br>United
+								States</span><br>
+
+							<a class="a-footer-contact-links" href="mailto:engagesc@usc.edu"
+								aria-label="Send an email to engagesc@usc.edu">engagesc@usc.edu</a><br>
+
+						</div>
+					</div>
+					<div class="text-xs-center text-sm-left text-md-left col-md-3 col-sm-6 col-xs-12"
+						style="display:flex;vertical-align:top;padding: 10px 10px;">
+						<div style="margin:auto" role="group" aria-label="Links">
+							<h2 class="footer__home--title" style="margin-top: 0; margin-bottom: 10px;">Links</h2><br>
+
+							<a class="a-footer-contact-links" href="/home/groups/">Groups</a><br>
+
+							<a class="a-footer-contact-links" href="/home/events/">Events</a><br>
+
+							<a class="a-footer-contact-links" href="https://www.usc.edu/">Terms of Service</a><br>
+
+							<a class="a-footer-contact-links"
+								href="https://www.usc.edu/pages/usc-privacy-notice/">Privacy Policy</a><br>
+
+							<a class="a-footer-contact-links"
+								href="https://readyedu.atlassian.net/wiki/spaces/CGSD/overview?homepageId=302186786">Support
+								Center</a>
+						</div>
+					</div>
+
+				</div>
+				<div class="row" style="padding:15px 20px 0 20px;border-top:1px solid #5a5a5a;margin-top: 10px;"
+					role="group" aria-label="Footer Bar Links">
+					<div class="col-sm-6 col-xs-12 text-xs-center text-sm-left"></div>
+					<div class="col-sm-6 col-xs-12 text-xs-center text-sm-right">
+						<a class="a-footer-contact-links" href="http://www.novalsys.com">&copy;2025 CampusGroups</a>
+					</div>
+				</div>
+			</div>
+		</footer>
+
+
+		<script type="text/javascript" src="/js/jquery-migrate-1.2.1.js"></script>
+
+		<!-- THICKBOX -->
+		<script src="/js/thickbox/thickbox.js"></script>
+
+		<script type="text/javascript" src="/static/js/metisMenuCustom.js?v=1"></script>
+		<script type="text/javascript" src="/static/js/jquery.slimscroll.js"></script>
+		<!--<link href="/static/css/scrollbar.css" rel="stylesheet">
+    <script type="text/javascript" src="/static/js/scrollbar.js"></script>-->
+
+		<script type="text/javascript">function $$(strId) { return document.getElementById(strId); }</script>
+		<script type="text/javascript" src="/static/plugins/clamp/clamp.min.js"></script>
+		<script type="text/javascript" src="/static/js/core.js"></script>
+		<script type="text/javascript" src="/static/js/menu.js"></script>
+		<script type="text/javascript" src="/static/js/routing.js"></script>
+
+
+
+		<script type="text/javascript">$.ajaxSetup({ cache: true })</script>
+
+
+		<!-- @TODO: This is for jPrompt. We might to see if an update is available or give it a better style -->
+
+		<link href="/js/jquery-alerts/jquery.alerts.css" rel="stylesheet" type="text/css">
+		<script src="/js/jquery-alerts/jquery.alerts.js" type="text/javascript"></script>
+
+
+		<!-- @TODO: Check if used : put directly on /r and student_password-->
+
+		<script>
+
+		</script>
+
+		<script type="text/javascript" src="/js/jquery-validate/jquery.validate.js"></script>
+
+
+		<!-- Google Analytics -->
+		<script>
+			var _customTask = function () {
+				return function (model) {
+					var piiRegex = [
+						{ name: 'Email', regex: /.{4}@.{4}/g },
+						{ name: 'Phone_Number', regex: /^(\+|\d)[0-9]{7,16}$/g },
+						{ name: 'SSN', regex: /^\d{3}-\d{2}-\d{4}$}/g },
+						{ name: 'Address', regex: /^\d+\s[A-z]+\s[A-z]+/g }];
+
+					var globalSendTaskName = '_' + model.get('trackingId') + '_sendHitTask';
+
+					// Fetch reference to the original sendHitTask
+					var originalSendTask = window[globalSendTaskName] = window[globalSendTaskName] || model.get('sendHitTask');
+					var i, hitPayload, parts, val;
+
+					// Overwrite sendHitTask with PII purger
+					model.set('sendHitTask', function (sendModel) {
+
+						hitPayload = sendModel.get('hitPayload').split('&');
+
+						for (i = 0; i < hitPayload.length; i++) {
+							parts = hitPayload[i].split('=');
+
+							// Double-decode, to account for web server encode + analytics.js encode
+							try {
+								val = decodeURIComponent(decodeURIComponent(parts[1]));
+							} catch (e) {
+								val = decodeURIComponent(parts[1]);
+							}
+
+							piiRegex.forEach(function (pii) {
+								val = val.replace(pii.regex, '[REDACTED ' + pii.name + ']');
+							});
+
+							parts[1] = encodeURIComponent(val);
+							hitPayload[i] = parts.join('=');
+						}
+
+						sendModel.set('hitPayload', hitPayload.join('&'), true);
+						originalSendTask(sendModel);
+					});
+				};
+			}
+		</script>
+
+
+		<!-- GA4 implementation -->
+		<script async src='https://www.googletagmanager.com/gtag/js?id=G-LTJ1SL01CG'></script>
+		<script>
+			window.dataLayer = window.dataLayer || [];
+			function gtag() { dataLayer.push(arguments); }
+			gtag('js', new Date());
+			gtag('config', 'G-LTJ1SL01CG', {
+				'send_page_view': true,
+				'name': 'school',
+				custom_map: {
+					'dimension1': 'customTask'
+				}
+			});
+			gtag('event', 'page_view', { customTask: _customTask() });
+		</script>
+
+		<!-- End Google Analytics -->
+
+
+
+		<!-- Help -->
+
+		<!-- End Help -->
+
+</body>
+
+<!-- END AX != 1 -->
+
+<style>
+	/* acc-keyboard-mode (OFF) - Default outline on :focus (none) */
+	body:not(.acc-keyboard-mode) :focus {
+		outline: none;
+	}
+
+	body:not(.acc-keyboard-mode) a:focus {
+		outline: none;
+	}
+
+	body:not(.acc-keyboard-mode) button.close:focus {
+		outline: none;
+	}
+
+	body:not(.acc-keyboard-mode) .button:focus {
+		outline: none;
+	}
+
+	body:not(.acc-keyboard-mode) .button.focus {
+		outline: none;
+	}
+
+	body:not(.acc-keyboard-mode) .btn.active.focus,
+	body:not(.acc-keyboard-mode) .btn.active:focus,
+	body:not(.acc-keyboard-mode) .btn.focus,
+	body:not(.acc-keyboard-mode) .btn:active.focus,
+	body:not(.acc-keyboard-mode) .btn:active:focus,
+	body:not(.acc-keyboard-mode) .btn:focus {
+		outline: none;
+	}
+
+	body:not(.acc-keyboard-mode) .dropdown-toggle:focus {
+		outline: none;
+	}
+
+	#header__btn-cont--manage:focus,
+	#header__btn-cont--manage:focus-within {
+		outline: none;
+	}
+
+	/* no outline/focus on the following (various reasons including hover style on focus, other focus styles applied, etc.) */
+	body:not(.acc-keyboard-mode) h2:focus {
+		outline: none;
+		outline-offset: 0px;
+		border: none;
+	}
+
+	/* .page__header--btns .btn:focus { outline: none !important; outline-offset: 0px !important; } */
+	/* a.btn--rounded:focus { outline: none !important; outline-offset: 0px !important; } */
+
+	/* acc-keyboard-mode (ON) - Default outline on :focus (2px solid #000000) */
+	.acc-keyboard-mode a:focus {
+		outline: 2px solid #000000;
+		outline-offset: 2px;
+	}
+</style>
+
+<!-- should always be last stylesheet loaded -->
+<link href="/static/css/accessibility.css?v=20251008.3" rel="stylesheet" />
+
+</html>
