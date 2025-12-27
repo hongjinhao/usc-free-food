@@ -30,8 +30,10 @@ const fetchEngageEvents = async () => {
     console.log('Number of items:', data.length);
 
     // Filter out separator items
+    // separator items are rows like "Ongoing" or the dates 
+    // they are not actual events. 
     const actualEvents = data.filter(item => {
-      return item.p1 && item.p3 && item.listingSeparator !== 'true';
+      return item.p0 === 'false' && item.p3 && item.listingSeparator !== 'true';
     });
 
     console.log('Filtered to actual events:', actualEvents.length);
