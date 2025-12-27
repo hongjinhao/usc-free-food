@@ -9,9 +9,9 @@
  */
 
 import React, { useState, useEffect } from 'react';
-import { Calendar, MapPin, Users, Pizza, ExternalLink, X, RefreshCw, AlertCircle } from 'lucide-react';
+import { Calendar, MapPin, Users, Pizza, ExternalLink, X, RefreshCw, AlertCircle, Scan } from 'lucide-react';
 
-// API configuration - works both locally and in production
+// API configuration for the Vercel Backend Proxy
 const API_BASE = import.meta.env.DEV ? 'http://localhost:3000' : '';
 
 const fetchEngageEvents = async () => {
@@ -26,8 +26,6 @@ const fetchEngageEvents = async () => {
     }
 
     const data = await response.json();
-    console.log('Raw API response:', data);
-    console.log('Number of items:', data.length);
 
     // Filter out separator items
     // separator items are rows like "Ongoing" or the dates 
@@ -36,28 +34,8 @@ const fetchEngageEvents = async () => {
       return item.p0 === 'false' && item.p1 && item.p3 && item.listingSeparator !== 'true';
     });
 
-    console.log('Filtered to actual events:', actualEvents.length);
-
+    // Parse events WITHOUT checking for free food in initial load
     const parsedEvents = actualEvents.map(item => {
-      // Search for free food keywords
-      const searchText = [
-        item.p3 || '',  // title
-        item.p4 || '',  // dates/description  
-        item.p22 || '', // tags
-        item.p12 || '', // price range
-      ].join(' ').toLowerCase();
-
-      const freeFootKeywords = [
-        'free food', 'free pizza', 'free lunch', 'free dinner',
-        'free breakfast', 'free snacks', 'refreshments',
-        'food provided', 'snacks provided', 'pizza provided',
-        'complimentary food', 'complimentary meal',
-        'food will be served', 'free boba', 'free drinks',
-        'free cookies', 'free ice cream', 'catering provided'
-      ];
-
-      const hasFreeFood = freeFootKeywords.some(k => searchText.includes(k));
-
       return {
         id: item.p1,
         title: item.p3,
@@ -68,17 +46,57 @@ const fetchEngageEvents = async () => {
         category: item.p22?.replace(/<[^>]*>/g, '').trim() || '',
         detailUrl: `https://engage.usc.edu${item.p18}`,
         attendees: item.p10 || '0',
-        hasFreeFood,
+        hasFreeFood: false, // Initially false
+        scanned: false, // Track if we've checked this event
       };
     });
-
-    console.log('Parsed events:', parsedEvents);
-    console.log('Events with free food:', parsedEvents.filter(e => e.hasFreeFood).length);
 
     return parsedEvents;
   } catch (error) {
     console.error('Error fetching events:', error);
     throw error;
+  }
+};
+
+const scanEventForFreeFood = async (eventId) => {
+  try {
+    const url = `${API_BASE}/api/event-details?id=${eventId}`;
+    const response = await fetch(url);
+
+    if (!response.ok) {
+      throw new Error('Failed to fetch details');
+    }
+
+    const html = await response.text();
+    const parser = new DOMParser();
+    const doc = parser.parseFromString(html, 'text/html');
+    const eventDetailsCard = doc.querySelector('#event_details .card-block');
+
+    let description = '';
+    let hasFreeFood = false;
+
+    if (eventDetailsCard) {
+      const clone = eventDetailsCard.cloneNode(true);
+      clone.querySelector('.card-block__title')?.remove();
+      clone.querySelector('.card-border')?.remove();
+      description = clone.textContent.trim();
+
+      const descLower = description.toLowerCase();
+      const freeFootKeywords = [
+        'free food', 'free pizza', 'free lunch', 'free dinner',
+        'free breakfast', 'free snacks', 'refreshments',
+        'food provided', 'snacks provided', 'pizza provided',
+        'complimentary food', 'complimentary meal',
+        'food will be served', 'free boba', 'free drinks',
+        'free cookies', 'free ice cream', 'catering provided'
+      ];
+      hasFreeFood = freeFootKeywords.some(k => descLower.includes(k));
+    }
+
+    return { description, hasFreeFood };
+  } catch (error) {
+    console.error('Error scanning event:', error);
+    return { description: 'Could not load description', hasFreeFood: false };
   }
 };
 
@@ -93,6 +111,10 @@ function App() {
   const [loadingDetails, setLoadingDetails] = useState(false);
   const [lastUpdated, setLastUpdated] = useState(null);
 
+  const [scanning, setScanning] = useState(false);
+  const [scanProgress, setScanProgress] = useState(0);
+  const [scannedCount, setScannedCount] = useState(0);
+
   useEffect(() => {
     loadEvents();
   }, []);
@@ -104,12 +126,108 @@ function App() {
       const data = await fetchEngageEvents();
       setEvents(data);
       setLastUpdated(new Date());
+      setScannedCount(0);
+      setScanProgress(0);
     } catch (error) {
       console.error('Failed to load events:', error);
       setError('Failed to load events. Please try again.');
     } finally {
       setLoading(false);
     }
+  };
+
+  // Scan all events in batches
+  const scanAllEvents = async () => {
+    setScanning(true);
+    setScanProgress(0);
+    setScannedCount(0);
+
+    const unscannedEvents = events.filter(e => !e.scanned);
+    const total = unscannedEvents.length;
+    const batchSize = 5;
+    let processed = 0;
+
+    for (let i = 0; i < unscannedEvents.length; i += batchSize) {
+      const batch = unscannedEvents.slice(i, i + batchSize);
+
+      // Process batch in parallel
+      const results = await Promise.all(
+        batch.map(event => scanEventForFreeFood(event.id))
+      );
+
+      // Update events with scan results
+      setEvents(prevEvents => {
+        const newEvents = [...prevEvents];
+        batch.forEach((event, idx) => {
+          const eventIndex = newEvents.findIndex(e => e.id === event.id);
+          if (eventIndex !== -1) {
+            newEvents[eventIndex] = {
+              ...newEvents[eventIndex],
+              hasFreeFood: results[idx].hasFreeFood,
+              scanned: true,
+            };
+          }
+        });
+        return newEvents;
+      });
+
+      processed += batch.length;
+      setScanProgress((processed / total) * 100);
+      setScannedCount(processed);
+
+      // Small delay between batches to avoid overwhelming the server
+      if (i + batchSize < unscannedEvents.length) {
+        await new Promise(resolve => setTimeout(resolve, 100));
+      }
+    }
+
+    setScanning(false);
+  };
+
+  // Scan single event when clicked
+  const scanSingleEvent = async (event) => {
+    if (event.scanned) return;
+
+    const result = await scanEventForFreeFood(event.id);
+
+    setEvents(prevEvents => {
+      const newEvents = [...prevEvents];
+      const eventIndex = newEvents.findIndex(e => e.id === event.id);
+      if (eventIndex !== -1) {
+        newEvents[eventIndex] = {
+          ...newEvents[eventIndex],
+          hasFreeFood: result.hasFreeFood,
+          scanned: true,
+        };
+      }
+      return newEvents;
+    });
+
+    setScannedCount(prev => prev + 1);
+
+    return result;
+  };
+
+  const handleEventClick = async (event) => {
+    setSelectedEvent(event);
+    setLoadingDetails(true);
+
+    let details;
+    if (event.scanned) {
+      // If already scanned, just fetch details again for display
+      details = await scanEventForFreeFood(event.id);
+    } else {
+      // If not scanned, scan it now
+      details = await scanSingleEvent(event);
+    }
+
+    setEventDetails(details);
+    setLoadingDetails(false);
+  };
+
+  const closeModal = () => {
+    setSelectedEvent(null);
+    setEventDetails(null);
   };
 
   const filteredEvents = events.filter(event => {
@@ -119,65 +237,8 @@ function App() {
     return matchesFreeFood && matchesSearch;
   });
 
-  const freeFootCount = events.filter(e => e.hasFreeFood).length;
-
-  const fetchEventDetails = async (eventId) => {
-    setLoadingDetails(true);
-    try {
-      const url = `${API_BASE}/api/event-details?id=${eventId}`;
-      const response = await fetch(url);
-
-      if (!response.ok) {
-        throw new Error('Failed to fetch details');
-      }
-
-      const html = await response.text();
-
-      const parser = new DOMParser();
-      const doc = parser.parseFromString(html, 'text/html');
-
-      const eventDetailsCard = doc.querySelector('#event_details .card-block');
-
-      let description = 'No description available';
-      let hasFreeFood = false;
-
-      if (eventDetailsCard) {
-        const clone = eventDetailsCard.cloneNode(true);
-        clone.querySelector('.card-block__title')?.remove();
-        clone.querySelector('.card-border')?.remove();
-
-        description = clone.textContent.trim();
-
-        const descLower = description.toLowerCase();
-        const freeFootKeywords = [
-          'free food', 'free pizza', 'free lunch', 'free dinner',
-          'free breakfast', 'free snacks', 'refreshments',
-          'food provided', 'snacks provided', 'pizza provided',
-          'complimentary food', 'complimentary meal',
-          'food will be served', 'free boba', 'free drinks',
-        ];
-        hasFreeFood = freeFootKeywords.some(k => descLower.includes(k));
-      }
-
-      setEventDetails({ description, hasFreeFood });
-    } catch (error) {
-      console.error('Error fetching details:', error);
-      setEventDetails({ description: 'Could not load description', hasFreeFood: false });
-    } finally {
-      setLoadingDetails(false);
-    }
-  };
-
-  const handleEventClick = (event) => {
-    setSelectedEvent(event);
-    setEventDetails(null);
-    fetchEventDetails(event.id);
-  };
-
-  const closeModal = () => {
-    setSelectedEvent(null);
-    setEventDetails(null);
-  };
+  const freeFootCount = events.filter(e => e.hasFreeFood && e.scanned).length;
+  const totalScanned = events.filter(e => e.scanned).length;
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-red-50 to-yellow-50">
@@ -217,32 +278,68 @@ function App() {
           </div>
         )}
 
-        <div className="bg-white rounded-lg shadow-md p-4 mb-6">
-          <div className="flex flex-col md:flex-row gap-4">
-            {/* Search */}
-            <input
-              type="text"
-              placeholder="Search events..."
-              value={searchQuery}
-              onChange={(e) => setSearchQuery(e.target.value)}
-              className="flex-1 px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-red-500 focus:border-transparent"
-            />
+        {/* Scan Controls */}
+        {!loading && events.length > 0 && (
+          <div className="bg-white rounded-lg shadow-md p-4 mb-6">
+            <div className="flex items-center justify-between mb-4">
+              <div className="flex items-center gap-4">
+                <button
+                  onClick={scanAllEvents}
+                  disabled={scanning || totalScanned === events.length}
+                  className="flex items-center gap-2 px-6 py-3 bg-green-600 hover:bg-green-700 text-white rounded-lg font-semibold transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+                >
+                  <Scan className={`w-5 h-5 ${scanning ? 'animate-pulse' : ''}`} />
+                  {scanning ? 'Scanning...' : totalScanned === events.length ? 'All Scanned' : 'Scan All Events'}
+                </button>
+                <div className="text-sm text-gray-600">
+                  Scanned: {totalScanned} / {events.length} events
+                  {freeFootCount > 0 && ` • ${freeFootCount} with free food`}
+                </div>
+              </div>
+            </div>
 
-            {/* Filter Toggle */}
-            <button
-              onClick={() => setShowOnlyFreeFood(!showOnlyFreeFood)}
-              className={`px-6 py-2 rounded-lg font-semibold transition-all ${showOnlyFreeFood
-                ? 'bg-red-700 text-white shadow-lg'
-                : 'bg-gray-200 text-gray-700 hover:bg-gray-300'
-                }`}
-            >
-              <span className="flex items-center gap-2">
-                <Pizza className="w-5 h-5" />
-                Free Food Only ({freeFootCount})
-              </span>
-            </button>
+            {/* Progress Bar */}
+            {scanning && (
+              <div className="mb-4">
+                <div className="w-full bg-gray-200 rounded-full h-3 overflow-hidden">
+                  <div
+                    className="bg-green-600 h-full transition-all duration-300 ease-out"
+                    style={{ width: `${scanProgress}%` }}
+                  />
+                </div>
+                <p className="text-sm text-gray-600 mt-2 text-center">
+                  Scanning... {Math.round(scanProgress)}% complete
+                </p>
+              </div>
+            )}
+
+            <div className="flex flex-col md:flex-row gap-4">
+              {/* Search */}
+              <input
+                type="text"
+                placeholder="Search events..."
+                value={searchQuery}
+                onChange={(e) => setSearchQuery(e.target.value)}
+                className="flex-1 px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-red-500 focus:border-transparent"
+              />
+
+              {/* Filter Toggle */}
+              <button
+                onClick={() => setShowOnlyFreeFood(!showOnlyFreeFood)}
+                disabled={totalScanned === 0}
+                className={`px-6 py-2 rounded-lg font-semibold transition-all disabled:opacity-50 disabled:cursor-not-allowed ${showOnlyFreeFood
+                  ? 'bg-red-700 text-white shadow-lg'
+                  : 'bg-gray-200 text-gray-700 hover:bg-gray-300'
+                  }`}
+              >
+                <span className="flex items-center gap-2">
+                  <Pizza className="w-5 h-5" />
+                  Free Food Only ({freeFootCount})
+                </span>
+              </button>
+            </div>
           </div>
-        </div>
+        )}
 
         {/* Loading State */}
         {loading && (
@@ -270,7 +367,11 @@ function App() {
               <div className="text-center py-12 bg-white rounded-lg shadow">
                 <Pizza className="w-16 h-16 mx-auto text-gray-400 mb-4" />
                 <p className="text-xl text-gray-600">No events found</p>
-                <p className="text-gray-500 mt-2">Try adjusting your filters</p>
+                <p className="text-gray-500 mt-2">
+                  {showOnlyFreeFood && totalScanned === 0
+                    ? 'Scan events first to find free food'
+                    : 'Try adjusting your filters'}
+                </p>
               </div>
             ) : (
               <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
@@ -318,7 +419,7 @@ function App() {
                 </div>
               </div>
 
-              {(selectedEvent.hasFreeFood || eventDetails?.hasFreeFood) && (
+              {selectedEvent.scanned && selectedEvent.hasFreeFood && (
                 <div className="bg-yellow-100 border-2 border-yellow-400 rounded-lg p-3 mb-4 flex items-center gap-2">
                   <Pizza className="w-5 h-5 text-yellow-700" />
                   <span className="font-semibold text-yellow-900">This event has FREE FOOD!</span>
@@ -380,12 +481,17 @@ function EventCard({ event, onClick }) {
           </div>
         )}
 
-        {event.hasFreeFood && (
+        {/* Badge Logic */}
+        {!event.scanned ? (
+          <div className="absolute top-2 right-2 bg-gray-400 text-white px-3 py-1 rounded-full font-bold text-sm shadow-lg">
+            NOT SCANNED
+          </div>
+        ) : event.hasFreeFood ? (
           <div className="absolute top-2 right-2 bg-yellow-400 text-yellow-900 px-3 py-1 rounded-full font-bold text-sm shadow-lg flex items-center gap-1">
             <Pizza className="w-4 h-4" />
             FREE FOOD
           </div>
-        )}
+        ) : null}
       </div>
 
       <div className="p-4">
