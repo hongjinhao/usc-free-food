@@ -14,6 +14,11 @@ import { Calendar, MapPin, Users, Pizza, ExternalLink, X, RefreshCw, AlertCircle
 // API configuration for the Vercel Backend Proxy
 const API_BASE = import.meta.env.DEV ? 'http://localhost:3000' : '';
 
+/**
+ * Fetches events from the USC Engage API
+ * Used by: loadEvents()
+ * Returns: Array of parsed event objects
+ */
 const fetchEngageEvents = async () => {
   const url = `${API_BASE}/api/events`;
 
@@ -58,6 +63,14 @@ const fetchEngageEvents = async () => {
   }
 };
 
+/**
+ * Fetches event details HTML via `/api/event-details?id=...` and scans for free-food keywords.
+ * Param: eventId (string)
+ * Parses the HTML, strips some nodes and searches for keywords
+ * Side effects: none (pure; does not mutate React state)
+ * Used by: handleEventClick(), scanAllEvents() and scanSingleEvent()
+ * Returns: Promise<{ description: string, hasFreeFood: boolean }>
+ */
 const scanEventForFreeFood = async (eventId) => {
   try {
     const url = `${API_BASE}/api/event-details?id=${eventId}`;
@@ -67,30 +80,61 @@ const scanEventForFreeFood = async (eventId) => {
       throw new Error('Failed to fetch details');
     }
 
+    // 1) Read raw HTML returned by the Engage event details page
     const html = await response.text();
+
+    // 2) Create a DOMParser to convert the HTML string into a document
     const parser = new DOMParser();
+
+    // 3) Parse HTML into a DOM Document so we can query it like real DOM
     const doc = parser.parseFromString(html, 'text/html');
+
+    // 4) Grab the specific card block that contains event details content
     const eventDetailsCard = doc.querySelector('#event_details .card-block');
 
     let description = '';
     let hasFreeFood = false;
 
     if (eventDetailsCard) {
+      // Clone so we can safely remove UI-only elements before extracting text
       const clone = eventDetailsCard.cloneNode(true);
+      // Remove title and decorative border to avoid noisy text
       clone.querySelector('.card-block__title')?.remove();
       clone.querySelector('.card-border')?.remove();
+      // 5) Extract human-readable text for keyword scanning
       description = clone.textContent.trim();
 
+      // 6) Keyword scan to infer free-food presence
       const descLower = description.toLowerCase();
       const freeFootKeywords = [
-        'free food', 'free pizza', 'free lunch', 'free dinner',
-        'free breakfast', 'free snacks', 'refreshments',
-        'food provided', 'snacks provided', 'pizza provided',
-        'complimentary food', 'complimentary meal',
-        'food will be served', 'free boba', 'free drinks',
-        'free cookies', 'free ice cream', 'catering provided'
+        // Explicit "free" phrases
+        'free food', 'free pizza', 'free lunch', 'free dinner', 'free breakfast',
+        'free snacks', 'free refreshments', 'free drinks', 'free beverages',
+        'free coffee', 'free tea', 'free boba', 'free bubble tea',
+        'free cookies', 'free dessert', 'free ice cream', 'free gelato',
+        'free pastries', 'free donuts', 'free bagels', 'free cupcakes', 'free brownies',
+        'free sandwiches', 'free subs', 'free burritos', 'free tacos', 'free wings',
+        'free bbq', 'free ramen', 'free sushi',
+
+        // "Provided/served" phrasing
+        'food provided', 'snacks provided', 'drinks provided', 'refreshments provided',
+        'meal provided', 'lunch provided', 'dinner provided', 'breakfast provided',
+        'food will be served', 'refreshments will be served', 'snacks will be served', 'drinks will be served',
+        'pizza provided',
+
+        // Complimentary/catering
+        'complimentary food', 'complimentary meal', 'complimentary refreshments',
+        'catering provided', 'catered',
+
+        // Light food terms often used in events
+        'light refreshments', 'appetizers', "hors d'oeuvres", 'treats', 'bites', 'munchies',
+
+        // Broader terms (may increase recall; watch false positives)
+        'confections', 'cereals', 'food', 'boba', 'vegan', 'snacks', 'drinks'
       ];
-      hasFreeFood = freeFootKeywords.some(k => descLower.includes(k));
+      const matched = freeFootKeywords.filter(k => descLower.includes(k));
+      hasFreeFood = matched.length > 0;
+      console.debug('[scanEventForFreeFood] Keyword matches:', matched);
     }
 
     return { description, hasFreeFood };
@@ -119,15 +163,20 @@ function App() {
     loadEvents();
   }, []);
 
+  /**
+   * Loads events and updates component state
+   * Used by: useEffect on mount, Refresh button click
+   * Updates: events state, loading state, error state, lastUpdated timestamp
+   */
   const loadEvents = async () => {
     setLoading(true);
     setError(null);
     try {
       const data = await fetchEngageEvents();
-      setEvents(data);
-      setLastUpdated(new Date());
-      setScannedCount(0);
-      setScanProgress(0);
+      setEvents(data); // store all events in events
+      setLastUpdated(new Date()); // last updated timestamp
+      setScannedCount(0); // reset count
+      setScanProgress(0); // reset progress bar
     } catch (error) {
       console.error('Failed to load events:', error);
       setError('Failed to load events. Please try again.');
@@ -208,13 +257,18 @@ function App() {
     return result;
   };
 
+  /**
+   * Handles event card clicks to open the detail modal
+   * Used by: EventCard onClick handler
+   * Updates: selectedEvent state, triggers scanEventForFreeFood() for details
+   */
   const handleEventClick = async (event) => {
     setSelectedEvent(event);
     setLoadingDetails(true);
 
     let details;
     if (event.scanned) {
-      // If already scanned, just fetch details again for display
+      // If already scanned, just fetch details again for display? TODO
       details = await scanEventForFreeFood(event.id);
     } else {
       // If not scanned, scan it now
@@ -225,6 +279,11 @@ function App() {
     setLoadingDetails(false);
   };
 
+  /**
+   * Closes the event detail modal
+   * Used by: Modal close button, modal background click
+   * Updates: clears selectedEvent and eventDetails state
+   */
   const closeModal = () => {
     setSelectedEvent(null);
     setEventDetails(null);
@@ -462,6 +521,12 @@ function App() {
   );
 }
 
+/**
+ * EventCard Component
+ * Displays a single event as a clickable card
+ * Props: event (event object), onClick (handler for opening detail modal)
+ * Features: Image, title, dates, location, organizer, category, free food badge
+ */
 function EventCard({ event, onClick }) {
   return (
     <div
