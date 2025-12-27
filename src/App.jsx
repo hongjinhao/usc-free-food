@@ -15,9 +15,10 @@ import { Calendar, MapPin, Users, Pizza, ExternalLink, X, RefreshCw, AlertCircle
 const API_BASE = import.meta.env.DEV ? 'http://localhost:3000' : '';
 
 /**
- * Fetches events from the USC Engage API
+ * Fetches events from the USC Engage API via `/api/events`.
  * Used by: loadEvents()
- * Returns: Array of parsed event objects
+ * Returns: Promise<Array of parsed event objects>
+ * Notes: Async function; resolves with normalized event data for the UI.
  */
 const fetchEngageEvents = async () => {
   const url = `${API_BASE}/api/events`;
@@ -106,7 +107,7 @@ const scanEventForFreeFood = async (eventId) => {
 
       // 6) Keyword scan to infer free-food presence
       const descLower = description.toLowerCase();
-      const freeFootKeywords = [
+      const freeFoodKeywords = [
         // Explicit "free" phrases
         'free food', 'free pizza', 'free lunch', 'free dinner', 'free breakfast',
         'free snacks', 'free refreshments', 'free drinks', 'free beverages',
@@ -132,7 +133,7 @@ const scanEventForFreeFood = async (eventId) => {
         // Broader terms (may increase recall; watch false positives)
         'confections', 'cereals', 'food', 'boba', 'vegan', 'snacks', 'drinks'
       ];
-      const matched = freeFootKeywords.filter(k => descLower.includes(k));
+      const matched = freeFoodKeywords.filter(k => descLower.includes(k));
       hasFreeFood = matched.length > 0;
       console.debug('[scanEventForFreeFood] Keyword matches:', matched);
     }
@@ -296,7 +297,7 @@ function App() {
     return matchesFreeFood && matchesSearch;
   });
 
-  const freeFootCount = events.filter(e => e.hasFreeFood && e.scanned).length;
+  const freeFoodCount = events.filter(e => e.hasFreeFood && e.scanned).length;
   const totalScanned = events.filter(e => e.scanned).length;
 
   return (
@@ -352,7 +353,7 @@ function App() {
                 </button>
                 <div className="text-sm text-gray-600">
                   Scanned: {totalScanned} / {events.length} events
-                  {freeFootCount > 0 && ` • ${freeFootCount} with free food`}
+                  {freeFoodCount > 0 && ` • ${freeFoodCount} with free food`}
                 </div>
               </div>
             </div>
@@ -393,7 +394,7 @@ function App() {
               >
                 <span className="flex items-center gap-2">
                   <Pizza className="w-5 h-5" />
-                  Free Food Only ({freeFootCount})
+                  Free Food Only ({freeFoodCount})
                 </span>
               </button>
             </div>

@@ -36,7 +36,7 @@ export default async function handler(req, res) {
 
         const data = await response.json();
 
-        console.log('[Proxy] Successfully fetched', data.length, 'items');
+        console.log('[Proxy] Successfully fetched', data.length, 'items from API');
 
         // Return the data
         return res.status(200).json(data);
