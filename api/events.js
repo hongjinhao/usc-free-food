@@ -20,7 +20,7 @@ export default async function handler(req, res) {
     }
 
     try {
-        const url = 'https://engage.usc.edu/mobile_ws/v17/mobile_events_list?range=0&limit=100&filter4_contains=OR&filter4_notcontains=OR&order=undefined&search_word=';
+        const url = 'https://engage.usc.edu/mobile_ws/v17/mobile_events_list?range=0&limit=50&filter4_contains=OR&filter4_notcontains=OR&order=undefined&search_word=';
 
         console.log('[Proxy] Fetching from USC Engage...');
 
