@@ -3,11 +3,9 @@
  * 
  * This file contains the root component for the USC Free Food Finder application.
  * It manages the core functionality including:
- * - Fetching and filtering free food events from the API
+ * - Fetching and filtering from the 2 APIs (event list and event details)
  * - Displaying events in a searchable, filterable interface
- * - Managing user interactions (search, filters, event details modal)
- * - Handling event categorization and free food detection
- * - Responsive UI with event cards and detailed views
+ * - UI with event cards and detailed views
  */
 
 import React, { useState, useEffect } from 'react';
