@@ -1,6 +1,11 @@
 // api/event-details.js
 // Vercel Serverless Function to proxy USC Engage event details page
-
+// Invocation: Every HTTP request to /api/event-details triggers this function (prod, preview, or local via `vercel dev`/proxied `npm run dev`);
+//             it runs once per request and then terminates, so state does not persist between calls.
+// API_BASE (client-side): The frontend defines `API_BASE` in `src/App.jsx`.
+//   - Dev (`import.meta.env.DEV`): `http://localhost:3000` (Vercel dev server)
+//   - Prod/Preview: '' (same-origin), so requests hit `${origin}/api/...` directly
+// Example client call: `${API_BASE}/api/event-details?id=<eventId>`
 export default async function handler(req, res) {
     // Enable CORS
     res.setHeader('Access-Control-Allow-Origin', '*');
