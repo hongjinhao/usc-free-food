@@ -8,5 +8,11 @@
             "source": "/api/:path*",
             "destination": "/api/:path*"
         }
+    ],
+    "crons": [
+        {
+            "path": "/api/cron-scan-events",
+            "schedule": "0 8 * * *"
+        }
     ]
 }

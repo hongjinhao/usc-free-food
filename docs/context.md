@@ -35,6 +35,7 @@ Plan:
 		○ Highlight matching keywords
 	• Setup Supabase
 		○ Working on this… 
+        - no need for backend proxy now since the database serves as the backend proxy
 	• Setup backend cron job with vercel 
 		○ Configure vercel cron
 		○ Setup environment variables 
@@ -47,7 +48,7 @@ Looking at the engagesc events page fetch network calls, it seems to be calling
 https://engage.usc.edu/mobile_ws/v17/mobile_events_list?range=0&limit=4&filter4_contains=OR&filter4_notcontains=OR&order=undefined&search_word=&&1766544989878 
 	• Range is the starting point (1st event shown)
 	• Limit is the total number of events provided
-    
+
 But for the individual events and the details of the event. Is there also an API? 
 	• Yes, link is here: https://engage.usc.edu/resed/rsvp_boot?id=408945
 	• But it doesn't return JSON, it returns HTML, CSS and JS. 
