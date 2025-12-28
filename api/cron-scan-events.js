@@ -6,6 +6,100 @@ const supabase = createClient(
     process.env.SUPABASE_SERVICE_ROLE_KEY
 );
 
+
+/** 
+ * Function : extractAriaLabelsAsCategory()
+ * Cleans the category - item.p22 in the fetchEngageEvents()
+*/
+
+function extractAriaLabelsAsCategory(html) {
+  if (!html || typeof html !== "string") return "";
+
+  const doc = new DOMParser().parseFromString(html, "text/html");
+
+  const labels = Array.from(doc.querySelectorAll("[aria-label]"))
+    .map((el) => (el.getAttribute("aria-label") || "").trim())
+    .filter(Boolean)
+    .map((label) =>
+      label
+        // "Lecture slash Presentation" -> "Lecture / Presentation"
+        .replace(/\s+slash\s+/gi, " / ")
+        // cleanup spacing around slashes: "A  /  B" -> "A / B"
+        .replace(/\s*\/\s*/g, " / ")
+        // collapse multiple spaces
+        .replace(/\s+/g, " ")
+        .trim()
+    );
+
+  // de-duplicate (case-insensitive) while preserving order
+  const unique = [];
+  const seen = new Set();
+  for (const l of labels) {
+    const key = l.toLowerCase();
+    if (!seen.has(key)) {
+      seen.add(key);
+      unique.push(l);
+    }
+  }
+
+  return unique.join(" / ");
+}
+
+/**
+ * Function : decodeHtmlEntities & parseEngageSingleDate
+ * Cleans the Date and Time for dates - item.p4 in the fetchEngageEvents()
+ */
+
+function decodeHtmlEntities(str) {
+  if (!str || typeof str !== "string") return "";
+  const txt = document.createElement("textarea");
+  txt.innerHTML = str; // decodes &ndash; etc.
+  return txt.value;
+}
+
+function parseEngageSingleDate(html) {
+  if (!html || typeof html !== "string") {
+    return { date: null, display: "" };
+  }
+
+  // Decode entities first (so &ndash; becomes –)
+  const decoded = decodeHtmlEntities(html);
+
+  // Parse the HTML and extract visible text
+  const doc = new DOMParser().parseFromString(decoded, "text/html");
+
+  // Join all <p> lines (some responses wrap the same date across multiple <p>)
+  const text =
+    Array.from(doc.body.querySelectorAll("p"))
+      .map((p) => (p.textContent || "").trim())
+      .filter(Boolean)
+      .join(" ")
+      .replace(/\s+/g, " ")
+      .trim() || (doc.body.textContent || "").replace(/\s+/g, " ").trim();
+
+  // Remove any trailing dash if API includes it (e.g., "... AM –")
+  const cleaned = text.replace(/\s*[–-]\s*$/, "").trim();
+
+  // Parse as Date (browser parses this format well in practice)
+  const d = cleaned ? new Date(cleaned) : null;
+  const valid = d instanceof Date && !isNaN(d);
+
+  // Nice formatting
+  const display = valid
+    ? d.toLocaleString(undefined, {
+        weekday: "short",
+        month: "short",
+        day: "numeric",
+        year: "numeric",
+        hour: "numeric",
+        minute: "2-digit",
+      })
+    : cleaned; // fallback if parsing fails
+
+  return { date: valid ? d : null, display };
+}
+
+
 /**
  * Fetches events directly from the USC Engage API via `/api/events`.
  * No separate vercel backend proxy needed since the database serves as the proxy
@@ -34,17 +128,21 @@ async function fetchEngageEvents() {
 
         console.log(`Fetched ${actualEvents.length} events from USC API`);
 
-        return actualEvents.map(item => ({
-            id: item.p1,
-            title: item.p3,
-            dates: item.p4?.replace(/<[^>]*>/g, '').trim() || '',
-            location: item.p6 || 'Location TBA',
-            imageUrl: item.p11 ? `https://engage.usc.edu${item.p11}` : null,
-            organizer: item.p9 || 'Unknown',
-            category: item.p22?.replace(/<[^>]*>/g, '').trim() || '',
-            detailUrl: `https://engage.usc.edu${item.p18}`,
-            attendees: item.p10 || '0',
-        }));
+        return actualEvents.map(item => {
+            const dateInfo = parseEngageSingleDate(item.p4);
+            return {
+                id: item.p1,
+                title: item.p3,
+                dates: dateInfo.display,
+                location: item.p6 || "Location TBA",
+                imageUrl: item.p11 ? `https://engage.usc.edu${item.p11}` : null,
+                organizer: item.p9 || "Unknown",
+                category: extractAriaLabelsAsCategory(item.p22),
+                detailUrl: `https://engage.usc.edu${item.p18}`,
+                attendees: item.p10 || "0",
+          };
+          
+        });
     } catch (error) {
         console.error('Error fetching from events list API:', error);
         throw new Error(`Failed to fetch events from events list API: ${error.message}`);
@@ -91,7 +189,39 @@ async function scanEventDetails(eventId) {
             clone.querySelector('.card-block__title')?.remove();
             clone.querySelector('.card-border')?.remove();
             // 5) Extract human-readable text for keyword scanning
-            description = clone.textContent.trim();
+            clone
+              .querySelectorAll('a[aria-label*="Copy link"]')
+              .forEach((el) => {
+                el.closest("div")?.remove();
+              });
+
+            clone.querySelectorAll("br").forEach((br) => br.replaceWith("\n"));
+
+            clone
+              .querySelectorAll("p, div, li, h1, h2, h3, h4")
+              .forEach((el) => {
+                el.insertAdjacentText("beforebegin", "\n");
+                el.insertAdjacentText("afterend", "\n");
+              });
+
+            // Safety: remove any remaining buttons
+            clone
+              .querySelectorAll("a.btn, button")
+              .forEach((el) => el.remove());
+
+            // Remove empty divs / comments / whitespace-only nodes
+            clone.querySelectorAll("div").forEach((div) => {
+              if (!div.textContent.trim()) {
+                div.remove();
+              }
+            });
+
+            description = clone.textContent
+              .replace(/\u00A0/g, " ")
+              .replace(/[ \t]+\n/g, "\n")
+              .replace(/\n[ \t]+/g, "\n")
+              .replace(/\n{3,}/g, "\n\n")
+              .trim();
 
             // 6) Keyword scan to infer free-food presence
             const descLower = description.toLowerCase();

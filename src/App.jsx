@@ -14,6 +14,100 @@ import { Calendar, MapPin, Users, Pizza, ExternalLink, X, RefreshCw, AlertCircle
 // API configuration for the Vercel Backend Proxy
 const API_BASE = import.meta.env.DEV ? 'http://localhost:3000' : '';
 
+/** 
+ * Function : extractAriaLabelsAsCategory()
+ * Cleans the category - item.p22 in the fetchEngageEvents()
+*/
+
+function extractAriaLabelsAsCategory(html) {
+  if (!html || typeof html !== "string") return "";
+
+  const doc = new DOMParser().parseFromString(html, "text/html");
+
+  const labels = Array.from(doc.querySelectorAll("[aria-label]"))
+    .map((el) => (el.getAttribute("aria-label") || "").trim())
+    .filter(Boolean)
+    .map((label) =>
+      label
+        // "Lecture slash Presentation" -> "Lecture / Presentation"
+        .replace(/\s+slash\s+/gi, " / ")
+        // cleanup spacing around slashes: "A  /  B" -> "A / B"
+        .replace(/\s*\/\s*/g, " / ")
+        // collapse multiple spaces
+        .replace(/\s+/g, " ")
+        .trim()
+    );
+
+  // de-duplicate (case-insensitive) while preserving order
+  const unique = [];
+  const seen = new Set();
+  for (const l of labels) {
+    const key = l.toLowerCase();
+    if (!seen.has(key)) {
+      seen.add(key);
+      unique.push(l);
+    }
+  }
+
+  return unique.join(" / ");
+}
+
+/**
+ * Function : decodeHtmlEntities & parseEngageSingleDate
+ * Cleans the Date and Time for dates - item.p4 in the fetchEngageEvents()
+ */
+
+function decodeHtmlEntities(str) {
+  if (!str || typeof str !== "string") return "";
+  const txt = document.createElement("textarea");
+  txt.innerHTML = str; // decodes &ndash; etc.
+  return txt.value;
+}
+
+function parseEngageSingleDate(html) {
+  if (!html || typeof html !== "string") {
+    return { date: null, display: "" };
+  }
+
+  // Decode entities first (so &ndash; becomes –)
+  const decoded = decodeHtmlEntities(html);
+
+  // Parse the HTML and extract visible text
+  const doc = new DOMParser().parseFromString(decoded, "text/html");
+
+  // Join all <p> lines (some responses wrap the same date across multiple <p>)
+  const text =
+    Array.from(doc.body.querySelectorAll("p"))
+      .map((p) => (p.textContent || "").trim())
+      .filter(Boolean)
+      .join(" ")
+      .replace(/\s+/g, " ")
+      .trim() || (doc.body.textContent || "").replace(/\s+/g, " ").trim();
+
+  // Remove any trailing dash if API includes it (e.g., "... AM –")
+  const cleaned = text.replace(/\s*[–-]\s*$/, "").trim();
+
+  // Parse as Date (browser parses this format well in practice)
+  const d = cleaned ? new Date(cleaned) : null;
+  const valid = d instanceof Date && !isNaN(d);
+
+  // Nice formatting
+  const display = valid
+    ? d.toLocaleString(undefined, {
+        weekday: "short",
+        month: "short",
+        day: "numeric",
+        year: "numeric",
+        hour: "numeric",
+        minute: "2-digit",
+      })
+    : cleaned; // fallback if parsing fails
+
+  return { date: valid ? d : null, display };
+}
+
+
+
 /**
  * Fetches events from the USC Engage API via `/api/events`.
  * Used by: loadEvents()
@@ -39,19 +133,21 @@ const fetchEngageEvents = async () => {
     const actualEvents = data.filter(item => {
       return item.p0 === 'false' && item.p1 && item.p3 && item.listingSeparator !== 'true';
     });
-
     // Parse events WITHOUT checking for free food in initial load
     const parsedEvents = actualEvents.map(item => {
+      const dateInfo = parseEngageSingleDate(item.p4)
       return {
         id: item.p1,
         title: item.p3,
-        dates: item.p4?.replace(/<[^>]*>/g, '').trim() || '',
-        location: item.p6 || 'Location TBA',
+        // dates: item.p4?.replace(/<[^>]*>/g, "").trim() || "",
+        dates: dateInfo.display,
+        location: item.p6 || "Location TBA",
         imageUrl: item.p11 ? `https://engage.usc.edu${item.p11}` : null,
-        organizer: item.p9 || 'Unknown',
-        category: item.p22?.replace(/<[^>]*>/g, '').trim() || '',
+        organizer: item.p9 || "Unknown",
+        // category: item.p22?.replace(/<[^>]*>/g, '').trim() || '',
+        category: extractAriaLabelsAsCategory(item.p22),
         detailUrl: `https://engage.usc.edu${item.p18}`,
-        attendees: item.p10 || '0',
+        attendees: item.p10 || "0",
         hasFreeFood: false, // Initially false
         scanned: false, // Track if we've checked this event
       };
@@ -100,42 +196,118 @@ const scanEventForFreeFood = async (eventId) => {
       // Clone so we can safely remove UI-only elements before extracting text
       const clone = eventDetailsCard.cloneNode(true);
       // Remove title and decorative border to avoid noisy text
-      clone.querySelector('.card-block__title')?.remove();
-      clone.querySelector('.card-border')?.remove();
+      clone.querySelector(".card-block__title")?.remove();
+      clone.querySelector(".card-border")?.remove();
       // 5) Extract human-readable text for keyword scanning
-      description = clone.textContent.trim();
 
+      // Remove "Copy Link" button block
+      clone.querySelectorAll('a[aria-label*="Copy link"]').forEach((el) => {
+        el.closest("div")?.remove();
+      });
+
+      clone.querySelectorAll("br").forEach((br) => br.replaceWith("\n"));
+
+      clone.querySelectorAll("p, div, li, h1, h2, h3, h4").forEach((el) => {
+        el.insertAdjacentText("beforebegin", "\n");
+        el.insertAdjacentText("afterend", "\n");
+      });
+
+      // Safety: remove any remaining buttons
+      clone.querySelectorAll("a.btn, button").forEach((el) => el.remove());
+
+      // Remove empty divs / comments / whitespace-only nodes
+      clone.querySelectorAll("div").forEach((div) => {
+        if (!div.textContent.trim()) {
+          div.remove();
+        }
+      });
+
+      description = clone.textContent
+        .replace(/\u00A0/g, " ")
+        .replace(/[ \t]+\n/g, "\n")
+        .replace(/\n[ \t]+/g, "\n")
+        .replace(/\n{3,}/g, "\n\n")
+        .trim();
+
+
+      
       // 6) Keyword scan to infer free-food presence
       const descLower = description.toLowerCase();
       const freeFoodKeywords = [
         // Explicit "free" phrases
-        'free food', 'free pizza', 'free lunch', 'free dinner', 'free breakfast',
-        'free snacks', 'free refreshments', 'free drinks', 'free beverages',
-        'free coffee', 'free tea', 'free boba', 'free bubble tea',
-        'free cookies', 'free dessert', 'free ice cream', 'free gelato',
-        'free pastries', 'free donuts', 'free bagels', 'free cupcakes', 'free brownies',
-        'free sandwiches', 'free subs', 'free burritos', 'free tacos', 'free wings',
-        'free bbq', 'free ramen', 'free sushi',
+        "free food",
+        "free pizza",
+        "free lunch",
+        "free dinner",
+        "free breakfast",
+        "free snacks",
+        "free refreshments",
+        "free drinks",
+        "free beverages",
+        "free coffee",
+        "free tea",
+        "free boba",
+        "free bubble tea",
+        "free cookies",
+        "free dessert",
+        "free ice cream",
+        "free gelato",
+        "free pastries",
+        "free donuts",
+        "free bagels",
+        "free cupcakes",
+        "free brownies",
+        "free sandwiches",
+        "free subs",
+        "free burritos",
+        "free tacos",
+        "free wings",
+        "free bbq",
+        "free ramen",
+        "free sushi",
 
         // "Provided/served" phrasing
-        'food provided', 'snacks provided', 'drinks provided', 'refreshments provided',
-        'meal provided', 'lunch provided', 'dinner provided', 'breakfast provided',
-        'food will be served', 'refreshments will be served', 'snacks will be served', 'drinks will be served',
-        'pizza provided',
+        "food provided",
+        "snacks provided",
+        "drinks provided",
+        "refreshments provided",
+        "meal provided",
+        "lunch provided",
+        "dinner provided",
+        "breakfast provided",
+        "food will be served",
+        "refreshments will be served",
+        "snacks will be served",
+        "drinks will be served",
+        "pizza provided",
 
         // Complimentary/catering
-        'complimentary food', 'complimentary meal', 'complimentary refreshments',
-        'catering provided', 'catered',
+        "complimentary food",
+        "complimentary meal",
+        "complimentary refreshments",
+        "catering provided",
+        "catered",
 
         // Light food terms often used in events
-        'light refreshments', 'appetizers', "hors d'oeuvres", 'treats', 'bites', 'munchies',
+        "light refreshments",
+        "appetizers",
+        "hors d'oeuvres",
+        "treats",
+        "bites",
+        "munchies",
 
         // Broader terms (may increase recall; watch false positives)
-        'confections', 'cereals', 'food', 'boba', 'vegan', 'snacks', 'drinks'
+        "confections",
+        "cereals",
+        "food",
+        "boba",
+        "vegan",
+        "snacks",
+        "drinks",
       ];
-      const matched = freeFoodKeywords.filter(k => descLower.includes(k));
+      const matched = freeFoodKeywords.filter((k) => descLower.includes(k));
       hasFreeFood = matched.length > 0;
-      console.debug('[scanEventForFreeFood] Keyword matches:', matched);
+      console.debug("[scanEventForFreeFood] Keyword matches:", matched);
     }
 
     return { description, hasFreeFood };
@@ -564,7 +736,7 @@ function EventCard({ event, onClick }) {
         <h3 className="font-bold text-lg text-gray-900 mb-2 line-clamp-2">
           {event.title}
         </h3>
-
+      
         <div className="space-y-2 text-sm text-gray-600">
           <div className="flex items-start gap-2">
             <Calendar className="w-4 h-4 mt-0.5 flex-shrink-0" />
