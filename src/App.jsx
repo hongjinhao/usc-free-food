@@ -346,7 +346,6 @@ function App() {
     setError(null);
     try {
       const data = await fetchEngageEvents();
-      // console.log(data)
       setEvents(data); // store all events in events
       setLastUpdated(new Date()); // last updated timestamp
       setScannedCount(0); // reset count
@@ -734,7 +733,7 @@ function EventCard({ event, onClick }) {
       </div>
 
       <div className="p-4">
-        <h3 className="font-bold text-lg text-black-900 mb-2 line-clamp-2">
+        <h3 className="font-bold text-lg text-gray-900 mb-2 line-clamp-2">
           {event.title}
         </h3>
       
