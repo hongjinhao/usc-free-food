@@ -206,7 +206,34 @@ async function scanEventDetails(eventId) {
       if (title) title.remove();
       if (border) border.remove();
 
-      description = eventDetailsCard.text.trim();
+      // Remove "Copy Link" buttons and their parent divs
+      eventDetailsCard
+        .querySelectorAll('a[aria-label*="Copy link"]')
+        .forEach((el) => {
+          const parent = el.parentNode;
+          if (parent) parent.remove();
+        });
+
+      // Remove all buttons and links with btn class
+      eventDetailsCard
+        .querySelectorAll("a.btn, button")
+        .forEach((el) => el.remove());
+
+      // Remove empty divs
+      eventDetailsCard.querySelectorAll("div").forEach((div) => {
+        if (!div.textContent.trim()) {
+          div.remove();
+        }
+      });
+
+      // Extract text content
+      description = eventDetailsCard.text
+        .replace(/\u00A0/g, " ") // non-breaking spaces to regular spaces
+        .replace(/[ \t]+\n/g, "\n") // remove trailing spaces before newlines
+        .replace(/\n[ \t]+/g, "\n") // remove leading spaces after newlines
+        .replace(/\n{3,}/g, "\n\n") // collapse multiple newlines to double
+        .replace(/[ \t]+/g, " ") // collapse multiple spaces to single
+        .trim();
 
       console.log(
         "[scanEventDetails] description peak: ",
