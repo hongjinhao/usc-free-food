@@ -13,7 +13,7 @@ Requirements:
 	• Fast load times 
 	• Use React, JS
 
-Libraries/Framework used: React, Vite, Tailwind, Vercel (backend proxy), Supabase (database)
+Libraries/Framework used: React, Vite, Tailwind, Supabase (database), Vercel (frontend, cron job)
 Languages: JS, HTML, CSS
 
 Plan:
@@ -34,11 +34,13 @@ Plan:
 		○ Time not displayed right, tags not displayed right
 		○ Highlight matching keywords
 	• Setup Supabase
-		○ Working on this… 
         - no need for backend proxy now since the database serves as the backend proxy
+        *Make sure to adjust app.jsx to reflect this
+        - done, create table, setup security policies, configure supabase env, add .env 
+    • Clean information before storing in database
+        - Done, using regex and html parser
 	• Setup backend cron job with vercel 
-		○ Configure vercel cron
-		○ Setup environment variables 
+		○ Done, configure vercel cron to upsert database table every day, setup cron config
 	• Update frontend (app.jsx) to read from supabase 
 	• Create .env file 
 	• Test with real data
@@ -53,4 +55,35 @@ But for the individual events and the details of the event. Is there also an API
 	• Yes, link is here: https://engage.usc.edu/resed/rsvp_boot?id=408945
 	• But it doesn't return JSON, it returns HTML, CSS and JS. 
 	• You call the url with the eventID as a query and you get back all the server generated html, css and js. 
-The very 1st object received is a html document containing the text details. 
+	• The very 1st object received is a html document containing the text details. 
+
+hongj@jinhao:~/usc-free-food$ tree -L 2 -a
+.
+├── .env
+├── .git
+├── .gitignore
+├── .prettierignore
+├── .vercel
+├── .vite
+├── README.md
+├── api
+│   ├── cron-scan-events.js
+│   ├── event-details.js
+│   └── events.js
+├── docs
+├── eslint.config.js
+├── index.html
+├── individualevent.html
+├── node_modules
+├── package-lock.json
+├── package.json
+├── public
+├── src
+│   ├── App.jsx
+│   ├── assets
+│   ├── index.css
+│   └── main.jsx
+├── utils
+│   └── freeFoodKeywords.js
+├── vercel.json
+└── vite.config.js
