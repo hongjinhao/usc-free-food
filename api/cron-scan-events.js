@@ -1,14 +1,14 @@
 import { createClient } from "@supabase/supabase-js";
 import { parse } from "node-html-parser";
 import {
-    checkFreeFood,
-    getMatchedKeywords,
+  checkFreeFood,
+  getMatchedKeywords,
 } from "../utils/freeFoodKeywords.js";
 
 // Initialize Supabase with SERVICE ROLE key (has write permissions)
 const supabase = createClient(
-    process.env.SUPABASE_URL,
-    process.env.SUPABASE_SERVICE_ROLE_KEY
+  process.env.SUPABASE_URL,
+  process.env.SUPABASE_SERVICE_ROLE_KEY
 );
 
 /**
@@ -16,37 +16,37 @@ const supabase = createClient(
  * Used in fetchEngageEvents()
  */
 function extractAriaLabelsAsCategory(html) {
-    if (!html || typeof html !== "string") return "";
+  if (!html || typeof html !== "string") return "";
 
-    const root = parse(html);
-    const elements = root.querySelectorAll("[aria-label]");
+  const root = parse(html);
+  const elements = root.querySelectorAll("[aria-label]");
 
-    const labels = elements
-        .map((el) => (el.getAttribute("aria-label") || "").trim())
-        .filter(Boolean)
-        .map((label) =>
-            label
-                // "Lecture slash Presentation" -> "Lecture / Presentation"
-                .replace(/\s+slash\s+/gi, " / ")
-                // cleanup spacing around slashes: "A  /  B" -> "A / B"
-                .replace(/\s*\/\s*/g, " / ")
-                // collapse multiple spaces
-                .replace(/\s+/g, " ")
-                .trim()
-        );
+  const labels = elements
+    .map((el) => (el.getAttribute("aria-label") || "").trim())
+    .filter(Boolean)
+    .map((label) =>
+      label
+        // "Lecture slash Presentation" -> "Lecture / Presentation"
+        .replace(/\s+slash\s+/gi, " / ")
+        // cleanup spacing around slashes: "A  /  B" -> "A / B"
+        .replace(/\s*\/\s*/g, " / ")
+        // collapse multiple spaces
+        .replace(/\s+/g, " ")
+        .trim()
+    );
 
-    // remove duplicates (case-insensitive) while preserving order
-    const unique = [];
-    const seen = new Set();
-    for (const l of labels) {
-        const key = l.toLowerCase();
-        if (!seen.has(key)) {
-            seen.add(key);
-            unique.push(l);
-        }
+  // remove duplicates (case-insensitive) while preserving order
+  const unique = [];
+  const seen = new Set();
+  for (const l of labels) {
+    const key = l.toLowerCase();
+    if (!seen.has(key)) {
+      seen.add(key);
+      unique.push(l);
     }
+  }
 
-    return unique.join(" / ");
+  return unique.join(" / ");
 }
 
 /**
@@ -54,67 +54,67 @@ function extractAriaLabelsAsCategory(html) {
  * Used in parseEngageSingleDate()
  */
 function decodeHtmlEntities(str) {
-    if (!str || typeof str !== "string") return "";
+  if (!str || typeof str !== "string") return "";
 
-    return str
-        .replace(/&amp;/g, "&")
-        .replace(/&lt;/g, "<")
-        .replace(/&gt;/g, ">")
-        .replace(/&quot;/g, '"')
-        .replace(/&#39;/g, "'")
-        .replace(/&ndash;/g, "–")
-        .replace(/&mdash;/g, "—")
-        .replace(/&nbsp;/g, " ")
-        .replace(/&#(\d+);/g, (match, dec) => String.fromCharCode(dec))
-        .replace(/&#x([0-9a-f]+);/gi, (match, hex) =>
-            String.fromCharCode(parseInt(hex, 16))
-        );
+  return str
+    .replace(/&amp;/g, "&")
+    .replace(/&lt;/g, "<")
+    .replace(/&gt;/g, ">")
+    .replace(/&quot;/g, '"')
+    .replace(/&#39;/g, "'")
+    .replace(/&ndash;/g, "–")
+    .replace(/&mdash;/g, "—")
+    .replace(/&nbsp;/g, " ")
+    .replace(/&#(\d+);/g, (match, dec) => String.fromCharCode(dec))
+    .replace(/&#x([0-9a-f]+);/gi, (match, hex) =>
+      String.fromCharCode(parseInt(hex, 16))
+    );
 }
 
 /**
  * Parses date from event list API
  */
 function parseEngageSingleDate(html) {
-    if (!html || typeof html !== "string") {
-        return { date: null, display: "" };
-    }
+  if (!html || typeof html !== "string") {
+    return { date: null, display: "" };
+  }
 
-    // Decode entities first (so &ndash; becomes –)
-    const decoded = decodeHtmlEntities(html);
-    const root = parse(decoded);
+  // Decode entities first (so &ndash; becomes –)
+  const decoded = decodeHtmlEntities(html);
+  const root = parse(decoded);
 
-    // Join all <p> lines (some responses wrap the same date across multiple <p>)
-    const paragraphs = root.querySelectorAll("p");
+  // Join all <p> lines (some responses wrap the same date across multiple <p>)
+  const paragraphs = root.querySelectorAll("p");
 
-    const text =
-        paragraphs.length > 0
-            ? paragraphs
-                  .map((p) => p.text.trim())
-                  .filter(Boolean)
-                  .join(" ")
-                  .replace(/\s+/g, " ")
-                  .trim()
-            : root.text.replace(/\s+/g, " ").trim();
+  const text =
+    paragraphs.length > 0
+      ? paragraphs
+          .map((p) => p.text.trim())
+          .filter(Boolean)
+          .join(" ")
+          .replace(/\s+/g, " ")
+          .trim()
+      : root.text.replace(/\s+/g, " ").trim();
 
-    const cleaned = text.replace(/\s*[–-]\s*$/, "").trim();
+  const cleaned = text.replace(/\s*[–-]\s*$/, "").trim();
 
-    // Parse as Date (browser parses this format well in practice)
-    const d = cleaned ? new Date(cleaned) : null;
-    const valid = d instanceof Date && !isNaN(d);
+  // Parse as Date (browser parses this format well in practice)
+  const d = cleaned ? new Date(cleaned) : null;
+  const valid = d instanceof Date && !isNaN(d);
 
-    // Nice formatting
-    const display = valid
-        ? d.toLocaleString(undefined, {
-              weekday: "short",
-              month: "short",
-              day: "numeric",
-              year: "numeric",
-              hour: "numeric",
-              minute: "2-digit",
-          })
-        : cleaned; // fallback if parsing fails
+  // Nice formatting
+  const display = valid
+    ? d.toLocaleString(undefined, {
+        weekday: "short",
+        month: "short",
+        day: "numeric",
+        year: "numeric",
+        hour: "numeric",
+        minute: "2-digit",
+      })
+    : cleaned; // fallback if parsing fails
 
-    return { date: valid ? d : null, display };
+  return { date: valid ? d : null, display };
 }
 
 /**
@@ -125,52 +125,50 @@ function parseEngageSingleDate(html) {
  * Notes: Async function; resolves with normalized event data for the database
  */
 async function fetchEngageEvents() {
-    const url =
-        "https://engage.usc.edu/mobile_ws/v17/mobile_events_list?range=0&limit=100&filter4_contains=OR&filter4_notcontains=OR&order=undefined&search_word=";
+  const url =
+    "https://engage.usc.edu/mobile_ws/v17/mobile_events_list?range=0&limit=100&filter4_contains=OR&filter4_notcontains=OR&order=undefined&search_word=";
 
-    try {
-        const response = await fetch(url);
+  try {
+    const response = await fetch(url);
 
-        if (!response.ok) {
-            throw new Error(
-                `USC event list API returned status ${response.status}`
-            );
-        }
-
-        const data = await response.json();
-        // Filter out separator items (not actual events)
-        // separator items are rows like "Ongoing" or the dates
-        const actualEvents = data.filter((item) => {
-            return (
-                item.p0 === "false" &&
-                item.p1 &&
-                item.p3 &&
-                item.listingSeparator !== "true"
-            );
-        });
-
-        console.log(`Fetched ${actualEvents.length} events from USC API`);
-
-        return actualEvents.map((item) => {
-            const dateInfo = parseEngageSingleDate(item.p4);
-            return {
-                id: item.p1,
-                title: item.p3,
-                dates: dateInfo.display,
-                location: item.p6 || "Location TBA",
-                imageUrl: item.p11 ? `https://engage.usc.edu${item.p11}` : null,
-                organizer: item.p9 || "Unknown",
-                category: extractAriaLabelsAsCategory(item.p22),
-                detailUrl: `https://engage.usc.edu${item.p18}`,
-                attendees: item.p10 || "0",
-            };
-        });
-    } catch (error) {
-        console.error("Error fetching from events list API:", error);
-        throw new Error(
-            `Failed to fetch events from events list API: ${error.message}`
-        );
+    if (!response.ok) {
+      throw new Error(`USC event list API returned status ${response.status}`);
     }
+
+    const data = await response.json();
+    // Filter out separator items (not actual events)
+    // separator items are rows like "Ongoing" or the dates
+    const actualEvents = data.filter((item) => {
+      return (
+        item.p0 === "false" &&
+        item.p1 &&
+        item.p3 &&
+        item.listingSeparator !== "true"
+      );
+    });
+
+    console.log(`Fetched ${actualEvents.length} events from USC API`);
+
+    return actualEvents.map((item) => {
+      const dateInfo = parseEngageSingleDate(item.p4);
+      return {
+        id: item.p1,
+        title: item.p3,
+        dates: dateInfo.display,
+        location: item.p6 || "Location TBA",
+        imageUrl: item.p11 ? `https://engage.usc.edu${item.p11}` : null,
+        organizer: item.p9 || "Unknown",
+        category: extractAriaLabelsAsCategory(item.p22),
+        detailUrl: `https://engage.usc.edu${item.p18}`,
+        attendees: item.p10 || "0",
+      };
+    });
+  } catch (error) {
+    console.error("Error fetching from events list API:", error);
+    throw new Error(
+      `Failed to fetch events from events list API: ${error.message}`
+    );
+  }
 }
 
 /**
@@ -182,55 +180,53 @@ async function fetchEngageEvents() {
  * Returns: Promise<{ description: string, hasFreeFood: boolean }>
  */
 async function scanEventDetails(eventId) {
-    const url = `https://engage.usc.edu/rsvp_boot?id=${eventId}`;
+  const url = `https://engage.usc.edu/rsvp_boot?id=${eventId}`;
 
-    try {
-        const response = await fetch(url);
+  try {
+    const response = await fetch(url);
 
-        if (!response.ok) {
-            throw new Error("Failed to fetch details");
-        }
-
-        // 1) Read raw HTML returned by the Engage event details page
-        const html = await response.text();
-
-        // 3) Parse HTML into a DOM Document so we can query it like real DOM
-        const root = parse(html);
-        // 4) Grab the specific card block that contains event details content
-        const eventDetailsCard = root.querySelector(
-            "#event_details .card-block"
-        );
-
-        let description = "No description available";
-        let hasFreeFood = false;
-
-        if (eventDetailsCard) {
-            const title = eventDetailsCard.querySelector(".card-block__title");
-            const border = eventDetailsCard.querySelector(".card-border");
-            if (title) title.remove();
-            if (border) border.remove();
-
-            description = eventDetailsCard.text.trim();
-
-            console.log(
-                "[scanEventDetails] description peak: ",
-                description.substring(0, 100)
-            );
-
-            hasFreeFood = checkFreeFood(description);
-
-            // For debugging in development
-            if (process.env.NODE_ENV === "development") {
-                const matches = getMatchedKeywords(description);
-                console.debug(`[Event ${eventId}] Matches:`, matches);
-            }
-        }
-
-        return { description, hasFreeFood };
-    } catch (error) {
-        console.error(`Error scanning event ${eventId}:`, error);
-        return { description: "Error loading description", hasFreeFood: false };
+    if (!response.ok) {
+      throw new Error("Failed to fetch details");
     }
+
+    // 1) Read raw HTML returned by the Engage event details page
+    const html = await response.text();
+
+    // 3) Parse HTML into a DOM Document so we can query it like real DOM
+    const root = parse(html);
+    // 4) Grab the specific card block that contains event details content
+    const eventDetailsCard = root.querySelector("#event_details .card-block");
+
+    let description = "No description available";
+    let hasFreeFood = false;
+
+    if (eventDetailsCard) {
+      const title = eventDetailsCard.querySelector(".card-block__title");
+      const border = eventDetailsCard.querySelector(".card-border");
+      if (title) title.remove();
+      if (border) border.remove();
+
+      description = eventDetailsCard.text.trim();
+
+      console.log(
+        "[scanEventDetails] description peak: ",
+        description.substring(0, 100)
+      );
+
+      hasFreeFood = checkFreeFood(description);
+
+      // For debugging in development
+      if (process.env.NODE_ENV === "development") {
+        const matches = getMatchedKeywords(description);
+        console.debug(`[Event ${eventId}] Matches:`, matches);
+      }
+    }
+
+    return { description, hasFreeFood };
+  } catch (error) {
+    console.error(`Error scanning event ${eventId}:`, error);
+    return { description: "Error loading description", hasFreeFood: false };
+  }
 }
 
 /**
@@ -239,85 +235,86 @@ async function scanEventDetails(eventId) {
  * @param res Outgoing response used for cron logs and status
  */
 export default async function handler(req, res) {
-    // Guard against unauthorized cron invocations
-    // Verify cron secret (security measure)
-    const authHeader = req.headers.authorization;
-    if (authHeader !== `Bearer ${process.env.CRON_SECRET}`) {
-        return res.status(401).json({ error: "Unauthorized" });
-    }
+  // Guard against unauthorized cron invocations
+  // Verify cron secret (security measure)
+  const authHeader = req.headers.authorization;
+  if (authHeader !== `Bearer ${process.env.CRON_SECRET}`) {
+    return res.status(401).json({ error: "Unauthorized" });
+  }
 
-    console.log("Starting cron job...");
+  console.log("Starting cron job...");
 
-    try {
-        // Step 1: Fetch events from event list API
-        const events = await fetchEngageEvents();
-        console.log(`Fetched ${events.length} events`);
+  try {
+    // Step 1: Fetch events from event list API
+    const events = await fetchEngageEvents();
+    console.log(`Fetched ${events.length} events`);
 
-        // Step 2: Scan events in batches to avoid hammering the site
-        const batchSize = 5;
-        const scannedEvents = [];
+    // Step 2: Scan events in batches to avoid hammering the site
+    const batchSize = 5;
+    const scannedEvents = [];
 
-        for (let i = 0; i < events.length; i += batchSize) {
-            const batch = events.slice(i, i + batchSize);
+    for (let i = 0; i < events.length; i += batchSize) {
+      const batch = events.slice(i, i + batchSize);
 
-            const results = await Promise.all(
-                batch.map(async (event) => {
-                    const details = await scanEventDetails(event.id);
-                    return {
-                        ...event,
-                        description: details.description,
-                        hasFreeFood: details.hasFreeFood,
-                        scanned: true,
-                        lastScannedAt: new Date().toISOString(),
-                    };
-                })
-            );
-
-            scannedEvents.push(...results);
-
-            // Small delay between batches to be polite to the source
-            await new Promise((resolve) => setTimeout(resolve, 200));
-        }
-
-        console.log(`Scanned ${scannedEvents.length} events`);
-
-        // Step 3: Upsert into Supabase (insert or update)
-        const dbEvents = scannedEvents.map((e) => ({
-            id: e.id,
-            title: e.title,
-            dates: e.dates,
-            location: e.location,
-            image_url: e.imageUrl,
-            organizer: e.organizer,
-            category: e.category,
-            detail_url: e.detailUrl,
-            attendees: e.attendees,
-            description: e.description,
-            has_free_food: e.hasFreeFood,
+      const results = await Promise.all(
+        batch.map(async (event) => {
+          const details = await scanEventDetails(event.id);
+          return {
+            ...event,
+            description: details.description,
+            hasFreeFood: details.hasFreeFood,
             scanned: true,
-            last_scanned_at: e.lastScannedAt,
-            updated_at: new Date().toISOString(),
-        }));
+            lastScannedAt: new Date().toISOString(),
+          };
+        })
+      );
 
-        const { data, error } = await supabase
-            .from("events")
-            .upsert(dbEvents, { onConflict: "id" });
+      scannedEvents.push(...results);
 
-        if (error) throw error;
-
-        const freeFoodCount = scannedEvents.filter((e) => e.hasFreeFood).length;
-
-        console.log("Cron job completed successfully");
-
-        // Return a concise payload for Vercel cron logging
-        return res.status(200).json({
-            success: true,
-            totalEvents: scannedEvents.length,
-            freeFoodEvents: freeFoodCount,
-            timestamp: new Date().toISOString(),
-        });
-    } catch (error) {
-        console.error("Cron job error:", error);
-        return res.status(500).json({ error: error.message });
+      // Small delay between batches to be polite to the source
+      await new Promise((resolve) => setTimeout(resolve, 200));
     }
+
+    console.log(`Scanned ${scannedEvents.length} events`);
+
+    // Step 3: Upsert into Supabase (insert or update)
+    const dbEvents = scannedEvents.map((e, index) => ({
+      id: e.id,
+      title: e.title,
+      dates: e.dates,
+      location: e.location,
+      image_url: e.imageUrl,
+      organizer: e.organizer,
+      category: e.category,
+      detail_url: e.detailUrl,
+      attendees: e.attendees,
+      description: e.description,
+      has_free_food: e.hasFreeFood,
+      scanned: true,
+      last_scanned_at: e.lastScannedAt,
+      updated_at: new Date().toISOString(),
+      order_index: index,
+    }));
+
+    const { data, error } = await supabase
+      .from("events")
+      .upsert(dbEvents, { onConflict: "id" });
+
+    if (error) throw error;
+
+    const freeFoodCount = scannedEvents.filter((e) => e.hasFreeFood).length;
+
+    console.log("Cron job completed successfully");
+
+    // Return a concise payload for Vercel cron logging
+    return res.status(200).json({
+      success: true,
+      totalEvents: scannedEvents.length,
+      freeFoodEvents: freeFoodCount,
+      timestamp: new Date().toISOString(),
+    });
+  } catch (error) {
+    console.error("Cron job error:", error);
+    return res.status(500).json({ error: error.message });
+  }
 }
