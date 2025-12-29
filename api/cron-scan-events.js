@@ -1,4 +1,9 @@
-import { createClient } from '@supabase/supabase-js';
+import { createClient } from "@supabase/supabase-js";
+import { parse } from "node-html-parser";
+import {
+    checkFreeFood,
+    getMatchedKeywords,
+} from "../utils/freeFoodKeywords.js";
 
 // Initialize Supabase with SERVICE ROLE key (has write permissions)
 const supabase = createClient(
@@ -6,99 +11,111 @@ const supabase = createClient(
     process.env.SUPABASE_SERVICE_ROLE_KEY
 );
 
-
-/** 
- * Function : extractAriaLabelsAsCategory()
- * Cleans the category - item.p22 in the fetchEngageEvents()
-*/
-
+/**
+ * Cleans the tags (p22) from event details API
+ * Used in fetchEngageEvents()
+ */
 function extractAriaLabelsAsCategory(html) {
-  if (!html || typeof html !== "string") return "";
+    if (!html || typeof html !== "string") return "";
 
-  const doc = new DOMParser().parseFromString(html, "text/html");
+    const root = parse(html);
+    const elements = root.querySelectorAll("[aria-label]");
 
-  const labels = Array.from(doc.querySelectorAll("[aria-label]"))
-    .map((el) => (el.getAttribute("aria-label") || "").trim())
-    .filter(Boolean)
-    .map((label) =>
-      label
-        // "Lecture slash Presentation" -> "Lecture / Presentation"
-        .replace(/\s+slash\s+/gi, " / ")
-        // cleanup spacing around slashes: "A  /  B" -> "A / B"
-        .replace(/\s*\/\s*/g, " / ")
-        // collapse multiple spaces
-        .replace(/\s+/g, " ")
-        .trim()
-    );
+    const labels = elements
+        .map((el) => (el.getAttribute("aria-label") || "").trim())
+        .filter(Boolean)
+        .map((label) =>
+            label
+                // "Lecture slash Presentation" -> "Lecture / Presentation"
+                .replace(/\s+slash\s+/gi, " / ")
+                // cleanup spacing around slashes: "A  /  B" -> "A / B"
+                .replace(/\s*\/\s*/g, " / ")
+                // collapse multiple spaces
+                .replace(/\s+/g, " ")
+                .trim()
+        );
 
-  // de-duplicate (case-insensitive) while preserving order
-  const unique = [];
-  const seen = new Set();
-  for (const l of labels) {
-    const key = l.toLowerCase();
-    if (!seen.has(key)) {
-      seen.add(key);
-      unique.push(l);
+    // remove duplicates (case-insensitive) while preserving order
+    const unique = [];
+    const seen = new Set();
+    for (const l of labels) {
+        const key = l.toLowerCase();
+        if (!seen.has(key)) {
+            seen.add(key);
+            unique.push(l);
+        }
     }
-  }
 
-  return unique.join(" / ");
+    return unique.join(" / ");
 }
 
 /**
- * Function : decodeHtmlEntities & parseEngageSingleDate
- * Cleans the Date and Time for dates - item.p4 in the fetchEngageEvents()
+ * Cleans the Date and Time (p4) in the event details API response.
+ * Used in parseEngageSingleDate()
  */
-
 function decodeHtmlEntities(str) {
-  if (!str || typeof str !== "string") return "";
-  const txt = document.createElement("textarea");
-  txt.innerHTML = str; // decodes &ndash; etc.
-  return txt.value;
+    if (!str || typeof str !== "string") return "";
+
+    return str
+        .replace(/&amp;/g, "&")
+        .replace(/&lt;/g, "<")
+        .replace(/&gt;/g, ">")
+        .replace(/&quot;/g, '"')
+        .replace(/&#39;/g, "'")
+        .replace(/&ndash;/g, "–")
+        .replace(/&mdash;/g, "—")
+        .replace(/&nbsp;/g, " ")
+        .replace(/&#(\d+);/g, (match, dec) => String.fromCharCode(dec))
+        .replace(/&#x([0-9a-f]+);/gi, (match, hex) =>
+            String.fromCharCode(parseInt(hex, 16))
+        );
 }
 
+/**
+ * Parses date from event list API
+ */
 function parseEngageSingleDate(html) {
-  if (!html || typeof html !== "string") {
-    return { date: null, display: "" };
-  }
+    if (!html || typeof html !== "string") {
+        return { date: null, display: "" };
+    }
 
-  // Decode entities first (so &ndash; becomes –)
-  const decoded = decodeHtmlEntities(html);
+    // Decode entities first (so &ndash; becomes –)
+    const decoded = decodeHtmlEntities(html);
+    const root = parse(decoded);
 
-  // Parse the HTML and extract visible text
-  const doc = new DOMParser().parseFromString(decoded, "text/html");
+    // Join all <p> lines (some responses wrap the same date across multiple <p>)
+    const paragraphs = root.querySelectorAll("p");
 
-  // Join all <p> lines (some responses wrap the same date across multiple <p>)
-  const text =
-    Array.from(doc.body.querySelectorAll("p"))
-      .map((p) => (p.textContent || "").trim())
-      .filter(Boolean)
-      .join(" ")
-      .replace(/\s+/g, " ")
-      .trim() || (doc.body.textContent || "").replace(/\s+/g, " ").trim();
+    const text =
+        paragraphs.length > 0
+            ? paragraphs
+                  .map((p) => p.text.trim())
+                  .filter(Boolean)
+                  .join(" ")
+                  .replace(/\s+/g, " ")
+                  .trim()
+            : root.text.replace(/\s+/g, " ").trim();
 
-  // Remove any trailing dash if API includes it (e.g., "... AM –")
-  const cleaned = text.replace(/\s*[–-]\s*$/, "").trim();
+    const cleaned = text.replace(/\s*[–-]\s*$/, "").trim();
 
-  // Parse as Date (browser parses this format well in practice)
-  const d = cleaned ? new Date(cleaned) : null;
-  const valid = d instanceof Date && !isNaN(d);
+    // Parse as Date (browser parses this format well in practice)
+    const d = cleaned ? new Date(cleaned) : null;
+    const valid = d instanceof Date && !isNaN(d);
 
-  // Nice formatting
-  const display = valid
-    ? d.toLocaleString(undefined, {
-        weekday: "short",
-        month: "short",
-        day: "numeric",
-        year: "numeric",
-        hour: "numeric",
-        minute: "2-digit",
-      })
-    : cleaned; // fallback if parsing fails
+    // Nice formatting
+    const display = valid
+        ? d.toLocaleString(undefined, {
+              weekday: "short",
+              month: "short",
+              day: "numeric",
+              year: "numeric",
+              hour: "numeric",
+              minute: "2-digit",
+          })
+        : cleaned; // fallback if parsing fails
 
-  return { date: valid ? d : null, display };
+    return { date: valid ? d : null, display };
 }
-
 
 /**
  * Fetches events directly from the USC Engage API via `/api/events`.
@@ -108,27 +125,33 @@ function parseEngageSingleDate(html) {
  * Notes: Async function; resolves with normalized event data for the database
  */
 async function fetchEngageEvents() {
-    const url = 'https://engage.usc.edu/mobile_ws/v17/mobile_events_list?range=0&limit=100&filter4_contains=OR&filter4_notcontains=OR&order=undefined&search_word=';
+    const url =
+        "https://engage.usc.edu/mobile_ws/v17/mobile_events_list?range=0&limit=100&filter4_contains=OR&filter4_notcontains=OR&order=undefined&search_word=";
 
     try {
         const response = await fetch(url);
 
         if (!response.ok) {
-            throw new Error(`USC API returned status ${response.status}`);
+            throw new Error(
+                `USC event list API returned status ${response.status}`
+            );
         }
 
         const data = await response.json();
-
-        // Filter out separator items
-        // separator items are rows like "Ongoing" or the dates 
-        // they are not actual events. 
-        const actualEvents = data.filter(item => {
-            return item.p0 === 'false' && item.p1 && item.p3 && item.listingSeparator !== 'true';
+        // Filter out separator items (not actual events)
+        // separator items are rows like "Ongoing" or the dates
+        const actualEvents = data.filter((item) => {
+            return (
+                item.p0 === "false" &&
+                item.p1 &&
+                item.p3 &&
+                item.listingSeparator !== "true"
+            );
         });
 
         console.log(`Fetched ${actualEvents.length} events from USC API`);
 
-        return actualEvents.map(item => {
+        return actualEvents.map((item) => {
             const dateInfo = parseEngageSingleDate(item.p4);
             return {
                 id: item.p1,
@@ -140,12 +163,13 @@ async function fetchEngageEvents() {
                 category: extractAriaLabelsAsCategory(item.p22),
                 detailUrl: `https://engage.usc.edu${item.p18}`,
                 attendees: item.p10 || "0",
-          };
-          
+            };
         });
     } catch (error) {
-        console.error('Error fetching from events list API:', error);
-        throw new Error(`Failed to fetch events from events list API: ${error.message}`);
+        console.error("Error fetching from events list API:", error);
+        throw new Error(
+            `Failed to fetch events from events list API: ${error.message}`
+        );
     }
 }
 
@@ -158,108 +182,54 @@ async function fetchEngageEvents() {
  * Returns: Promise<{ description: string, hasFreeFood: boolean }>
  */
 async function scanEventDetails(eventId) {
-    const url = `https://engage.usc.edu/event/${eventId}`;
+    const url = `https://engage.usc.edu/rsvp_boot?id=${eventId}`;
 
     try {
         const response = await fetch(url);
 
         if (!response.ok) {
-            throw new Error('Failed to fetch details');
+            throw new Error("Failed to fetch details");
         }
 
         // 1) Read raw HTML returned by the Engage event details page
         const html = await response.text();
 
-        // 2) Create a DOMParser to convert the HTML string into a document
-        const parser = new DOMParser();
-
         // 3) Parse HTML into a DOM Document so we can query it like real DOM
-        const doc = parser.parseFromString(html, 'text/html');
-
+        const root = parse(html);
         // 4) Grab the specific card block that contains event details content
-        const eventDetailsCard = doc.querySelector('#event_details .card-block');
+        const eventDetailsCard = root.querySelector(
+            "#event_details .card-block"
+        );
 
-        let description = '';
+        let description = "No description available";
         let hasFreeFood = false;
 
         if (eventDetailsCard) {
-            // Clone so we can safely remove UI-only elements before extracting text
-            const clone = eventDetailsCard.cloneNode(true);
-            // Remove title and decorative border to avoid noisy text
-            clone.querySelector('.card-block__title')?.remove();
-            clone.querySelector('.card-border')?.remove();
-            // 5) Extract human-readable text for keyword scanning
-            clone
-              .querySelectorAll('a[aria-label*="Copy link"]')
-              .forEach((el) => {
-                el.closest("div")?.remove();
-              });
+            const title = eventDetailsCard.querySelector(".card-block__title");
+            const border = eventDetailsCard.querySelector(".card-border");
+            if (title) title.remove();
+            if (border) border.remove();
 
-            clone.querySelectorAll("br").forEach((br) => br.replaceWith("\n"));
+            description = eventDetailsCard.text.trim();
 
-            clone
-              .querySelectorAll("p, div, li, h1, h2, h3, h4")
-              .forEach((el) => {
-                el.insertAdjacentText("beforebegin", "\n");
-                el.insertAdjacentText("afterend", "\n");
-              });
+            console.log(
+                "[scanEventDetails] description peak: ",
+                description.substring(0, 100)
+            );
 
-            // Safety: remove any remaining buttons
-            clone
-              .querySelectorAll("a.btn, button")
-              .forEach((el) => el.remove());
+            hasFreeFood = checkFreeFood(description);
 
-            // Remove empty divs / comments / whitespace-only nodes
-            clone.querySelectorAll("div").forEach((div) => {
-              if (!div.textContent.trim()) {
-                div.remove();
-              }
-            });
-
-            description = clone.textContent
-              .replace(/\u00A0/g, " ")
-              .replace(/[ \t]+\n/g, "\n")
-              .replace(/\n[ \t]+/g, "\n")
-              .replace(/\n{3,}/g, "\n\n")
-              .trim();
-
-            // 6) Keyword scan to infer free-food presence
-            const descLower = description.toLowerCase();
-            const freeFoodKeywords = [
-                // Explicit "free" phrases
-                'free food', 'free pizza', 'free lunch', 'free dinner', 'free breakfast',
-                'free snacks', 'free refreshments', 'free drinks', 'free beverages',
-                'free coffee', 'free tea', 'free boba', 'free bubble tea',
-                'free cookies', 'free dessert', 'free ice cream', 'free gelato',
-                'free pastries', 'free donuts', 'free bagels', 'free cupcakes', 'free brownies',
-                'free sandwiches', 'free subs', 'free burritos', 'free tacos', 'free wings',
-                'free bbq', 'free ramen', 'free sushi',
-
-                // "Provided/served" phrasing
-                'food provided', 'snacks provided', 'drinks provided', 'refreshments provided',
-                'meal provided', 'lunch provided', 'dinner provided', 'breakfast provided',
-                'food will be served', 'refreshments will be served', 'snacks will be served', 'drinks will be served',
-                'pizza provided',
-
-                // Complimentary/catering
-                'complimentary food', 'complimentary meal', 'complimentary refreshments',
-                'catering provided', 'catered',
-
-                // Light food terms often used in events
-                'light refreshments', 'appetizers', "hors d'oeuvres", 'treats', 'bites', 'munchies',
-
-                // Broader terms (may increase recall; watch false positives)
-                'confections', 'cereals', 'food', 'boba', 'vegan', 'snacks', 'drinks'
-            ];
-            const matched = freeFoodKeywords.filter(k => descLower.includes(k));
-            hasFreeFood = matched.length > 0;
-            console.debug('[scanEventDetails] Keyword matches:', matched);
+            // For debugging in development
+            if (process.env.NODE_ENV === "development") {
+                const matches = getMatchedKeywords(description);
+                console.debug(`[Event ${eventId}] Matches:`, matches);
+            }
         }
 
         return { description, hasFreeFood };
     } catch (error) {
         console.error(`Error scanning event ${eventId}:`, error);
-        return { description: 'Error loading description', hasFreeFood: false };
+        return { description: "Error loading description", hasFreeFood: false };
     }
 }
 
@@ -273,10 +243,10 @@ export default async function handler(req, res) {
     // Verify cron secret (security measure)
     const authHeader = req.headers.authorization;
     if (authHeader !== `Bearer ${process.env.CRON_SECRET}`) {
-        return res.status(401).json({ error: 'Unauthorized' });
+        return res.status(401).json({ error: "Unauthorized" });
     }
 
-    console.log('Starting cron job...');
+    console.log("Starting cron job...");
 
     try {
         // Step 1: Fetch events from event list API
@@ -306,13 +276,13 @@ export default async function handler(req, res) {
             scannedEvents.push(...results);
 
             // Small delay between batches to be polite to the source
-            await new Promise(resolve => setTimeout(resolve, 200));
+            await new Promise((resolve) => setTimeout(resolve, 200));
         }
 
         console.log(`Scanned ${scannedEvents.length} events`);
 
         // Step 3: Upsert into Supabase (insert or update)
-        const dbEvents = scannedEvents.map(e => ({
+        const dbEvents = scannedEvents.map((e) => ({
             id: e.id,
             title: e.title,
             dates: e.dates,
@@ -330,14 +300,14 @@ export default async function handler(req, res) {
         }));
 
         const { data, error } = await supabase
-            .from('events')
-            .upsert(dbEvents, { onConflict: 'id' });
+            .from("events")
+            .upsert(dbEvents, { onConflict: "id" });
 
         if (error) throw error;
 
-        const freeFoodCount = scannedEvents.filter(e => e.hasFreeFood).length;
+        const freeFoodCount = scannedEvents.filter((e) => e.hasFreeFood).length;
 
-        console.log('Cron job completed successfully');
+        console.log("Cron job completed successfully");
 
         // Return a concise payload for Vercel cron logging
         return res.status(200).json({
@@ -346,9 +316,8 @@ export default async function handler(req, res) {
             freeFoodEvents: freeFoodCount,
             timestamp: new Date().toISOString(),
         });
-
     } catch (error) {
-        console.error('Cron job error:', error);
+        console.error("Cron job error:", error);
         return res.status(500).json({ error: error.message });
     }
 }
