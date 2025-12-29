@@ -3,16 +3,15 @@
     "framework": "vite",
     "installCommand": "npm install",
     "outputDirectory": "dist",
-    "rewrites": [
-        {
-            "source": "/api/:path*",
-            "destination": "/api/:path*"
+    "functions": {
+        "api/cron-scan-events.js": {
+            "maxDuration": 300
         }
-    ],
+    },
     "crons": [
         {
             "path": "/api/cron-scan-events",
-            "schedule": "0 8 * * *"
+            "schedule": "0 10 * * *"
         }
     ]
 }

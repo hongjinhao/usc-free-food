@@ -3,7 +3,7 @@
 A web application that helps USC students discover campus events with free food by automatically scanning and filtering USC Engage events.
 
 ![React](https://img.shields.io/badge/React-19.2-blue)
-![Vite](https://img.shields.io/badge/Vite-646CFF)
+![Vite](https://img.shields.io/badge/Vite-7.3-646CFF)
 ![Tailwind CSS](https://img.shields.io/badge/Tailwind-4.1-38B2AC)
 ![License](https://img.shields.io/badge/license-MIT-green)
 

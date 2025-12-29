@@ -112,6 +112,8 @@ A web application to show all USC Engage events with free food detection capabil
 - Custom domain name
 - Gather user feedback
 - Implement improvements based on feedback
+  - filter by date
+  - identify what type of food/ highlight keyword matched
 
 
 ## Architecture Flow
