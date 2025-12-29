@@ -1,95 +1,154 @@
-Website to show all the free food engagesc events Call this url: https://engage.usc.edu/events.
-	- shows an overview of all events. Each event has the title, a picture, date time, tags and organizer.
-	- This url is a public website, no sign in or log in is required.
-Click into the event to see more details: e.g. https://engage.usc.edu/resed/rsvp_boot?id=408945
-	- This page has a description of the event 
-	- e.g. "Trojans, to close out week 0, join us for a night of trivia! Come to Tommy's Place as we host a variety of categories, as well as win some prizes for ranking high in the leaderboard. Categories include: Total Trivia, Movie Mania, and Geek Out Trivia. This program is open to all eligible individuals. Late Night 'SC operates all of its programs and activities consistent with the USC’s Notice of Non-Discrimination. Eligibility is not determined based on race, sex, ethnicity, sexual orientation, or any other prohibited factor. Individuals with disabilities who need accommodations to attend this event may contact latenight.sc@usc.edu. We request that individuals requiring accommodations or auxiliary aids, such as sign language interpreters and alternative format materials, notify us at least 7 days prior to the event. Every reasonable effort will be made to provide reasonable accommodations in an effective and timely manner."
-	- this url is also public, no sign in or log in is required.
+# USC Free Food Finder - Project Context
 
-Requirements:
-	• Good UI
-	• Filter by free food
-	• Don't overload USC's endpoints 
-	• Fast load times 
-	• Use React, JS
+## Overview
 
-Libraries/Framework used: React, Vite, Tailwind, Supabase (database), Vercel (frontend, cron job)
-Languages: JS, HTML, CSS
+A web application to show all USC Engage events with free food detection capabilities.
 
-Plan:
-	• Understand if I can directly call their backend API endpoint or I have to parse from their frontend
-		○ Done, both the list API and the details page has CORS so I need to set up a backend proxy? 
-	• Set up React App with Vite
-		○ Done, created project, installed dependencies and libraries, pasted in Claude's app.jsx code and started dev server. 
-	• Setup backend proxy with Vercel 
-		○ Done, APIs can be called now
-	• Build the event list parsing for overview information
-		○ Done, just get the information we need from the JSON response
-	• Build the event details scraping for free food 
-		○ Initial attempt done. 
-	• Refine free food keyword detection
-		○ Added more keywords and understand the parsing logic
-	• Design and build front end. Add detail fetching when users click "view details", add a link for registration. 
-		○ Semi completed, still needs some polishing 
-		○ Time not displayed right, tags not displayed right
-		○ Highlight matching keywords
-	• Setup Supabase
-        - no need for backend proxy now since the database serves as the backend proxy
-        *Make sure to adjust app.jsx to reflect this
-        - done, create table, setup security policies, configure supabase env, add .env 
-    • Clean information before storing in database
-        - Done, using regex and html parser
-	• Setup backend cron job with vercel 
-		○ Done, configure vercel cron to upsert database table every day, setup cron config
-	• Update frontend (app.jsx) to read from supabase 
-		- done, add order_index, configure .env file
-	• Deploy to Vercel/Netlify
-		- done
-	• Custom domain name? 
-	• Gather feedback
-	• Improve
+## Source Data
 
-Looking at the engagesc events page fetch network calls, it seems to be calling
-https://engage.usc.edu/mobile_ws/v17/mobile_events_list?range=0&limit=4&filter4_contains=OR&filter4_notcontains=OR&order=undefined&search_word=&&1766544989878 
-	• Range is the starting point (1st event shown)
-	• Limit is the total number of events provided
+### Main Events Page
+- **URL**: https://engage.usc.edu/events
+- **Description**: Shows an overview of all events with title, picture, date/time, tags, and organizer
+- **Access**: Public website, no sign-in required
 
-But for the individual events and the details of the event. Is there also an API? 
-	• Yes, link is here: https://engage.usc.edu/resed/rsvp_boot?id=408945
-	• But it doesn't return JSON, it returns HTML, CSS and JS. 
-	• You call the url with the eventID as a query and you get back all the server generated html, css and js. 
-	• The very 1st object received is a html document containing the text details. 
+### Individual Event Details
+- **URL Pattern**: `https://engage.usc.edu/resed/rsvp_boot?id={event_id}`
+- **Example**: https://engage.usc.edu/resed/rsvp_boot?id=408945
+- **Content**: Full event description including accessibility information, accommodations, contact details
+- **Access**: Public, no sign-in required
 
-Project structure: 
-.
-├── .env
-├── .git
-├── .gitignore
-├── .prettierignore
-├── .vercel
-├── .vite
-├── README.md
-├── api
-│   ├── cron-scan-events.js
-│   ├── event-details.js
-│   └── events.js
-├── docs
-├── eslint.config.js
-├── index.html
-├── individualevent.html
-├── node_modules
-├── package-lock.json
-├── package.json
-├── public
-├── src
-│   ├── App.jsx
-│   ├── assets
-│   ├── index.css
-│   └── main.jsx
-├── utils
-│   └── freeFoodKeywords.js
-├── vercel.json
-└── vite.config.js
-  
-To start the react server: '$ npm run dev'  
-To start the vercel frontend react server + cron job: '$ vercel dev'
+## Requirements
+
+- ✅ Good UI/UX
+- ✅ Filter by free food
+- ✅ Don't overload USC's endpoints
+- ✅ Fast load times
+- ✅ Use React and JavaScript
+
+## Technology used
+
+- Libraries/Framework used: React, Vite, Tailwind, Supabase (database), Vercel (frontend, cron job)
+- Languages: JS, HTML, CSS
+
+## API Analysis
+
+### Events List API
+- **Endpoint**: `https://engage.usc.edu/mobile_ws/v17/mobile_events_list`
+- **Parameters**:
+  - `range`: Starting point (index of first event shown)
+  - `limit`: Total number of events returned
+  - `filter4_contains`: OR
+  - `filter4_notcontains`: OR
+  - `order`: undefined
+  - `search_word`: (empty for all events)
+- **Response Format**: JSON array of event objects
+- **CORS**: Enabled
+
+### Event Details API
+- **Endpoint**: `https://engage.usc.edu/resed/rsvp_boot?id={eventId}`
+- **Response Format**: Server-generated HTML, CSS, and JavaScript
+- **Content**: HTML document containing event description and details
+- **CORS**: Enabled
+
+## Implementation Progress
+
+### ✅ Completed Tasks
+
+1. **Backend API Discovery**
+   - Identified both list API (JSON) and details page (HTML)
+   - CORS policy needs to be bypassed
+
+2. **React Application Setup**
+   - Created project with Vite
+   - Installed dependencies and libraries
+   - Started development server
+
+3. **Backend Proxy (Deprecated)**
+   - Initially set up Vercel proxy for CORS
+   - Later removed as database now serves as backend proxy
+
+4. **Event Parsing**
+   - Built event list parser for overview information
+   - Extracts relevant fields from JSON response
+
+5. **Free Food Detection**
+   - Implemented keyword-based detection system
+   - Added comprehensive keyword list
+   - Created parsing logic for HTML descriptions
+
+6. **Frontend Development**
+   - Designed and built main UI
+   - Added detail fetching on click
+   - Integrated registration links
+   - Implemented search and filter functionality
+
+7. **Data Cleaning**
+   - Used regex and HTML parser
+   - Cleaned tags (aria-labels from p22 field)
+   - Cleaned date/time (decoded HTML entities from p4 field)
+
+8. **Supabase Integration**
+   - Created events table with proper schema
+   - Set up security policies
+   - Configured environment variables
+   - Removed need for separate backend proxy
+
+9. **Cron Job Setup**
+   - Configured Vercel cron to run daily
+   - Upserts database table with latest events
+   - Runs at 8 AM UTC daily
+
+10. **Frontend Database Integration**
+    - Updated App.jsx to read from Supabase
+    - Added order_index for consistent sorting
+    - Configured environment variables
+
+11. **Deployment**
+    - Deployed to Vercel
+    - Production environment configured
+
+### 🚧 Pending Tasks
+
+- Custom domain name
+- Gather user feedback
+- Implement improvements based on feedback
+
+
+## Architecture Flow
+
+1. **Daily Cron Job** (8 AM UTC)
+   - Vercel cron triggers `/api/cron-scan-events`
+   - Validates secret token for security
+
+2. **Event Fetching**
+   - Calls USC Engage events list API
+   - Fetches up to 100 events
+
+3. **Description Scanning**
+   - Processes events in batches of 5
+   - Fetches HTML for each event detail page
+   - Parses and cleans description
+   - Scans for free food keywords
+
+4. **Database Update**
+   - Upserts all events to Supabase
+   - Stores free food detection results
+   - Updates timestamp
+
+5. **Frontend Display**
+   - React app reads from Supabase
+   - Displays events with search/filter
+   - Shows free food badges
+   - Provides event details on click
+
+## Key Design Decisions
+
+1. **Database as Proxy**: Instead of proxying USC Engage API calls through Vercel functions, we cache all data in Supabase for faster load times and reduced API calls
+
+2. **Batch Processing**: Process events in batches of 5 with 200ms delays to avoid overwhelming USC's servers
+
+3. **Keyword Detection**: Use keyword matching rather than ML to ensure reliability and transparency
+
+4. **Daily Updates**: Cron job runs once per day to balance freshness with API courtesy
+
+5. **Client-Side Filtering**: All search/filter operations happen in React for instant responsiveness

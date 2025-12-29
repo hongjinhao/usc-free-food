@@ -17,7 +17,6 @@ import {
   ExternalLink,
   X,
   AlertCircle,
-  Database,
 } from "lucide-react";
 import { createClient } from "@supabase/supabase-js";
 
