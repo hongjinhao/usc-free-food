@@ -42,9 +42,12 @@ Plan:
 	• Setup backend cron job with vercel 
 		○ Done, configure vercel cron to upsert database table every day, setup cron config
 	• Update frontend (app.jsx) to read from supabase 
-	• Create .env file 
-	• Test with real data
+		- done, add order_index, configure .env file
 	• Deploy to Vercel/Netlify
+		- done
+	• Custom domain name? 
+	• Gather feedback
+	• Improve
 
 Looking at the engagesc events page fetch network calls, it seems to be calling
 https://engage.usc.edu/mobile_ws/v17/mobile_events_list?range=0&limit=4&filter4_contains=OR&filter4_notcontains=OR&order=undefined&search_word=&&1766544989878 
@@ -57,7 +60,7 @@ But for the individual events and the details of the event. Is there also an API
 	• You call the url with the eventID as a query and you get back all the server generated html, css and js. 
 	• The very 1st object received is a html document containing the text details. 
 
-hongj@jinhao:~/usc-free-food$ tree -L 2 -a
+Project structure: 
 .
 ├── .env
 ├── .git
@@ -87,3 +90,6 @@ hongj@jinhao:~/usc-free-food$ tree -L 2 -a
 │   └── freeFoodKeywords.js
 ├── vercel.json
 └── vite.config.js
+  
+To start the react server: '$ npm run dev'  
+To start the vercel frontend react server + cron job: '$ vercel dev'
