@@ -256,6 +256,47 @@ async function scanEventDetails(eventId) {
   }
 }
 
+async function markStaleEvents(activeEventIds) {
+  try {
+    const { data, error } = await supabase
+      .from("events")
+      .update({ status: "stale", updated_at: new Date().toISOString() })
+      .not("id", "in", `(${activeEventIds.join(",")})`)
+      .eq("status", "active");
+    if (error) throw error;
+    console.log(`Marked events as stale (not in current API response)`);
+  } catch (error) {
+    console.log("Error marking stale events:", error);
+    throw error;
+  }
+}
+
+/*
+ * Delete stale events that are more than 30 days old
+ */
+async function deleteOldStaleEvents() {
+  try {
+    const thirtyDaysAgo = new Date();
+    thirtyDaysAgo.setDate(thirtyDaysAgo.getDate() - 30);
+    // this approach works because JS automatically handles the date math
+
+    const { data, error } = await supabase
+      .from("events")
+      .delete()
+      .eq("status", "stale")
+      .lt("updated_at", thirtyDaysAgo.toISOString());
+
+    if (error) throw error;
+    // using optional chaining ?.
+    const deletedCount = data?.length || 0;
+    console.log(`Deleted ${deletedCount} stale events older than 30 days`);
+    return deletedCount;
+  } catch (error) {
+    console.error("Error deleting old stale events:", error);
+    throw error;
+  }
+}
+
 /**
  * Cron entrypoint: validates secret, fetches events, scans descriptions for free food, and upserts into Supabase.
  * @param req Incoming request (expects Authorization: Bearer CRON_SECRET)
@@ -321,13 +362,20 @@ export default async function handler(req, res) {
       last_scanned_at: e.lastScannedAt,
       updated_at: new Date().toISOString(),
       order_index: index,
+      status: "active",
     }));
-
     const { data, error } = await supabase
       .from("events")
       .upsert(dbEvents, { onConflict: "id" });
 
     if (error) throw error;
+
+    // Step 4: Mark events not in current API response as stale
+    const activeEventIds = scannedEvents.map((e) => e.id);
+    await markStaleEvents(activeEventIds);
+
+    // Step 5: Delete events older than 30 days
+    const deletedCount = await deleteOldStaleEvents();
 
     const freeFoodCount = scannedEvents.filter((e) => e.hasFreeFood).length;
 
@@ -338,6 +386,7 @@ export default async function handler(req, res) {
       success: true,
       totalEvents: scannedEvents.length,
       freeFoodEvents: freeFoodCount,
+      staleEventsDeleted: deletedCount,
       timestamp: new Date().toISOString(),
     });
   } catch (error) {

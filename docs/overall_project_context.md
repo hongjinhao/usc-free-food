@@ -107,13 +107,20 @@ A web application to show all USC Engage events with free food detection capabil
     - Deployed to Vercel
     - Production environment configured
 
+12. **Deal with stale events**
+    - add an attribute status in the database
+    - mark events as "stale" once they stop being returned in the API
+    - delete stale events after 30 days. 
+    - update frontend to only display active events
+
 ### 🚧 Pending Tasks
 
-- Custom domain name
+- refine database datetime, datatype of attendees (text to int)
 - Gather user feedback
 - Implement improvements based on feedback
   - filter by date
   - identify what type of food/ highlight keyword matched
+- Custom domain name
 
 
 ## Architecture Flow

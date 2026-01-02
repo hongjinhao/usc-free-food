@@ -42,6 +42,7 @@ function App() {
   /**
    * Loads events from supabase on mount and update components
    * Updates: events state, error state, lastUpdated timestamp
+   * Only fetch active events (not stale)
    */
   const loadEvents = async () => {
     setLoading(true);
@@ -50,6 +51,7 @@ function App() {
       const { data, error } = await supabase
         .from("events")
         .select("*")
+        .eq("status", "active")
         .order("order_index", { ascending: true });
 
       if (error) throw error;
@@ -69,6 +71,7 @@ function App() {
         hasFreeFood: event.has_free_food,
         scanned: event.scanned,
         lastScannedAt: event.last_scanned_at,
+        status: event.status,
       }));
 
       setEvents(transformedEvents); // store all events in events
