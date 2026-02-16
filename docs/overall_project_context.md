@@ -115,12 +115,20 @@ A web application to show all USC Engage events with free food detection capabil
 
 ### 🚧 Pending Tasks
 
+- add vercel analytics
 - refine database datetime, datatype of attendees (text to int)
 - Gather user feedback
 - Implement improvements based on feedback
-  - filter by date
-  - identify what type of food/ highlight keyword matched
+   - filter for non Resident Housing.  
+   - filter by date
+   - identify what type of food/ highlight keyword matched
+
 - Custom domain name
+- Testing 
+   - Add testing for utility functions
+   - Add testing for API and React Components
+   - Setup CICD to run tests automatically
+
 
 
 ## Architecture Flow

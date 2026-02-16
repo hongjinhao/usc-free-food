@@ -120,7 +120,8 @@ CREATE TABLE events (
   scanned BOOLEAN DEFAULT FALSE,
   last_scanned_at TIMESTAMP WITH TIME ZONE,
   created_at TIMESTAMP WITH TIME ZONE DEFAULT NOW(),
-  updated_at TIMESTAMP WITH TIME ZONE DEFAULT NOW()
+  updated_at TIMESTAMP WITH TIME ZONE DEFAULT NOW(), 
+  status TEXT,
 );
 ```
 Also setup necessary security policies to use Supabase
