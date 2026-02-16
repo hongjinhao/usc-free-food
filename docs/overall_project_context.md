@@ -113,14 +113,25 @@ A web application to show all USC Engage events with free food detection capabil
     - delete stale events after 30 days. 
     - update frontend to only display active events
 
+13. **Add Vercel Analytics**
+    - Integrated @vercel/analytics/react into main.jsx
+    - Tracks page views using Vercel dashboard
+
+14. **Add Favicon**
+    - Generated favicon package (https://realfavicongenerator.net/)
+    - Updated index.html with meta tags
+
+15. **Housing Resident Filter**
+    - Added database update to detect "Housing Residents only" events
+    - Checks both description text and "RA Floor Program" category
+    - Added frontend toggle to hide/show these events
+    - Added "HOUSING ONLY" badge to UI
+
 ### 🚧 Pending Tasks
 
-- add vercel analytics
-- add favicon 
 - refine database datetime, datatype of attendees (text to int)
 - Gather user feedback
 - Implement improvements based on feedback
-   - filter for non Resident Housing.  
    - filter by date
    - identify what type of food/ highlight keyword matched
 

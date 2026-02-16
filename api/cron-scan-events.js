@@ -8,7 +8,7 @@ import {
 // Initialize Supabase with SERVICE ROLE key (has write permissions)
 const supabase = createClient(
   process.env.SUPABASE_URL,
-  process.env.SUPABASE_SERVICE_ROLE_KEY
+  process.env.SUPABASE_SERVICE_ROLE_KEY,
 );
 
 /**
@@ -32,7 +32,7 @@ function extractAriaLabelsAsCategory(html) {
         .replace(/\s*\/\s*/g, " / ")
         // collapse multiple spaces
         .replace(/\s+/g, " ")
-        .trim()
+        .trim(),
     );
 
   // remove duplicates (case-insensitive) while preserving order
@@ -67,7 +67,7 @@ function decodeHtmlEntities(str) {
     .replace(/&nbsp;/g, " ")
     .replace(/&#(\d+);/g, (match, dec) => String.fromCharCode(dec))
     .replace(/&#x([0-9a-f]+);/gi, (match, hex) =>
-      String.fromCharCode(parseInt(hex, 16))
+      String.fromCharCode(parseInt(hex, 16)),
     );
 }
 
@@ -166,7 +166,7 @@ async function fetchEngageEvents() {
   } catch (error) {
     console.error("Error fetching from events list API:", error);
     throw new Error(
-      `Failed to fetch events from events list API: ${error.message}`
+      `Failed to fetch events from events list API: ${error.message}`,
     );
   }
 }
@@ -199,6 +199,7 @@ async function scanEventDetails(eventId) {
 
     let description = "No description available";
     let hasFreeFood = false;
+    let isHousingOnly = false;
 
     if (eventDetailsCard) {
       const title = eventDetailsCard.querySelector(".card-block__title");
@@ -237,8 +238,12 @@ async function scanEventDetails(eventId) {
 
       console.log(
         "[scanEventDetails] description peak: ",
-        description.substring(0, 100)
+        description.substring(0, 100),
       );
+
+      const housingOnlyText =
+        "This event is open to USC Housing Residents only. Residential Education operates its programs in accordance with USC's Notice of Non-Discrimination.";
+      isHousingOnly = description.includes(housingOnlyText);
 
       hasFreeFood = checkFreeFood(description);
 
@@ -249,10 +254,14 @@ async function scanEventDetails(eventId) {
       }
     }
 
-    return { description, hasFreeFood };
+    return { description, hasFreeFood, isHousingOnly };
   } catch (error) {
     console.error(`Error scanning event ${eventId}:`, error);
-    return { description: "Error loading description", hasFreeFood: false };
+    return {
+      description: "Error loading description",
+      hasFreeFood: false,
+      isHousingOnly: false,
+    };
   }
 }
 
@@ -327,14 +336,18 @@ export default async function handler(req, res) {
       const results = await Promise.all(
         batch.map(async (event) => {
           const details = await scanEventDetails(event.id);
+          const isHousingOnly =
+            details.isHousingOnly ||
+            (event.category && event.category.includes("RA Floor Program"));
           return {
             ...event,
             description: details.description,
             hasFreeFood: details.hasFreeFood,
+            isHousingOnly,
             scanned: true,
             lastScannedAt: new Date().toISOString(),
           };
-        })
+        }),
       );
 
       scannedEvents.push(...results);
@@ -358,6 +371,7 @@ export default async function handler(req, res) {
       attendees: e.attendees,
       description: e.description,
       has_free_food: e.hasFreeFood,
+      is_housing_only: e.isHousingOnly,
       scanned: true,
       last_scanned_at: e.lastScannedAt,
       updated_at: new Date().toISOString(),

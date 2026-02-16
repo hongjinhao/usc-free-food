@@ -23,7 +23,7 @@ import { createClient } from "@supabase/supabase-js";
 // Initialize Supabase client (using public anon key)
 const supabase = createClient(
   import.meta.env.VITE_SUPABASE_URL,
-  import.meta.env.VITE_SUPABASE_ANON_KEY
+  import.meta.env.VITE_SUPABASE_ANON_KEY,
 );
 
 function App() {
@@ -31,6 +31,7 @@ function App() {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const [showOnlyFreeFood, setShowOnlyFreeFood] = useState(false);
+  const [hideHousingOnly, setHideHousingOnly] = useState(false);
   const [searchQuery, setSearchQuery] = useState("");
   const [selectedEvent, setSelectedEvent] = useState(null);
   const [lastUpdated, setLastUpdated] = useState(null);
@@ -69,6 +70,7 @@ function App() {
         attendees: event.attendees,
         description: event.description,
         hasFreeFood: event.has_free_food,
+        isHousingOnly: event.is_housing_only,
         scanned: event.scanned,
         lastScannedAt: event.last_scanned_at,
         status: event.status,
@@ -107,10 +109,11 @@ function App() {
 
   const filteredEvents = events.filter((event) => {
     const matchesFreeFood = !showOnlyFreeFood || event.hasFreeFood;
+    const matchesHousingFilter = !hideHousingOnly || !event.isHousingOnly;
     const matchesSearch =
       event.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
       event.location.toLowerCase().includes(searchQuery.toLowerCase());
-    return matchesFreeFood && matchesSearch;
+    return matchesFreeFood && matchesSearch && matchesHousingFilter;
   });
 
   const freeFoodCount = events.filter((e) => e.hasFreeFood && e.scanned).length;
@@ -161,19 +164,34 @@ function App() {
               />
 
               {/* Filter Toggle */}
-              <button
-                onClick={() => setShowOnlyFreeFood(!showOnlyFreeFood)}
-                className={`px-6 py-2 rounded-lg font-semibold transition-all ${
-                  showOnlyFreeFood
-                    ? "bg-red-700 text-white shadow-lg"
-                    : "bg-gray-200 text-gray-700 hover:bg-gray-300"
-                }`}
-              >
-                <span className="flex items-center gap-2">
-                  <Pizza className="w-5 h-5" />
-                  Free Food Only ({freeFoodCount})
-                </span>
-              </button>
+              <div className="flex gap-2">
+                <button
+                  onClick={() => setShowOnlyFreeFood(!showOnlyFreeFood)}
+                  className={`px-6 py-2 rounded-lg font-semibold transition-all ${
+                    showOnlyFreeFood
+                      ? "bg-red-700 text-white shadow-lg"
+                      : "bg-gray-200 text-gray-700 hover:bg-gray-300"
+                  }`}
+                >
+                  <span className="flex items-center gap-2">
+                    <Pizza className="w-5 h-5" />
+                    Free Food Only ({freeFoodCount})
+                  </span>
+                </button>
+                <button
+                  onClick={() => setHideHousingOnly(!hideHousingOnly)}
+                  className={`px-6 py-2 rounded-lg font-semibold transition-all ${
+                    hideHousingOnly
+                      ? "bg-blue-700 text-white shadow-lg"
+                      : "bg-gray-200 text-gray-700 hover:bg-gray-300"
+                  }`}
+                >
+                  <span className="flex items-center gap-2">
+                    <Users className="w-5 h-5" />
+                    Hide Housing Only
+                  </span>
+                </button>
+              </div>
             </div>
           </div>
         )}
@@ -350,16 +368,25 @@ function EventCard({ event, onClick }) {
         )}
 
         {/* Badge Logic */}
-        {!event.scanned ? (
-          <div className="absolute top-2 right-2 bg-gray-400 text-white px-3 py-1 rounded-full font-bold text-sm shadow-lg">
-            NOT SCANNED
-          </div>
-        ) : event.hasFreeFood ? (
-          <div className="absolute top-2 right-2 bg-yellow-400 text-yellow-900 px-3 py-1 rounded-full font-bold text-sm shadow-lg flex items-center gap-1">
-            <Pizza className="w-4 h-4" />
-            FREE FOOD
-          </div>
-        ) : null}
+        <div className="absolute top-2 right-2 flex flex-col items-end gap-2">
+          {!event.scanned && (
+            <div className="bg-gray-400 text-white px-3 py-1 rounded-full font-bold text-sm shadow-lg">
+              NOT SCANNED
+            </div>
+          )}
+          {event.scanned && event.hasFreeFood && (
+            <div className="bg-yellow-400 text-yellow-900 px-3 py-1 rounded-full font-bold text-sm shadow-lg flex items-center gap-1">
+              <Pizza className="w-4 h-4" />
+              FREE FOOD
+            </div>
+          )}
+          {event.scanned && event.isHousingOnly && (
+            <div className="bg-blue-500 text-white px-3 py-1 rounded-full font-bold text-sm shadow-lg flex items-center gap-1">
+              <Users className="w-4 h-4" />
+              HOUSING ONLY
+            </div>
+          )}
+        </div>
       </div>
 
       <div className="p-4">

@@ -79,7 +79,6 @@ export const freeFoodKeywords = [
   "treats",
   "bites",
   "munchies",
-  "food",
   "snacks",
   "drinks",
   "confections",
