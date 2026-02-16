@@ -116,6 +116,7 @@ A web application to show all USC Engage events with free food detection capabil
 ### 🚧 Pending Tasks
 
 - add vercel analytics
+- add favicon 
 - refine database datetime, datatype of attendees (text to int)
 - Gather user feedback
 - Implement improvements based on feedback
