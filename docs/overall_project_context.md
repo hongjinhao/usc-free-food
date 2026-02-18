@@ -127,6 +127,16 @@ A web application to show all USC Engage events with free food detection capabil
     - Added frontend toggle to hide/show these events
     - Added "HOUSING ONLY" badge to UI
 
+16. **Expand Event Fetching**
+    - Increased API fetch limit from 100 to 700 events per cron run
+
+17. **Housing Resident Detection Improvements**
+    - Made description text check case-insensitive for more reliable detection
+    - Expanded category keyword list to catch more housing-related event categories
+
+18. **Free Food Description Spacing Issue Fix**
+    - Fixed extra whitespace/spacing issues when "Food Provided" appears in event description text
+
 ### 🚧 Pending Tasks
 
 - refine database datetime, datatype of attendees (text to int)
@@ -134,7 +144,7 @@ A web application to show all USC Engage events with free food detection capabil
 - Implement improvements based on feedback
    - filter by date
    - identify what type of food/ highlight keyword matched
-
+- get events from other organizers like student organizations instagram/VSGA email
 - Custom domain name
 - Testing 
    - Add testing for utility functions

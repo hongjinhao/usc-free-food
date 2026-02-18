@@ -126,7 +126,7 @@ function parseEngageSingleDate(html) {
  */
 async function fetchEngageEvents() {
   const url =
-    "https://engage.usc.edu/mobile_ws/v17/mobile_events_list?range=0&limit=100&filter4_contains=OR&filter4_notcontains=OR&order=undefined&search_word=";
+    "https://engage.usc.edu/mobile_ws/v17/mobile_events_list?range=0&limit=700&filter4_contains=OR&filter4_notcontains=OR&order=undefined&search_word=";
 
   try {
     const response = await fetch(url);
@@ -220,20 +220,66 @@ async function scanEventDetails(eventId) {
         .querySelectorAll("a.btn, button")
         .forEach((el) => el.remove());
 
-      // Remove empty divs
-      eventDetailsCard.querySelectorAll("div").forEach((div) => {
-        if (!div.textContent.trim()) {
-          div.remove();
-        }
-      });
+      // Remove image wrappers (flyer images add no text value)
+      eventDetailsCard
+        .querySelectorAll("img, .text-center")
+        .forEach((el) => el.remove());
 
-      // Extract text content
-      description = eventDetailsCard.text
-        .replace(/\u00A0/g, " ") // non-breaking spaces to regular spaces
-        .replace(/[ \t]+\n/g, "\n") // remove trailing spaces before newlines
-        .replace(/\n[ \t]+/g, "\n") // remove leading spaces after newlines
-        .replace(/\n{3,}/g, "\n\n") // collapse multiple newlines to double
-        .replace(/[ \t]+/g, " ") // collapse multiple spaces to single
+      // Extract text content by walking the node tree.
+      // Text nodes are trimmed; block-level children are joined with "\n"
+      // so indentation whitespace in the raw HTML never leaks into the output.
+      const BLOCK_TAGS = new Set([
+        "div",
+        "p",
+        "br",
+        "li",
+        "tr",
+        "h1",
+        "h2",
+        "h3",
+        "h4",
+        "h5",
+        "h6",
+      ]);
+      function extractText(node) {
+        if (node.nodeType === 3) {
+          // Trim each text node so bare whitespace nodes produce nothing
+          return node.rawText
+            .replace(/\u00A0/g, " ")
+            .replace(/[ \t]+/g, " ")
+            .trim();
+        }
+        const tag = (node.rawTagName || "").toLowerCase();
+        // <br> emits a bare newline so consecutive <br><br> produces \n\n
+        if (tag === "br") return "\n";
+        const isBlock = BLOCK_TAGS.has(tag);
+        const parts = (node.childNodes || [])
+          .map(extractText)
+          .filter((s) => s.length > 0);
+        // Top-level block elements are separated by a blank line (\n\n);
+        // nested blocks use a single newline
+        const sep = isBlock ? "\n\n" : " ";
+        const inner = parts.join(sep).trim();
+        return inner;
+      }
+
+      description = extractText(eventDetailsCard)
+        .replace(/[ \t]+/g, " ") // collapse runs of spaces/tabs
+        .replace(/[ \t]*\n[ \t]*/g, "\n") // trim spaces around newlines
+        .replace(/\n{3,}/g, "\n\n") // collapse 3+ newlines to a blank line
+        // Decode HTML entities left over after text extraction
+        .replace(/&amp;/g, "&")
+        .replace(/&lt;/g, "<")
+        .replace(/&gt;/g, ">")
+        .replace(/&quot;/g, '"')
+        .replace(/&#39;/g, "'")
+        .replace(/&nbsp;/g, " ")
+        .replace(/&ndash;/g, "\u2013")
+        .replace(/&mdash;/g, "\u2014")
+        .replace(/&#(\d+);/g, (_, dec) => String.fromCharCode(dec))
+        .replace(/&#x([0-9a-f]+);/gi, (_, hex) =>
+          String.fromCharCode(parseInt(hex, 16)),
+        )
         .trim();
 
       console.log(
@@ -243,7 +289,15 @@ async function scanEventDetails(eventId) {
 
       const housingOnlyText =
         "This event is open to USC Housing Residents only. Residential Education operates its programs in accordance with USC's Notice of Non-Discrimination.";
-      isHousingOnly = description.includes(housingOnlyText);
+      const housingOnlyMarkers = [
+        housingOnlyText,
+        "usc housing residents",
+        "housing residents only",
+      ];
+      const normalizedDescription = description.toLowerCase();
+      isHousingOnly = housingOnlyMarkers.some((marker) =>
+        normalizedDescription.includes(marker.toLowerCase()),
+      );
 
       hasFreeFood = checkFreeFood(description);
 
@@ -338,7 +392,13 @@ export default async function handler(req, res) {
           const details = await scanEventDetails(event.id);
           const isHousingOnly =
             details.isHousingOnly ||
-            (event.category && event.category.includes("RA Floor Program"));
+            (event.category &&
+              (event.category.includes("RA Floor Program") ||
+                event.category.includes("ResEd Event") ||
+                event.category.includes("Res College Cup") ||
+                event.category.includes(
+                  "Residential College or Community Event",
+                )));
           return {
             ...event,
             description: details.description,
