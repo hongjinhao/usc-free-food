@@ -394,7 +394,6 @@ export default async function handler(req, res) {
             details.isHousingOnly ||
             (event.category &&
               (event.category.includes("RA Floor Program") ||
-                event.category.includes("ResEd Event") ||
                 event.category.includes("Res College Cup") ||
                 event.category.includes(
                   "Residential College or Community Event",

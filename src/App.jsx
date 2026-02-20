@@ -19,6 +19,7 @@ import {
   AlertCircle,
 } from "lucide-react";
 import { createClient } from "@supabase/supabase-js";
+import { getMatchedKeywords } from "../utils/freeFoodKeywords.js";
 
 // Initialize Supabase client (using public anon key)
 const supabase = createClient(
@@ -299,9 +300,10 @@ function App() {
                   Description
                 </h3>
                 {selectedEvent.description ? (
-                  <p className="text-gray-700 whitespace-pre-wrap">
-                    {selectedEvent.description}
-                  </p>
+                  <HighlightedDescription
+                    text={selectedEvent.description}
+                    highlight={selectedEvent.hasFreeFood}
+                  />
                 ) : (
                   <p className="text-gray-500">No description available</p>
                 )}
@@ -339,6 +341,49 @@ function App() {
         )}
       </footer>
     </div>
+  );
+}
+
+/**
+ * HighlightedDescription Component
+ * Renders event description text with free food keywords highlighted in yellow.
+ * Props: text (string), highlight (boolean – only highlight when true)
+ */
+function HighlightedDescription({ text, highlight }) {
+  if (!highlight) {
+    return <p className="text-gray-700 whitespace-pre-wrap">{text}</p>;
+  }
+
+  const matched = getMatchedKeywords(text);
+  if (matched.length === 0) {
+    return <p className="text-gray-700 whitespace-pre-wrap">{text}</p>;
+  }
+
+  // Build a single regex that matches any of the keywords (case-insensitive)
+  const escaped = matched.map((kw) =>
+    kw.replace(/[.*+?^${}()|[\]\\]/g, "\\$&"),
+  );
+  const regex = new RegExp(`(${escaped.join("|")})`, "gi");
+
+  // Split text into parts: plain strings and matched spans
+  const parts = text.split(regex);
+  const lowerMatched = new Set(matched.map((kw) => kw.toLowerCase()));
+
+  return (
+    <p className="text-gray-700 whitespace-pre-wrap">
+      {parts.map((part, i) =>
+        lowerMatched.has(part.toLowerCase()) ? (
+          <mark
+            key={i}
+            className="bg-yellow-200 text-yellow-900 font-semibold rounded px-0.5"
+          >
+            {part}
+          </mark>
+        ) : (
+          part
+        ),
+      )}
+    </p>
   );
 }
 

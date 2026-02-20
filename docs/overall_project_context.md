@@ -137,13 +137,18 @@ A web application to show all USC Engage events with free food detection capabil
 18. **Free Food Description Spacing Issue Fix**
     - Fixed extra whitespace/spacing issues when "Food Provided" appears in event description text
 
+19. **Highlight Matched Free Food Keywords in Description**
+    - Added `HighlightedDescription` component in App.jsx
+    - Uses `getMatchedKeywords` (client-side) to find matched keywords when modal opens
+    - Builds a case-insensitive regex to split description text and wraps matches in `<mark>` with yellow highlight styling
+    - Only applies highlighting when `hasFreeFood` is true; no latency or database changes needed
+
 ### 🚧 Pending Tasks
 
 - refine database datetime, datatype of attendees (text to int)
 - Gather user feedback
 - Implement improvements based on feedback
    - filter by date
-   - identify what type of food/ highlight keyword matched
 - get events from other organizers like student organizations instagram/VSGA email
 - Custom domain name
 - Testing 
