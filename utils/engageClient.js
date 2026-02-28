@@ -75,8 +75,8 @@ export async function fetchEngageEvents() {
   }
 }
 
-// Matches the standalone word "RA" (case-insensitive), not substrings like "grass" or "drama"
-const RA_WORD_REGEX = /\bra\b/i;
+// Matches the standalone word "RA" or "RAs" (case-insensitive), not substrings like "grass" or "drama"
+const RA_WORD_REGEX = /\bras?\b/i;
 
 /**
  * Returns true if the event description contains a housing-only marker.
