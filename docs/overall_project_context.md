@@ -24,6 +24,7 @@ A web application to show all USC Engage events with free food detection capabil
 - ✅ Don't overload USC's endpoints
 - ✅ Fast load times
 - ✅ Use React and JavaScript
+- Clean Code
 
 ## Technology used
 
@@ -161,8 +162,11 @@ A web application to show all USC Engage events with free food detection capabil
 - get events from other organizers like student organizations instagram/VSGA email
 - Custom domain name
 - Testing 
-   - Add testing for utility functions
-   - Add testing for API and React Components
+   - Add testing for pure logic (checkFreeFood, isHousingOnlyEvent)
+   - Data mapping (mapToDbEvent, mapEventItem)
+   - Database Calls - fake the DB
+   - External APIs - fake the API response to test your parsing
+   - Add testing for React Components
    - Setup CICD to run tests automatically
 
 
@@ -175,10 +179,9 @@ A web application to show all USC Engage events with free food detection capabil
 
 2. **Event Fetching**
    - Calls USC Engage events list API
-   - Fetches up to 100 events
 
 3. **Description Scanning**
-   - Processes events in batches of 5
+   - Processes events in batches
    - Fetches HTML for each event detail page
    - Parses and cleans description
    - Scans for free food keywords
@@ -191,7 +194,7 @@ A web application to show all USC Engage events with free food detection capabil
 5. **Frontend Display**
    - React app reads from Supabase
    - Displays events with search/filter
-   - Shows free food badges
+   - Shows free food and housing only badges
    - Provides event details on click
 
 ## Key Design Decisions
@@ -205,3 +208,5 @@ A web application to show all USC Engage events with free food detection capabil
 4. **Daily Updates**: Cron job runs once per day to balance freshness with API courtesy
 
 5. **Client-Side Filtering**: All search/filter operations happen in React for instant responsiveness
+
+6. **Functions over Classes**: The cron job is a linear, stateless pipeline. There is no state needed to change or remember between steps, making classes unnecessary overhead. 
