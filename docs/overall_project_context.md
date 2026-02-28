@@ -143,6 +143,15 @@ A web application to show all USC Engage events with free food detection capabil
     - Builds a case-insensitive regex to split description text and wraps matches in `<mark>` with yellow highlight styling
     - Only applies highlighting when `hasFreeFood` is true; no latency or database changes needed
 
+20. **Cron Job Refactoring into Modules**
+    - Split monolithic `api/cron-scan-events.js` (481 lines) into focused utility modules
+    - `utils/htmlParser.js` — DOM cleaning, text extraction, date parsing
+    - `utils/engageClient.js` — USC Engage API fetching and event detail scanning
+    - `utils/eventScanner.js` — batch scan orchestration with rate limiting
+    - `utils/eventRepository.js` — Supabase DB operations (upsert, stale marking, deletion)
+    - `api/cron-scan-events.js` reduced to ~57 lines (imports + auth + handler only)
+    - `api/test-extraction.js` updated to import shared utils instead of duplicating logic
+
 ### 🚧 Pending Tasks
 
 - refine database datetime, datatype of attendees (text to int)

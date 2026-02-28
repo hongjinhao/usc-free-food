@@ -2,6 +2,8 @@
 
 A web application that helps USC students discover campus events with free food by automatically scanning and filtering USC Engage events.
 
+🌐 **Live site**: [usc-free-food2.vercel.app](https://usc-free-food2.vercel.app)
+
 ![React](https://img.shields.io/badge/React-19.2-blue)
 ![Vite](https://img.shields.io/badge/Vite-7.3-646CFF)
 ![Tailwind CSS](https://img.shields.io/badge/Tailwind-4.1-38B2AC)
@@ -52,17 +54,23 @@ A web application that helps USC students discover campus events with free food 
 ```
 .
 ├── src/
-│   ├── App.jsx           # Main React component
-│   ├── main.jsx          # React entry point
-│   └── index.css         # Global styles
+│   ├── App.jsx                # Main React component
+│   ├── main.jsx               # React entry point
+│   └── index.css              # Global styles
 ├── api/
-│   └── cron-scan-events.js  # Vercel cron function
+│   ├── cron-scan-events.js    # Vercel cron entrypoint
+│   └── test-extraction.js     # Local HTML extraction test script
 ├── utils/
-│   └── freeFoodKeywords.js  # Free food detection logic
+│   ├── freeFoodKeywords.js    # Free food keyword list and detection
+│   ├── htmlParser.js          # DOM cleaning and text extraction
+│   ├── engageClient.js        # USC Engage API fetch and event scanning
+│   ├── eventScanner.js        # Batch scan orchestration
+│   └── eventRepository.js     # Supabase DB operations
+├── tests/                     # Unit tests
 ├── docs/
 │   └── overall_project_context.md
-├── vercel.json           # Vercel deployment config
-├── vite.config.js        # Vite configuration
+├── vercel.json                # Vercel deployment config
+├── vite.config.js             # Vite configuration
 └── package.json
 ```
 
