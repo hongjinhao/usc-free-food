@@ -56,27 +56,6 @@ export function extractAriaLabelsAsCategory(html) {
 }
 
 /**
- * Decodes common HTML entities in a string.
- */
-export function decodeHtmlEntities(str) {
-  if (!str || typeof str !== "string") return "";
-
-  return str
-    .replace(/&amp;/g, "&")
-    .replace(/&lt;/g, "<")
-    .replace(/&gt;/g, ">")
-    .replace(/&quot;/g, '"')
-    .replace(/&#39;/g, "'")
-    .replace(/&ndash;/g, "–")
-    .replace(/&mdash;/g, "—")
-    .replace(/&nbsp;/g, " ")
-    .replace(/&#(\d+);/g, (match, dec) => String.fromCharCode(dec))
-    .replace(/&#x([0-9a-f]+);/gi, (match, hex) =>
-      String.fromCharCode(parseInt(hex, 16)),
-    );
-}
-
-/**
  * Formats a Date object into a human-readable event date string.
  */
 export function formatEventDate(date) {
@@ -91,43 +70,38 @@ export function formatEventDate(date) {
 }
 
 /**
- * Extracts and normalizes date text from the p4 HTML field in the events list API.
+ * Normalizes raw date text from the p4 field in the events list API.
  */
-export function parseDateInfoFromHtml(html) {
-  if (!html || typeof html !== "string") return "";
+export function normalizeDateText(text) {
+  if (!text || typeof text !== "string") return "";
 
-  // Decode entities first (so &ndash; becomes –)
-  const decoded = decodeHtmlEntities(html);
-  const root = parse(decoded);
-
-  // Join all <p> lines (some responses wrap the same date across multiple <p>)
-  const paragraphs = root.querySelectorAll("p");
-
-  const text =
-    paragraphs.length > 0
-      ? paragraphs
-          .map((p) => p.text.trim())
-          .filter(Boolean)
-          .join(" ")
-          .replace(/\s+/g, " ")
-          .trim()
-      : root.text.replace(/\s+/g, " ").trim();
-
-  return text.replace(/\s*[–-]\s*$/, "").trim();
+  return text
+    .replace(/\s+/g, " ")
+    .replace(/\s*[–-]\s*$/, "")
+    .trim();
 }
 
 /**
- * Parses event date HTML into a { date, display } object.
+ * Parses a raw date string from the Engage API into a structured object.
+ * Returns both a Date object (for sorting/comparison) and a formatted display string (for rendering).
+ * Text examples:
+ * "\nMon, Aug 25, 2025 9:00 AM –\n\n\nFri, May 29, 2026 10:00 AM\n\n"
+ * "\nThu, Mar 5, 2026\n\n7 PM – 8:45 PM\n\n"
  */
-export function parseEngageSingleDate(html) {
-  const cleaned = parseDateInfoFromHtml(html);
+export function parseDate(text) {
+  const cleaned = normalizeDateText(text);
 
-  const d = cleaned ? new Date(cleaned) : null;
-  const valid = d instanceof Date && !isNaN(d);
+  // condition ? expressionIfTrue : expressionIfFalse;
+  const parsedDate = cleaned ? new Date(cleaned) : null;
+  // Verify the Date is actually valid (new Date("garbage") produces an invalid Date)
+  const isValidDate = parsedDate instanceof Date && !isNaN(parsedDate);
 
-  const display = valid ? formatEventDate(d) : cleaned;
+  const display = isValidDate ? formatEventDate(parsedDate) : cleaned;
 
-  return { date: valid ? d : null, display };
+  return {
+    date: isValidDate ? parsedDate : null,
+    display,
+  };
 }
 
 /**

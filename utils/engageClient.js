@@ -2,7 +2,7 @@ import { parse } from "node-html-parser";
 import { checkFreeFood, getMatchedKeywords } from "./freeFoodKeywords.js";
 import {
   extractAriaLabelsAsCategory,
-  parseEngageSingleDate,
+  parseDate as parseDate,
   cleanEventDOM,
   extractNodeText,
   processDescriptionText,
@@ -36,19 +36,20 @@ function isValidEventItem(item) {
   );
 }
 
-function mapEventItem(item) {
-  const dateInfo = parseEngageSingleDate(item.p4);
-  return {
-    id: item.p1,
-    title: item.p3,
-    dates: dateInfo.display,
-    location: item.p6 || "Location TBA",
-    imageUrl: item.p11 ? `${ENGAGE_API_BASE}${item.p11}` : null,
-    organizer: item.p9 || "Unknown",
-    category: extractAriaLabelsAsCategory(item.p22),
-    detailUrl: `${ENGAGE_API_BASE}${item.p18}`,
-    attendees: item.p10 || "0",
+function mapEventItem({ p1, p3, p4, p6, p9, p10, p11, p18, p22 }) {
+  const { display: dates } = parseDate(p4);
+  const result = {
+    id: p1,
+    title: p3,
+    dates,
+    location: p6 || "Location TBA",
+    imageUrl: p11 ? `${ENGAGE_API_BASE}${p11}` : null,
+    organizer: p9 || "Unknown",
+    category: extractAriaLabelsAsCategory(p22),
+    detailUrl: `${ENGAGE_API_BASE}${p18}`,
+    attendees: p10 || "0",
   };
+  return result;
 }
 
 /**
