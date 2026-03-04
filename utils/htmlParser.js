@@ -70,23 +70,37 @@ export function formatEventDate(date) {
 }
 
 /**
- * Normalizes raw date text from the p4 field in the events list API.
+ * Parses the p4 HTML field from the events list API into a plain date string.
+ * p4 contains HTML like: "<p style='margin:0;'>Mon, Aug 25, 2025 9:00 AM &ndash; </p><p style='margin:0;'>Fri, May 29, 2026 10:00 AM</p>"
  */
-export function normalizeDateText(text) {
-  if (!text || typeof text !== "string") return "";
+export function normalizeDateText(html) {
+  if (!html || typeof html !== "string") return "";
+
+  const root = parse(html);
+  const paragraphs = root.querySelectorAll("p");
+
+  // Join text from all <p> tags, falling back to raw text if no <p> tags present
+  const text =
+    paragraphs.length > 0
+      ? paragraphs
+          .map((p) => p.text.trim())
+          .filter(Boolean)
+          .join(" ")
+      : root.text;
 
   return text
+    .replace(/&ndash;/g, "–")
     .replace(/\s+/g, " ")
-    .replace(/\s*[–-]\s*$/, "")
+    .replace(/\s*–\s*$/, "") // strip trailing en-dash (open-ended date ranges)
     .trim();
 }
 
 /**
  * Parses a raw date string from the Engage API into a structured object.
  * Returns both a Date object (for sorting/comparison) and a formatted display string (for rendering).
- * Text examples:
- * "\nMon, Aug 25, 2025 9:00 AM –\n\n\nFri, May 29, 2026 10:00 AM\n\n"
- * "\nThu, Mar 5, 2026\n\n7 PM – 8:45 PM\n\n"
+ * HTML input examples:
+ * "<p style='margin:0;'>Mon, Aug 25, 2025 9:00 AM &ndash; </p><p style='margin:0;'>Fri, May 29, 2026 10:00 AM</p>"
+ * "<p style='margin:0;'>Thu, Mar 5, 2026 7:00 PM &ndash; </p><p style='margin:0;'>Thu, Mar 5, 2026 8:45 PM</p>"
  */
 export function parseDate(text) {
   const cleaned = normalizeDateText(text);

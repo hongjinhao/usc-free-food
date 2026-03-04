@@ -22,7 +22,7 @@
 {
   "p1": "404810",
   "p3": "Greif LaunchPad",
-  "p4": "\nMon, Aug 25, 2025 9:00 AM –\n\n\nFri, May 29, 2026 10:00 AM\n\n",
+  "p4": "<p style='margin:0;'>Mon, Aug 25, 2025 9:00 AM &ndash; </p><p style='margin:0;'>Fri, May 29, 2026 10:00 AM</p>",
   "p6": "Private Location (sign in to display)",
   "p9": "Lloyd Greif Center for Entrepreneurial Studies",
   "p10": "115",

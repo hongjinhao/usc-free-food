@@ -6,7 +6,7 @@
 {
   "id": "411029",
   "title": "Home Away from Home",
-  "dates": "Thu, Mar 5, 2026 7 PM – 8:45 PM",
+  "dates": "Thu, Mar 5, 2026 7:00 PM – Thu, Mar 5, 2026 8:45 PM",
   "location": "Private Location (sign in to display)",
   "imageUrl": "https://engage.usc.edu/upload/usc/2026/r2_image_upload_2610708_Screenshot_20260304_at_123013AM_3433036.png",
   "organizer": "Troy",
@@ -22,7 +22,7 @@
 {
   "p1": "411029",
   "p3": "Home Away from Home",
-  "p4": "\nThu, Mar 5, 2026\n\n7 PM – 8:45 PM\n\n",
+  "p4": "<p style='margin:0;'>Thu, Mar 5, 2026 7:00 PM &ndash; </p><p style='margin:0;'>Thu, Mar 5, 2026 8:45 PM</p>",
   "p6": "Private Location (sign in to display)",
   "p9": "Troy",
   "p10": "0",
