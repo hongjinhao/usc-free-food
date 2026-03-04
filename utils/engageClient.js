@@ -2,7 +2,7 @@ import { parse } from "node-html-parser";
 import { checkFreeFood, getMatchedKeywords } from "./freeFoodKeywords.js";
 import {
   extractAriaLabelsAsCategory,
-  parseDate as parseDate,
+  parseDate,
   cleanEventDOM,
   extractNodeText,
   processDescriptionText,
