@@ -210,3 +210,13 @@ A web application to show all USC Engage events with free food detection capabil
 5. **Client-Side Filtering**: All search/filter operations happen in React for instant responsiveness
 
 6. **Functions over Classes**: The cron job is a linear, stateless pipeline. There is no state needed to change or remember between steps, making classes unnecessary overhead. 
+
+7. **Why use Node.js and not python?**: there are no python modules here. FastAPI makes more sense if the backend were doing ML inference, heavy data processing. 
+
+8. **Why not use redis?**: 
+- If I used redis instead of supabase for the database, it would not support SQL statements, it would not be persistent data, there is no built-in REST API. (not a good idea)
+- But redis could be used as a cache layer in front of supabase, reducing latency (by 100ms) and increasing throughput. I would need to change the React call to the new redis API rather than supabase API. I would also need to invalidate the redis cache after the cron job writes new data.
+- Adding redis as a cache layer adds complexity and is not really worth it unless:
+   - millions of users
+   - supabase free tier rate limits becoming a problem
+   - sub 10ms latency being a product requirement
