@@ -67,6 +67,7 @@ export const freeFoodKeywords = [
   "complimentary meal",
   "complimentary refreshments",
   "complimentary snacks",
+  "catering",
   "catering provided",
   "catered event",
 
